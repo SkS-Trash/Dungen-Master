@@ -21,7 +21,7 @@ namespace Core.Project
         public UniTask Initialize()
         {
             // _stateMachine.ChangeState<OpenLoadingScreenState>();
-
+            
             return UniTask.CompletedTask;
         }
 

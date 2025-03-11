@@ -29,16 +29,6 @@ namespace Infrastructure.Installers
 
             builder.AddTransient(typeof(DirectControlMultiLayerStateMachine), typeof(IDirectControlMultiLayerStateMachine));
             builder.AddTransient(typeof(MultiLayerTransitionStateMachine), typeof(IMultiLayerTransitionStateMachine));
-
-            builder.OnContainerBuilt += OnBuilderOnOnContainerBuilt;
-            builder.AddSingleton(typeof(GamingBootloader), typeof(IGamingInitializable));
-            return;
-
-            void OnBuilderOnOnContainerBuilt(Container container)
-            {
-                builder.OnContainerBuilt -= OnBuilderOnOnContainerBuilt;
-                container.Resolve<IGamingInitializable>().Initialize();
-            }
         }
     }
 }
