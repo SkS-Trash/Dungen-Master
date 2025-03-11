@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace Infrastructure.Observers.Input
 {
     [CreateAssetMenu(menuName = "Data/Input/InputActionReader")]
-    public class InputActionReader : ScriptableObject, PlayerInputSystem.IPlayerActions
+    public class InputActionReader : ScriptableObject, IInputActionReader, PlayerInputSystem.IPlayerActions
     {
         public event Action<Vector2> OnMoveChange;
         public event Action<Vector2> OnLookChange;
