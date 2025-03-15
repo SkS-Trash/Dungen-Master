@@ -123,6 +123,24 @@ namespace StateMachines.DirectControlMultiLayer
             }
         }
 
+        /// <inheritdoc/>
+        public async UniTask InitializeStateWithoutCaching<TState>() where TState : IState
+        {
+            try
+            {
+                var state = _statesFactory.CreateState<TState>();
+                if (state is IInitializable initializable)
+                {
+                    await initializable.Initialize();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Internal State Logic
@@ -140,7 +158,6 @@ namespace StateMachines.DirectControlMultiLayer
             if (!currentState.IsReusable)
             {
                 _stateCache.Remove(currentState.GetType());
-                currentState.Dispose();
             }
         }
 

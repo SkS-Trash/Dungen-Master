@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using StateMachines.DirectControlMultiLayer;
 
-namespace Core.Project
+namespace Core.Project.Base
 {
     public class ExitFromApplicationState : IState
     {
@@ -16,10 +16,6 @@ namespace Core.Project
 #endif
 
             return UniTask.CompletedTask;
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Providers
         private readonly Dictionary<string, AsyncOperationHandle> _completedOperations = new();
         private readonly Dictionary<string, List<AsyncOperationHandle>> _handles = new();
 
-        public void Initialize()
+        public AssetsAddressablesProvider()
         {
             Addressables.InitializeAsync();
         }

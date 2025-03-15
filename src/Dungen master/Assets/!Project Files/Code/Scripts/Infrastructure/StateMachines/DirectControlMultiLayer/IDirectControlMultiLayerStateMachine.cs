@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using Cysharp.Threading.Tasks;
 
 #endregion
 
@@ -47,5 +48,10 @@ namespace StateMachines.DirectControlMultiLayer
         /// Убрать состояние из стека.
         /// </summary>
         void PopState();
+        
+        /// <summary>
+        /// Инициализирует состояние, не запоминая его в кеше, и возвращает UniTask для отслеживания завершения.
+        /// </summary>
+        UniTask InitializeStateWithoutCaching<TState>() where TState : IState;
     }
 }

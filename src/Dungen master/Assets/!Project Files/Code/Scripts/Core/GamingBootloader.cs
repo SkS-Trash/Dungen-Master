@@ -1,7 +1,5 @@
-﻿using Core.Project;
-using Reflex.Core;
+﻿using Core.Project.Base;
 using Services;
-using UnityEngine;
 
 /// <summary>
 /// Этот класс отвечает за начальную загрузку игры.

@@ -1,4 +1,5 @@
-﻿using StateMachines.DirectControlMultiLayer;
+﻿using Cysharp.Threading.Tasks;
+using StateMachines.DirectControlMultiLayer;
 
 namespace Services
 {
@@ -33,5 +34,8 @@ namespace Services
 
         public void PopState() =>
             _impl.PopState();
+
+        public UniTask InitializeStateWithoutCaching<TState>() where TState : IState
+            => _impl.InitializeStateWithoutCaching<TState>();
     }
 }

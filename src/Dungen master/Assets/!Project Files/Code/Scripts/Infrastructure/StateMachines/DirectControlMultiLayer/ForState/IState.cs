@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace StateMachines.DirectControlMultiLayer
+﻿namespace StateMachines.DirectControlMultiLayer
 {
     /// <summary>
     /// Общий интерфейс для состояний.
     /// </summary>
-    public interface IState : IInitializable, IDisposable
+    public interface IState : IInitializable
     {
         /// <summary>
         /// Флаг, говорит нужно ли переиспользовать это состояние (true),

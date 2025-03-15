@@ -15,6 +15,6 @@ namespace StateMachines.DirectControlMultiLayer
     /// </summary>
     public interface IEnterable<TArg>
     {
-        UniTask OnEnterAsync(TArg arg);
+        UniTask OnEnterAsync(TArg _);
     }
 }

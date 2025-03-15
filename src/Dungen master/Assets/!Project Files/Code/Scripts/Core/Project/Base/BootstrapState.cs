@@ -1,9 +1,9 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Core.Project.Initialization;
+using Cysharp.Threading.Tasks;
 using Services;
 using StateMachines.DirectControlMultiLayer;
-using UnityEngine;
 
-namespace Core.Project
+namespace Core.Project.Base
 {
     public class BootstrapState : IState
     {
@@ -20,13 +20,9 @@ namespace Core.Project
 
         public UniTask Initialize()
         {
-            // _stateMachine.ChangeState<OpenLoadingScreenState>();
+            _stateMachine.ChangeState<InitializationState>();
             
             return UniTask.CompletedTask;
-        }
-
-        public void Dispose()
-        {
         }
     }
 }
