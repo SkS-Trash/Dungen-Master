@@ -4,10 +4,12 @@ using Observers;
 using Providers;
 using Providers.Containers;
 using Reflex.Core;
+using Reflex.Extensions;
 using Services;
 using StateMachines.DirectControlMultiLayer;
 using StateMachines.TransitionMultiLayer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Infrastructure.Installers
 {
@@ -34,7 +36,9 @@ namespace Infrastructure.Installers
             builder.AddSingleton(typeof(SceneLoaderService), typeof(ISceneLoaderService));
             builder.AddSingleton(typeof(WindowService), typeof(IWindowService));
 
+            builder.AddSingleton(typeof(StatesFactory), typeof(IStatesFactory));
             builder.AddTransient(typeof(DirectControlMultiLayerStateMachine), typeof(IDirectControlMultiLayerStateMachine));
+
             builder.AddTransient(typeof(MultiLayerTransitionStateMachine), typeof(IMultiLayerTransitionStateMachine));
         }
     }

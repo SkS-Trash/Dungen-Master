@@ -12,16 +12,16 @@ namespace Factories
     /// </summary>
     public class GameObjectFactory : IGameObjectFactory
     {
-        private readonly Container _container;
         private readonly IAssetsProvider _assetsProvider;
+        private readonly Container _container;
 
         public GameObjectFactory(
-            Container container,
-            IAssetsProvider assetsProvider
+            IAssetsProvider assetsProvider,
+            Container container
         )
         {
-            _container = container;
             _assetsProvider = assetsProvider;
+            _container = container;
         }
 
         /// <inheritdoc/>
@@ -68,7 +68,9 @@ namespace Factories
                 parent
             );
 
-            GameObjectInjector.InjectRecursive(instance, _container);
+            Object.DontDestroyOnLoad(instance);
+
+            AttributeInjector.Inject(instance, _container);
 
             return instance;
         }

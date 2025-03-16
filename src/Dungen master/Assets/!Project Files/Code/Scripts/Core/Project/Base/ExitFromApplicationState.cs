@@ -3,11 +3,9 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Base
 {
-    public class ExitFromApplicationState : IState
+    public class ExitFromApplicationState : IState, IEnterable
     {
-        public bool IsReusable => true;
-
-        public UniTask Initialize()
+        public UniTask OnEnterAsync(Unit _)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

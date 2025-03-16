@@ -1,0 +1,91 @@
+﻿using Core.Project.Base;
+using Cysharp.Threading.Tasks;
+using Services;
+using StateMachines.DirectControlMultiLayer;
+using UI.MainMenu;
+using UnityEngine;
+
+namespace Core.Project.MainMenu
+{
+    public class MainMenuState : IState, IEnterable, IExitable
+    {
+        private readonly IWindowService _windowService;
+        private readonly IProjectEngine _projectEngine;
+
+        public MainMenuState(
+            IProjectEngine projectEngine,
+            IWindowService windowService
+        )
+        {
+            _windowService = windowService;
+            _projectEngine = projectEngine;
+        }
+
+        private async UniTask InstantiateMainMenu()
+        {
+            var mainMenuUI = await _windowService.OpenAndGet<MainMenuUI>(WindowID.MainMenu);
+            mainMenuUI.Hide();
+        }
+
+        private void SetupMainMenuCallbacks()
+        {
+            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
+            mainMenuWindow.OnStartGame += OnStartGame;
+            mainMenuWindow.OnExit += OnExit;
+        }
+
+        private void OnStartGame()
+        {
+            // TODO: Запустить игру
+
+            Debug.Log("Start Game");
+        }
+
+        private void OnExit()
+        {
+            _projectEngine.ChangeState<ExitFromApplicationState>();
+        }
+
+        #region Enter
+
+        public async UniTask OnEnterAsync(Unit _)
+        {
+            await InstantiateMainMenu();
+
+            SetupMainMenuCallbacks();
+
+            ShowMainMenu();
+            HideLoadingScreen();
+        }
+
+        private void ShowMainMenu()
+        {
+            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
+            mainMenuWindow.Show();
+        }
+
+        private void HideLoadingScreen()
+        {
+            // TODO: Скрыть экран загрузки
+        }
+
+        #endregion
+
+        #region Exit
+
+        public UniTask OnExitAsync()
+        {
+            HideMainMenu();
+
+            return UniTask.CompletedTask;
+        }
+
+        private void HideMainMenu()
+        {
+            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
+            mainMenuWindow.Hide();
+        }
+
+        #endregion
+    }
+}

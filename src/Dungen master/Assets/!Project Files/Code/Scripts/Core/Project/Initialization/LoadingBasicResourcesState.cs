@@ -4,13 +4,11 @@ using UnityEngine.AddressableAssets;
 
 namespace Core.Project.Initialization
 {
-    public class LoadingBasicResourcesState : IState
+    public class LoadingBasicResourcesState : IState, IEnterable
     {
-        public bool IsReusable => false;
-
         private const string DEFAULT_ADDRESSABLE_LABEL = "default";
 
-        public async UniTask Initialize()
+        public async UniTask OnEnterAsync(Unit _)
         {
             await AddressablesInitialize();
 

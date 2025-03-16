@@ -4,10 +4,9 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Initialization
 {
-    public class LoadProgressState : IState
+    public class LoadProgressState : IState, IEnterable
     {
         private readonly IProgressService _progressService;
-        public bool IsReusable => true;
 
         public LoadProgressState(
             IProgressService progressService
@@ -16,7 +15,7 @@ namespace Core.Project.Initialization
             _progressService = progressService;
         }
 
-        public UniTask Initialize()
+        public UniTask OnEnterAsync(Unit _)
         {
             LoadProgress();
 

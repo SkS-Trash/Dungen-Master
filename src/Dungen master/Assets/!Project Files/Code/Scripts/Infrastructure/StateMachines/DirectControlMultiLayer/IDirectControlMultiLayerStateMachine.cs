@@ -52,6 +52,6 @@ namespace StateMachines.DirectControlMultiLayer
         /// <summary>
         /// Инициализирует состояние, не запоминая его в кеше, и возвращает UniTask для отслеживания завершения.
         /// </summary>
-        UniTask InitializeStateWithoutCaching<TState>() where TState : IState;
+        UniTask RunWhileWaitingForCompletion<TState>() where TState : IState;
     }
 }

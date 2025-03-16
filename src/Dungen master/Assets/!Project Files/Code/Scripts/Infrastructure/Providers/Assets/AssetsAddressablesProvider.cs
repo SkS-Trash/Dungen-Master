@@ -18,7 +18,6 @@ namespace Providers
 
         public AssetsAddressablesProvider()
         {
-            Addressables.InitializeAsync();
         }
 
         /// <inheritdoc/>

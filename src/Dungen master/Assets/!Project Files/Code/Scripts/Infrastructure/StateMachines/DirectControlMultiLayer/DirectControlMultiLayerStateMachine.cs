@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Reflex.Core;
 using UnityEngine;
 
 namespace StateMachines.DirectControlMultiLayer
@@ -22,16 +21,15 @@ namespace StateMachines.DirectControlMultiLayer
             : null;
 
         private readonly IStatesFactory _statesFactory;
-        private readonly Dictionary<Type, IState> _stateCache = new();
         private readonly Stack<IState> _stateStack = new();
 
         private CancellationTokenSource _updateLoopCts;
 
         public DirectControlMultiLayerStateMachine(
-            Container container
+            IStatesFactory statesFactory
         )
         {
-            _statesFactory = new StatesFactory(container);
+            _statesFactory = statesFactory;
         }
 
         #region Public API
@@ -73,7 +71,7 @@ namespace StateMachines.DirectControlMultiLayer
             {
                 await ExitCurrentIfUpdateableAsync();
 
-                var newState = await ResolveState<TState>();
+                var newState = ResolveState<TState>();
                 _stateStack.Push(newState);
 
                 await EnterActiveStateAsync(Unit.Default);
@@ -91,7 +89,7 @@ namespace StateMachines.DirectControlMultiLayer
             {
                 await ExitCurrentIfUpdateableAsync();
 
-                var newState = await ResolveState<TState>();
+                var newState = ResolveState<TState>();
                 _stateStack.Push(newState);
 
                 await EnterActiveStateAsync(arg);
@@ -124,21 +122,21 @@ namespace StateMachines.DirectControlMultiLayer
         }
 
         /// <inheritdoc/>
-        public async UniTask InitializeStateWithoutCaching<TState>() where TState : IState
+        public async UniTask RunWhileWaitingForCompletion<TState>() where TState : IState
         {
             try
             {
                 var state = _statesFactory.CreateState<TState>();
-                if (state is IInitializable initializable)
-                {
-                    await initializable.Initialize();
-                }
+                if (state is IEnterable<Unit> enterable)
+                    await enterable.OnEnterAsync(Unit.Default);
             }
             catch (Exception e)
             {
                 Debug.LogException(e);
                 throw;
             }
+
+            await UniTask.CompletedTask;
         }
 
         #endregion
@@ -154,11 +152,6 @@ namespace StateMachines.DirectControlMultiLayer
             var currentState = _stateStack.Peek();
             if (currentState is IExitable exitable)
                 await exitable.OnExitAsync();
-
-            if (!currentState.IsReusable)
-            {
-                _stateCache.Remove(currentState.GetType());
-            }
         }
 
         private UniTask ExitCurrentIfUpdateableAsync()
@@ -176,24 +169,9 @@ namespace StateMachines.DirectControlMultiLayer
             return UniTask.CompletedTask;
         }
 
-        private async Task<IState> ResolveState<TState>() where TState : IState
+        private IState ResolveState<TState>() where TState : IState
         {
-            var stateType = typeof(TState);
-
-            if (_stateCache.TryGetValue(stateType, out var cachedState))
-            {
-                return cachedState;
-            }
-
             var newState = _statesFactory.CreateState<TState>();
-
-            if (_stateCache.TryAdd(stateType, newState))
-            {
-                if (newState is IInitializable initializable)
-                {
-                    await initializable.Initialize();
-                }
-            }
 
             return newState;
         }

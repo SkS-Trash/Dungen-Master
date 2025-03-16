@@ -4,11 +4,9 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Initialization
 {
-    public class LoadEmptySceneState : IState
+    public class LoadEmptySceneState : IState, IEnterable
     {
         private readonly ISceneLoaderService _sceneLoaderService;
-        public bool IsReusable => false;
-
         private readonly IProjectEngine _projectEngine;
 
         public LoadEmptySceneState(
@@ -18,7 +16,7 @@ namespace Core.Project.Initialization
             _sceneLoaderService = sceneLoaderService;
         }
 
-        public async UniTask Initialize()
+        public async UniTask OnEnterAsync(Unit _)
         {
             var scenePath = ScenesPaths.EMPTY;
 

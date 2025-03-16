@@ -17,6 +17,8 @@ namespace StateMachines.DirectControlMultiLayer
 
         /// <inheritdoc/>
         public TState CreateState<TState>() where TState : IState
-            => (TState)ConstructorInjector.Construct(typeof(TState), _container);
+        {
+            return (TState)ConstructorInjector.Construct(typeof(TState), _container);
+        }
     }
 }

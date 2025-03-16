@@ -35,7 +35,7 @@ namespace Services
         public void PopState() =>
             _impl.PopState();
 
-        public UniTask InitializeStateWithoutCaching<TState>() where TState : IState
-            => _impl.InitializeStateWithoutCaching<TState>();
+        public UniTask RunWhileWaitingForCompletion<TState>() where TState : IState
+            => _impl.RunWhileWaitingForCompletion<TState>();
     }
 }

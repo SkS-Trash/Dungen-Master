@@ -1,14 +1,13 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Core.Project.MainMenu;
+using Cysharp.Threading.Tasks;
 using Services;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
 namespace Core.Project.Initialization
 {
-    public class InitializationState : IState
+    public class InitializationState : IState, IEnterable
     {
-        public bool IsReusable => false;
-
         private readonly IProjectEngine _projectEngine;
 
         public InitializationState(
@@ -18,16 +17,23 @@ namespace Core.Project.Initialization
             _projectEngine = projectEngine;
         }
 
-        public async UniTask Initialize()
+        public async UniTask OnEnterAsync(Unit _)
         {
-            // await _projectEngine.InitializeStateWithoutCaching<OpenLoadingScreenState>();
-            await _projectEngine.InitializeStateWithoutCaching<LoadingBasicResourcesState>();
-            await _projectEngine.InitializeStateWithoutCaching<LoadProgressState>();
-            await _projectEngine.InitializeStateWithoutCaching<LoadEmptySceneState>();
+            // await _projectEngine.InitializeStateWithoutCaching<Ехать OpenLoadingScreenState>();
+            await _projectEngine.RunWhileWaitingForCompletion<LoadingBasicResourcesState>();
+            await _projectEngine.RunWhileWaitingForCompletion<LoadProgressState>();
+            // await _projectEngine.InitializeStateWithoutCaching<LoadEmptySceneState>();
 
-            // _projectEngine.ChangeState<MainMenuState>();
+            await _projectEngine.RunWhileWaitingForCompletion<WindowServiceInitializeState>();
+            _projectEngine.ChangeState<MainMenuState>();
+        }
 
-            Debug.Log("InitializationState initialized");
+        // Костыль для инициализации сервиса окон
+        private class WindowServiceInitializeState : IState
+        {
+            public WindowServiceInitializeState(IWindowService windowService)
+            {
+            }
         }
     }
 }

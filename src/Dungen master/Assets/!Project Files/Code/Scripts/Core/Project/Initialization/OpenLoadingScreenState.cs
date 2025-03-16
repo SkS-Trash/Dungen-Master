@@ -4,10 +4,8 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Initialization
 {
-    public class OpenLoadingScreenState : IState
+    public class OpenLoadingScreenState : IState, IEnterable
     {
-        public bool IsReusable => false;
-
         private readonly IWindowService _windowService;
 
         public OpenLoadingScreenState(
@@ -17,7 +15,7 @@ namespace Core.Project.Initialization
             _windowService = windowService;
         }
 
-        public async UniTask Initialize()
+        public async UniTask OnEnterAsync(Unit _)
         {
             await InstantiateLoadingScreen();
         }

@@ -5,10 +5,8 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Base
 {
-    public class BootstrapState : IState
+    public class BootstrapState : IState, IEnterable
     {
-        public bool IsReusable => false;
-
         private readonly IProjectEngine _stateMachine;
 
         public BootstrapState(
@@ -18,7 +16,7 @@ namespace Core.Project.Base
             _stateMachine = stateMachine;
         }
 
-        public UniTask Initialize()
+        public UniTask OnEnterAsync(Unit _)
         {
             _stateMachine.ChangeState<InitializationState>();
             
