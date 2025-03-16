@@ -1,21 +1,13 @@
-﻿using Reflex.Core;
-using UnityEngine;
+﻿using VContainer;
+using VContainer.Unity;
 
 namespace Infrastructure.Installers
 {
-    public class GameBootstrapInstaller : MonoBehaviour, IInstaller
+    public class GameBootstrapInstaller : LifetimeScope
     {
-        public void InstallBindings(ContainerBuilder builder)
+        protected override void Configure(IContainerBuilder builder)
         {
-            builder.OnContainerBuilt += OnBuilderOnOnContainerBuilt;
-            builder.AddSingleton(typeof(GamingBootloader), typeof(IGamingInitializable));
-            return;
-
-            void OnBuilderOnOnContainerBuilt(Container container)
-            {
-                builder.OnContainerBuilt -= OnBuilderOnOnContainerBuilt;
-                container.Resolve<IGamingInitializable>().Initialize();
-            }
+            builder.RegisterEntryPoint<GamingBootloader>();
         }
     }
 }

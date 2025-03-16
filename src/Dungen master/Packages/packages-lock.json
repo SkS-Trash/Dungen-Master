@@ -7,13 +7,6 @@
       "dependencies": {},
       "hash": "8042b29ff87dd5506d7aad72bd6d8d7405985f27"
     },
-    "com.gustavopsantos.reflex": {
-      "version": "https://github.com/gustavopsantos/reflex.git?path=/Assets/Reflex/",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "365fc5e40dd68f5c03619eda2d680bdf89a17145"
-    },
     "com.unity.addressables": {
       "version": "2.3.16",
       "depth": 0,
@@ -279,6 +272,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ee940efab8d92008716c568cdcfb1a388e2d4802"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
