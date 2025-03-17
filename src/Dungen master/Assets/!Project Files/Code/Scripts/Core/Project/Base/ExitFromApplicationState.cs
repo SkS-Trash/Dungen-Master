@@ -3,7 +3,7 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Base
 {
-    public class ExitFromApplicationState : IState, IEnterable
+    public class ExitFromApplicationState : IStateOneShot
     {
         public UniTask OnEnterAsync(Unit _)
         {

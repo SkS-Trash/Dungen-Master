@@ -12,7 +12,7 @@ namespace StateMachines.DirectControlMultiLayer
     /// <summary>
     /// Интерфейс контроллера "машины состояний"
     /// </summary>
-    public interface IDirectControlMultiLayerStateMachine
+    public interface IStateMachine
     {
         /// <summary>
         /// Событие изменения состояния.
@@ -24,34 +24,45 @@ namespace StateMachines.DirectControlMultiLayer
         /// </summary>
         Type CurrentStateType { get; }
 
+        // ------------------- 
+
         /// <summary>
         /// Переход в новое состояние без аргументов.
         /// </summary>
-        void ChangeState<TState>() where TState : IState;
+        UniTask ChangeState<TState>() where TState : IState;
 
         /// <summary>
         /// Переход в новое состояние с аргументами.
         /// </summary>
-        void ChangeState<TState, TArg>(TArg arg) where TState : IState;
+        UniTask ChangeState<TState, TArg>(TArg arg) where TState : IState;
+
+        // ------------------- 
+
+        /// <summary>
+        /// Инициализирует состояние, не запоминая его в кеше, и возвращает UniTask для отслеживания завершения.
+        /// </summary>
+        UniTask RunOneShot<TState>() where TState : IStateOneShot;
+
+        /// <summary>
+        /// Инициализирует состояние, не запоминая его в кеше, и возвращает UniTask для отслеживания завершения.
+        /// </summary>
+        UniTask RunOneShot<TState, TArg>(TArg arg) where TState : IStateOneShot<TArg>;
+
+        // ------------------- 
 
         /// <summary>
         /// Добавить состояние в стек.
         /// </summary>
-        void PushState<TState>() where TState : IState;
+        UniTask PushState<TState>() where TState : IState;
 
         /// <summary>
         /// Добавить состояние в стек с аргументами.
         /// </summary>
-        void PushState<TState, TArg>(TArg arg) where TState : IState;
+        UniTask PushState<TState, TArg>(TArg arg) where TState : IState;
 
         /// <summary>
         /// Убрать состояние из стека.
         /// </summary>
-        void PopState();
-        
-        /// <summary>
-        /// Инициализирует состояние, не запоминая его в кеше, и возвращает UniTask для отслеживания завершения.
-        /// </summary>
-        UniTask RunWhileWaitingForCompletion<TState>() where TState : IState;
+        UniTask PopState();
     }
 }

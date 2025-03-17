@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Core.Project.Initialization
 {
-    public class LoadingBasicResourcesState : IState, IEnterable
+    public class LoadingBasicResourcesState : IStateOneShot
     {
         private const string DEFAULT_ADDRESSABLE_LABEL = "default";
 

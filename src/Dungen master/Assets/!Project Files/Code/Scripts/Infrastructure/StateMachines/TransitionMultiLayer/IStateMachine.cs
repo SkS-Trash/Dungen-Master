@@ -5,7 +5,7 @@ namespace StateMachines.TransitionMultiLayer
     /// <summary>
     /// Интерфейс контроллера "машины состояний" с переходами.
     /// </summary>
-    public interface IMultiLayerTransitionStateMachine
+    public interface IStateMachine
     {
         /// <summary>
         /// Текущее активное состояние.
@@ -40,7 +40,7 @@ namespace StateMachines.TransitionMultiLayer
         /// </summary>
         /// <param name="state">Целевое состояние, в которое осуществляется переход.</param>
         /// <param name="conditions">Условия для перехода.</param>
-        void AddUnspecifiedTransition(IState state, params Func<bool>[] conditions);
+        void AddGlobalTransition(IState state, params Func<bool>[] conditions);
 
         /// <summary>
         /// Основной метод обновления, который должен вызываться каждый кадр.

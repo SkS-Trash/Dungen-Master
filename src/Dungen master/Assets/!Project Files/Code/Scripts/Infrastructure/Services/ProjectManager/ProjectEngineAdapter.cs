@@ -5,9 +5,9 @@ namespace Services
 {
     public class ProjectEngineAdapter : IProjectEngine
     {
-        private readonly IDirectControlMultiLayerStateMachine _impl;
+        private readonly IStateMachine _impl;
 
-        public ProjectEngineAdapter(IDirectControlMultiLayerStateMachine impl)
+        public ProjectEngineAdapter(IStateMachine impl)
         {
             _impl = impl;
         }
@@ -20,22 +20,25 @@ namespace Services
 
         public System.Type CurrentStateType => _impl.CurrentStateType;
 
-        public void ChangeState<TState>() where TState : IState =>
+        public UniTask ChangeState<TState>() where TState : IState =>
             _impl.ChangeState<TState>();
 
-        public void ChangeState<TState, TArg>(TArg arg) where TState : IState =>
+        public UniTask ChangeState<TState, TArg>(TArg arg) where TState : IState =>
             _impl.ChangeState<TState, TArg>(arg);
 
-        public void PushState<TState>() where TState : IState =>
+        public UniTask RunOneShot<TState>() where TState : IStateOneShot
+            => _impl.RunOneShot<TState>();
+
+        public UniTask RunOneShot<TState, TArg>(TArg arg) where TState : IStateOneShot<TArg>
+            => _impl.RunOneShot<TState, TArg>(arg);
+
+        public UniTask PushState<TState>() where TState : IState =>
             _impl.PushState<TState>();
 
-        public void PushState<TState, TArg>(TArg arg) where TState : IState =>
+        public UniTask PushState<TState, TArg>(TArg arg) where TState : IState =>
             _impl.PushState<TState, TArg>(arg);
 
-        public void PopState() =>
+        public UniTask PopState() =>
             _impl.PopState();
-
-        public UniTask RunWhileWaitingForCompletion<TState>() where TState : IState
-            => _impl.RunWhileWaitingForCompletion<TState>();
     }
 }

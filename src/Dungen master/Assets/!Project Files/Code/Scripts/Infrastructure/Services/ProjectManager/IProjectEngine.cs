@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public interface IProjectEngine : IDirectControlMultiLayerStateMachine
+    public interface IProjectEngine : IStateMachine
     {
     }
 }

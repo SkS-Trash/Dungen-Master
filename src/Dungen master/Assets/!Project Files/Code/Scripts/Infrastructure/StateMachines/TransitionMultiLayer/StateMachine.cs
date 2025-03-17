@@ -1,67 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace StateMachines.TransitionMultiLayer
 {
-    /// <summary>
-    /// Контроллер "машины состояний" с переходами.
-    /// </summary>
-    public sealed class MultiLayerTransitionStateMachine : IMultiLayerTransitionStateMachine
+    public sealed class StateMachine : IStateMachine
     {
-        /// <inheritdoc/>
         public IState CurrentState => _stateStack.Count > 0
-            ? _stateStack.Peek()
+            ? _stateStack[^1]
             : null;
 
-        /// <inheritdoc/>
         public event Action<IState> OnStateChanged;
 
-        private readonly Stack<IState> _stateStack = new();
-        private readonly List<Transition> _unspecifiedTransitions = new();
-        private readonly Dictionary<Type, List<Transition>> _stateTransitions = new();
+        private readonly List<IState> _stateStack = new();
+        private readonly Dictionary<IState, List<Transition>> _stateTransitions = new();
+        private readonly List<Transition> _globalTransitions = new();
 
-        /// <inheritdoc/>
         public void SetInitialState(IState state)
         {
+            if (CurrentState == state) return;
+
             while (_stateStack.Count > 0)
             {
-                var s = _stateStack.Pop();
-                s.OnExit();
+                _stateStack.RemoveAt(_stateStack.Count - 1);
             }
 
-            _stateStack.Push(state);
-
-            EnterNewState(state);
+            PushState(state);
         }
 
-        /// <inheritdoc/>
         public void AddTransition(IState from, IState to, bool replacing = false, params Func<bool>[] conditions)
         {
-            if (!_stateTransitions.TryGetValue(from.GetType(), out var transitions))
+            if (!_stateTransitions.TryGetValue(from, out var transitions))
             {
                 transitions = new List<Transition>();
-
-                _stateTransitions[from.GetType()] = transitions;
+                _stateTransitions[from] = transitions;
             }
 
             transitions.Add(new Transition(to, replacing, conditions));
         }
 
-        /// <inheritdoc/>
-        public void AddUnspecifiedTransition(IState state, params Func<bool>[] conditions)
+        public void AddGlobalTransition(IState to, params Func<bool>[] conditions)
         {
-            _unspecifiedTransitions.Add(new Transition(state, false, conditions));
+            _globalTransitions.Add(new Transition(to, false, conditions));
         }
 
-        /// <inheritdoc/>
+
         public void Tick()
         {
             var transition = GetValidTransition();
             if (transition != null)
             {
-                Debug.Log($"Переход от {CurrentState.GetType().Name} к {transition.To.GetType().Name}");
+                Debug.Log($"Переход от {CurrentState?.GetType().Name} к {transition.To.GetType().Name}");
 
                 if (transition.Removing)
                 {
@@ -86,8 +75,7 @@ namespace StateMachines.TransitionMultiLayer
 
             ExitFromState();
 
-            _stateStack.Pop();
-            _stateStack.Push(newState);
+            _stateStack[^1] = newState;
 
             EnterNewState(newState);
         }
@@ -96,10 +84,7 @@ namespace StateMachines.TransitionMultiLayer
         {
             if (newState == CurrentState) return;
 
-            ExitFromState();
-
-            _stateStack.Push(newState);
-
+            _stateStack.Add(newState);
             EnterNewState(newState);
         }
 
@@ -109,7 +94,7 @@ namespace StateMachines.TransitionMultiLayer
 
             ExitFromState();
 
-            _stateStack.Pop();
+            _stateStack.RemoveAt(_stateStack.Count - 1);
 
             EnterNewState(CurrentState);
         }
@@ -117,7 +102,6 @@ namespace StateMachines.TransitionMultiLayer
         private void EnterNewState(IState newState)
         {
             newState?.OnEnter();
-
             OnStateChanged?.Invoke(newState);
         }
 
@@ -126,30 +110,19 @@ namespace StateMachines.TransitionMultiLayer
             CurrentState?.OnExit();
         }
 
-
         private Transition GetValidTransition()
         {
-            foreach (var transition in _unspecifiedTransitions.Where(AllConditionsMet))
-            {
-                return transition;
-            }
+            foreach (var transition in _globalTransitions)
+                if (transition.CanTransition())
+                    return transition;
 
-            if (CurrentState == null)
-            {
-                return null;
-            }
+            if (!_stateTransitions.TryGetValue(CurrentState, out var transitions)) return null;
 
-            if (_stateTransitions.TryGetValue(CurrentState.GetType(), out var transitions))
-            {
-                return transitions.FirstOrDefault(AllConditionsMet);
-            }
+            foreach (var transition in transitions)
+                if (transition.CanTransition())
+                    return transition;
 
             return null;
-        }
-
-        private static bool AllConditionsMet(Transition transition)
-        {
-            return transition.Conditions.All(condition => condition());
         }
     }
 }

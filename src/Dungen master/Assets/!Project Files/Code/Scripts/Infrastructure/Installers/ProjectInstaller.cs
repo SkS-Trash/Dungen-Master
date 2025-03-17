@@ -7,12 +7,9 @@ using Observers;
 using Providers;
 using Providers.Containers;
 using Services;
-using StateMachines.DirectControlMultiLayer;
-using StateMachines.TransitionMultiLayer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using IState = StateMachines.DirectControlMultiLayer.IState;
 
 namespace Infrastructure.Installers
 {
@@ -39,10 +36,10 @@ namespace Infrastructure.Installers
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IWindowService, WindowService>(Lifetime.Singleton);
 
-            builder.Register<IStatesFactory, StatesFactory>(Lifetime.Singleton);
-            builder.Register<IDirectControlMultiLayerStateMachine, DirectControlMultiLayerStateMachine>(Lifetime.Transient);
+            builder.Register<StateMachines.DirectControlMultiLayer.IStatesFactory, StateMachines.DirectControlMultiLayer.StatesFactory>(Lifetime.Singleton);
+            builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine, StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);
 
-            builder.Register<IMultiLayerTransitionStateMachine, MultiLayerTransitionStateMachine>(Lifetime.Transient);
+            builder.Register<StateMachines.TransitionMultiLayer.IStateMachine, StateMachines.TransitionMultiLayer.StateMachine>(Lifetime.Transient);
             
             // States
             

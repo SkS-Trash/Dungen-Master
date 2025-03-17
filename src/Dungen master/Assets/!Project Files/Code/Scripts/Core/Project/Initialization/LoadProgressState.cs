@@ -4,7 +4,7 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Initialization
 {
-    public class LoadProgressState : IState, IEnterable
+    public class LoadProgressState : IStateOneShot
     {
         private readonly IProgressService _progressService;
 

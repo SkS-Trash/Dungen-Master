@@ -1,5 +1,4 @@
 ﻿using VContainer;
-using VContainer.Unity;
 
 namespace StateMachines.DirectControlMultiLayer
 {

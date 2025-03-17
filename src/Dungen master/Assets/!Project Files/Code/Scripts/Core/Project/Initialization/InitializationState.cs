@@ -20,9 +20,9 @@ namespace Core.Project.Initialization
         public async UniTask OnEnterAsync(Unit _)
         {
             // await _projectEngine.RunWhileWaitingForCompletion<OpenLoadingScreenState>();
-            await _projectEngine.RunWhileWaitingForCompletion<LoadEmptySceneState>();
-            await _projectEngine.RunWhileWaitingForCompletion<LoadingBasicResourcesState>();
-            await _projectEngine.RunWhileWaitingForCompletion<LoadProgressState>();
+            await _projectEngine.RunOneShot<LoadEmptySceneState>();
+            await _projectEngine.RunOneShot<LoadingBasicResourcesState>();
+            await _projectEngine.RunOneShot<LoadProgressState>();
 
             _projectEngine.ChangeState<MainMenuState>();
         }

@@ -4,7 +4,7 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Initialization
 {
-    public class LoadEmptySceneState : IState, IEnterable
+    public class LoadEmptySceneState : IStateOneShot
     {
         private readonly ISceneLoaderService _sceneLoaderService;
         private readonly IProjectEngine _projectEngine;

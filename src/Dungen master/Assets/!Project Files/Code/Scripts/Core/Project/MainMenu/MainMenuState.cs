@@ -21,6 +21,18 @@ namespace Core.Project.MainMenu
             _projectEngine = projectEngine;
         }
 
+        #region Enter
+
+        public async UniTask OnEnterAsync(Unit _)
+        {
+            await InstantiateMainMenu();
+
+            SetupMainMenuCallbacks();
+
+            ShowMainMenu();
+            HideLoadingScreen();
+        }
+
         private async UniTask InstantiateMainMenu()
         {
             var mainMenuUI = await _windowService.OpenAndGet<MainMenuUI>(WindowID.MainMenu);
@@ -44,18 +56,6 @@ namespace Core.Project.MainMenu
         private void OnExit()
         {
             _projectEngine.ChangeState<ExitFromApplicationState>();
-        }
-
-        #region Enter
-
-        public async UniTask OnEnterAsync(Unit _)
-        {
-            await InstantiateMainMenu();
-
-            SetupMainMenuCallbacks();
-
-            ShowMainMenu();
-            HideLoadingScreen();
         }
 
         private void ShowMainMenu()
