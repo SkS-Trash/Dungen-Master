@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
-using Services;
-using StateMachines.DirectControlMultiLayer;
+using Infrastructure.Services.ProjectManager;
+using Infrastructure.Services.SceneLoader;
+using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
 
 namespace Core.Project.Initialization
 {

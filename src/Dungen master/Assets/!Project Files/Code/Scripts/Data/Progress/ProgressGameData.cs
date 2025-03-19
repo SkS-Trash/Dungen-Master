@@ -1,7 +1,10 @@
 ﻿using System;
 
-[Serializable]
-public class ProgressGameData
+namespace Progress
 {
+    [Serializable]
+    public class ProgressGameData
+    {
     
+    }
 }

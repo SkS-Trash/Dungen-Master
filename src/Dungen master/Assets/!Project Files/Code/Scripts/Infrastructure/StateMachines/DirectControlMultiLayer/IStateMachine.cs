@@ -2,12 +2,13 @@
 
 using System;
 using Cysharp.Threading.Tasks;
+using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
 
 #endregion
 
 // ReSharper disable SuspiciousTypeConversion.Global
 
-namespace StateMachines.DirectControlMultiLayer
+namespace Infrastructure.StateMachines.DirectControlMultiLayer
 {
     /// <summary>
     /// Интерфейс контроллера "машины состояний"

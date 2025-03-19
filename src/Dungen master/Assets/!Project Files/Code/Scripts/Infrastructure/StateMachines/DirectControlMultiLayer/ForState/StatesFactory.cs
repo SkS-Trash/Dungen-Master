@@ -1,6 +1,6 @@
 ﻿using VContainer;
 
-namespace StateMachines.DirectControlMultiLayer
+namespace Infrastructure.StateMachines.DirectControlMultiLayer.ForState
 {
     /// <summary>
     /// Реализация фабрики состояний.

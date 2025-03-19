@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace Services
+namespace Infrastructure.Services.SceneLoader
 {
     /// <summary>
     /// Сервис для загрузки и выгрузки сцен с использованием Addressables.

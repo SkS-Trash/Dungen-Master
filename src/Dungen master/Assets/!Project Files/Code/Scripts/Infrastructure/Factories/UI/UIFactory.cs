@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Services;
+using Infrastructure.Factories.GameObject;
+using Infrastructure.Services.Window;
 using UnityEngine;
 
-namespace Factories
+namespace Infrastructure.Factories.UI
 {
     /// <summary>
     /// Фабрика UI.
@@ -11,7 +12,7 @@ namespace Factories
     public class UIFactory : IUIFactory
     {
         private readonly IGameObjectFactory _gameObjectFactory;
-        private readonly Dictionary<WindowID, GameObject> _screenInstances = new();
+        private readonly Dictionary<WindowID, UnityEngine.GameObject> _screenInstances = new();
 
         public UIFactory(
             IGameObjectFactory gameObjectFactory
@@ -21,7 +22,7 @@ namespace Factories
         }
 
         /// <inheritdoc/>
-        public async Task<GameObject> CreateScreen(string assetAddress, WindowID windowId)
+        public async Task<UnityEngine.GameObject> CreateScreen(string assetAddress, WindowID windowId)
         {
             if (_screenInstances.ContainsKey(windowId))
             {

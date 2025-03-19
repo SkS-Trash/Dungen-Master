@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Factories
+namespace Infrastructure.Factories.GameObject
 {
     /// <summary>
     /// Интерфейс для фабрики, которая создает и управляет GameObject.
@@ -17,7 +17,7 @@ namespace Factories
         /// <param name="rotation">Необязательная ротация для применения к GameObject.</param>
         /// <param name="parent">Необязательный родительский трансформ для прикрепления GameObject.</param>
         /// <returns>UniTask, который возвращает созданный GameObject.</returns>
-        UniTask<GameObject> InstantiateAsync(
+        UniTask<UnityEngine.GameObject> InstantiateAsync(
             string path,
             Vector3? position = null,
             Quaternion? rotation = null,
@@ -32,7 +32,7 @@ namespace Factories
         /// <param name="rotation">Необязательная ротация для применения к GameObject.</param>
         /// <param name="parent">Необязательный родительский трансформ для прикрепления GameObject.</param>
         /// <returns>UniTask, который возвращает созданный GameObject.</returns>
-        UniTask<GameObject> InstantiateAsync(
+        UniTask<UnityEngine.GameObject> InstantiateAsync(
             AssetReference path,
             Vector3? position = null,
             Quaternion? rotation = null,
@@ -75,6 +75,6 @@ namespace Factories
         /// Уничтожает указанный GameObject.
         /// </summary>
         /// <param name="gameObject">GameObject для уничтожения.</param>
-        void Destroy(GameObject gameObject);
+        void Destroy(UnityEngine.GameObject gameObject);
     }
 }

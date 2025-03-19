@@ -2,7 +2,7 @@
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace Services
+namespace Infrastructure.Services.SceneLoader
 {
     /// <summary>
     /// Интерфейс сервиса для загрузки и выгрузки сцен.

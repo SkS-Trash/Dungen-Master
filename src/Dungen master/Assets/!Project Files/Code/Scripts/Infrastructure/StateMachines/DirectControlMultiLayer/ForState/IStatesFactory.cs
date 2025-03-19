@@ -1,4 +1,4 @@
-﻿namespace StateMachines.DirectControlMultiLayer
+﻿namespace Infrastructure.StateMachines.DirectControlMultiLayer.ForState
 {
     /// <summary>
     /// Фабрика для создания состояний.

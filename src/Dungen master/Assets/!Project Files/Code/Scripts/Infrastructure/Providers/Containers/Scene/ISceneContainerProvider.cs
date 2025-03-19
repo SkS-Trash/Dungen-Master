@@ -1,4 +1,4 @@
-﻿namespace Providers.Containers
+﻿namespace Infrastructure.Providers.Containers.Scene
 {
     /// <summary>
     /// Интерфейс для предоставления контейнера сцены.

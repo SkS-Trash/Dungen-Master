@@ -1,23 +1,26 @@
 ﻿using Core.Project.Base;
-using Services;
+using Infrastructure.Services.ProjectManager;
 using VContainer.Unity;
 
-/// <summary>
-/// Этот класс отвечает за начальную загрузку игры.
-/// </summary>
-public class GamingBootloader : IStartable
+namespace Core
 {
-    private readonly IProjectEngine _stateMachineService;
-
-    public GamingBootloader(
-        IProjectEngine stateMachineService
-    )
+    /// <summary>
+    /// Этот класс отвечает за начальную загрузку игры.
+    /// </summary>
+    public class GamingBootloader : IStartable
     {
-        _stateMachineService = stateMachineService;
-    }
+        private readonly IProjectEngine _stateMachineService;
 
-    public void Start()
-    {
-        _stateMachineService.ChangeState<BootstrapState>();
+        public GamingBootloader(
+            IProjectEngine stateMachineService
+        )
+        {
+            _stateMachineService = stateMachineService;
+        }
+
+        public void Start()
+        {
+            _stateMachineService.ChangeState<BootstrapState>();
+        }
     }
 }

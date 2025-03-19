@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace StateMachines.TransitionMultiLayer
+namespace Infrastructure.StateMachines.TransitionMultiLayer.ForState
 {
     /// <summary>
     /// Внутренний класс, описывающий переход между состояниями.

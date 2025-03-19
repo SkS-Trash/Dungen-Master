@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Services;
+using Infrastructure.Services.Window;
 using UnityEngine;
 
-namespace Factories
+namespace Infrastructure.Factories.UI
 {
     /// <summary>
     /// Интерфейс для фабрики UI.
@@ -15,7 +15,7 @@ namespace Factories
         /// <param name="assetAddress">Адрес ресурса экрана.</param>
         /// <param name="windowId">Идентификатор окна.</param>
         /// <returns>Задача, возвращающая созданный объект GameObject.</returns>
-        Task<GameObject> CreateScreen(string assetAddress, WindowID windowId);
+        Task<UnityEngine.GameObject> CreateScreen(string assetAddress, WindowID windowId);
 
         /// <summary>
         /// Получает компонент экрана указанного типа по идентификатору окна.
