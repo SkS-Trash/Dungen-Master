@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a60ab59ee0434ae4790d079d2264608f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 281809
+  packageName: LowPoly Mysterious Dungeon
+  packageVersion: 1.2
+  assetPath: Assets/LowPoly Mysterious Dungeon/Materials/Emission.mat
+  uploadId: 730096
