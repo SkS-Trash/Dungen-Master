@@ -43,3 +43,26 @@ The following packages were updated:
   com.unity.render-pipelines.high-definition from version 17.0.1 to 17.0.4
   com.unity.timeline from version 1.8.6 to 1.8.7
   com.unity.visualscripting from version 1.9.1 to 1.9.5
+
+=== Wed Mar 19 20:18:44 2025
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ide.visualstudio from version 2.0.16 to 2.0.22
+  com.unity.render-pipelines.universal from version 12.1.7 to 17.0.4
+  com.unity.visualeffectgraph from version 12.1.7 to 17.0.4
+  com.unity.visualscripting from version 1.7.8 to 1.9.5
+
+=== Wed Mar 19 20:18:44 2025
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.2d.sprite@1.0.0
+  com.unity.ide.visualstudio@2.0.22
+  com.unity.ide.vscode@1.2.5
+  com.unity.render-pipelines.universal@17.0.4
+  com.unity.visualeffectgraph@17.0.4
