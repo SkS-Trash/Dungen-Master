@@ -1,7 +1,9 @@
 ﻿using Core.Project.Base;
+using Core.Project.Dungeon;
 using Cysharp.Threading.Tasks;
-using Services;
-using StateMachines.DirectControlMultiLayer;
+using Infrastructure.Services.ProjectManager;
+using Infrastructure.Services.Window;
+using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
 using UI.MainMenu;
 using UnityEngine;
 
@@ -48,7 +50,7 @@ namespace Core.Project.MainMenu
 
         private void OnStartGame()
         {
-            // TODO: Запустить игру
+            _projectEngine.ChangeState<TestState>();
 
             Debug.Log("Start Game");
         }

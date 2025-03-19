@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
-using Services;
-using StateMachines.DirectControlMultiLayer;
+using Infrastructure.Services.Progress;
+using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
 
 namespace Core.Project.Initialization
 {
