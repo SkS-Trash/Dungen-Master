@@ -1,4 +1,4 @@
-﻿namespace Subscribers.EventBusSystem
+﻿namespace Infrastructure.Subscribers.EventBusSystem
 {
     public interface IGlobalSubscriber
     {

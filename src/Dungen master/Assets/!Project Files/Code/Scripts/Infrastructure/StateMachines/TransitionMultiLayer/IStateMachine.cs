@@ -1,6 +1,7 @@
 ﻿using System;
+using Infrastructure.StateMachines.TransitionMultiLayer.ForState;
 
-namespace StateMachines.TransitionMultiLayer
+namespace Infrastructure.StateMachines.TransitionMultiLayer
 {
     /// <summary>
     /// Интерфейс контроллера "машины состояний" с переходами.

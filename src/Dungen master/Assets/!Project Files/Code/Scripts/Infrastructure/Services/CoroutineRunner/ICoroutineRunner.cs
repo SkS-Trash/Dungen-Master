@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services
+namespace Infrastructure.Services.CoroutineRunner
 {
     /// <summary>
     /// Интерфейс для запуска и остановки корутин.

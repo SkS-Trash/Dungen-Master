@@ -1,6 +1,7 @@
-﻿using Providers;
+﻿using Infrastructure.Providers.Data;
+using Progress;
 
-namespace Services
+namespace Infrastructure.Services.Progress
 {
     /// <summary>
     /// Сервис для работы с прогрессом, хранящимся в Scriptable Object.

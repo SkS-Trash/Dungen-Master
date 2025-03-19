@@ -1,11 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
-using Providers;
+using Infrastructure.Providers.Assets;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using VContainer;
 using VContainer.Unity;
 
-namespace Factories
+namespace Infrastructure.Factories.GameObject
 {
     /// <summary>
     /// Фабрика для создания игровых объектов.
@@ -25,17 +25,17 @@ namespace Factories
         }
 
         /// <inheritdoc/>
-        public async UniTask<GameObject> InstantiateAsync(string path, Vector3? position = null,
+        public async UniTask<UnityEngine.GameObject> InstantiateAsync(string path, Vector3? position = null,
             Quaternion? rotation = null, Transform parent = null)
         {
-            return InstantiateAsync(await _assetsProvider.GetAsset<GameObject>(path), position, rotation, parent);
+            return InstantiateAsync(await _assetsProvider.GetAsset<UnityEngine.GameObject>(path), position, rotation, parent);
         }
 
         /// <inheritdoc/>
-        public async UniTask<GameObject> InstantiateAsync(AssetReference path, Vector3? position = null,
+        public async UniTask<UnityEngine.GameObject> InstantiateAsync(AssetReference path, Vector3? position = null,
             Quaternion? rotation = null, Transform parent = null)
         {
-            return InstantiateAsync(await _assetsProvider.GetAsset<GameObject>(path), position, rotation, parent);
+            return InstantiateAsync(await _assetsProvider.GetAsset<UnityEngine.GameObject>(path), position, rotation, parent);
         }
 
         /// <inheritdoc/>
@@ -53,12 +53,12 @@ namespace Factories
         }
 
         /// <inheritdoc/>
-        public void Destroy(GameObject gameObject)
+        public void Destroy(UnityEngine.GameObject gameObject)
         {
             Object.Destroy(gameObject);
         }
 
-        private GameObject InstantiateAsync(GameObject prefab, Vector3? position = null, Quaternion? rotation = null,
+        private UnityEngine.GameObject InstantiateAsync(UnityEngine.GameObject prefab, Vector3? position = null, Quaternion? rotation = null,
             Transform parent = null)
         {
             var instance = _container.Instantiate(

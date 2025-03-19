@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Subscribers.EventBusSystem
+namespace Infrastructure.Subscribers.EventBusSystem
 {
     internal class SubscribersList<TSubscriber> where TSubscriber : class, IGlobalSubscriber
     {

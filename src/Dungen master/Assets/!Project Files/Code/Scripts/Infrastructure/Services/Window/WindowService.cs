@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
-using Factories;
+using Infrastructure.Factories.UI;
 using UnityEngine;
 
-namespace Services
+namespace Infrastructure.Services.Window
 {
     /// <summary>
     /// Сервис для управления окнами в приложении.

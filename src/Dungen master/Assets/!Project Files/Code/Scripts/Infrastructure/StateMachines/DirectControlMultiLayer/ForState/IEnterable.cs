@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace StateMachines.DirectControlMultiLayer
+namespace Infrastructure.StateMachines.DirectControlMultiLayer.ForState
 {
     /// <summary>
     /// Интерфейс для состояний, способных выполнять "OnEnter" без аргумента.

@@ -1,4 +1,5 @@
-﻿using VContainer;
+﻿using Core;
+using VContainer;
 using VContainer.Unity;
 
 namespace Infrastructure.Installers

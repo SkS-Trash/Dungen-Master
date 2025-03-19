@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Providers
+namespace Infrastructure.Providers.Assets
 {
     /// <summary>
     /// Провайдер ассетов, использующий Addressables.

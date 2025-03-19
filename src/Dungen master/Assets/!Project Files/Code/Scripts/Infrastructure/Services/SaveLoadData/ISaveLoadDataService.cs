@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace Infrastructure.Services.SaveLoadData
 {
     /// <summary>
     /// Интерфейс для сервиса сохранения и загрузки данных.

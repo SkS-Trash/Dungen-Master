@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using StateMachines.DirectControlMultiLayer;
+using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
 
 namespace Core.Project.Base
 {

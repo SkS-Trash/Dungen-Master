@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Providers.Containers
+namespace Infrastructure.Providers.Containers.Scene
 {
     /// <summary>
     /// Контейнер сцены.

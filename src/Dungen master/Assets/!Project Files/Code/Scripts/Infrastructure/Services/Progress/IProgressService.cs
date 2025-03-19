@@ -1,4 +1,6 @@
-﻿namespace Services
+﻿using Progress;
+
+namespace Infrastructure.Services.Progress
 {
     /// <summary>
     /// Сервис для работы с прогрессом игры.
