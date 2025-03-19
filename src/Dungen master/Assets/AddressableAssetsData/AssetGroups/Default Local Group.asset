@@ -15,6 +15,46 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: de7c0619d59fe844b93480ee600bcdbb
   m_SerializeEntries:
+  - m_GUID: 0ced51762a78071469eb620233046af2
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/Chest.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c894a722c9f361489310eca98720568
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/EnemyIsCloseCombat.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2afdd7cfcd5397d42a26ec56df0c5142
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/PressurePlate.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3167b2396a815d343a14386af1393e1b
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/Column.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6220e3898dba6d543bd216b647e480a8
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/Floor.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9068c21008185b94cbf663832b45a8ae
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/Barrel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6a51ff08a9c08141847fefc1823c905
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/Wall.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c658eb53f4b402c41985b34d6c2da6ea
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/EnemyRangedCombat.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c81fb0572a557c64087096aabad7ab94
     m_Address: UI/MainMenu
     m_ReadOnly: 0
@@ -25,6 +65,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d29ba7e4cafb6a646b36e334d0021a66
+    m_Address: Assets/!Project Files/Level/Prefabs/!Test/Door.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bc6d34526371ac64da585fdf58175687, type: 2}
