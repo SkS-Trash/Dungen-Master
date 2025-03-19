@@ -1,5 +1,4 @@
-﻿using Reflex.Core;
-using Reflex.Injectors;
+﻿using VContainer;
 
 namespace StateMachines.DirectControlMultiLayer
 {
@@ -8,15 +7,17 @@ namespace StateMachines.DirectControlMultiLayer
     /// </summary>
     public class StatesFactory : IStatesFactory
     {
-        private readonly Container _container;
+        private readonly IObjectResolver _container;
 
-        public StatesFactory(Container container)
+        public StatesFactory(IObjectResolver container)
         {
             _container = container;
         }
 
         /// <inheritdoc/>
         public TState CreateState<TState>() where TState : IState
-            => (TState)ConstructorInjector.Construct(typeof(TState), _container);
+        {
+            return _container.Resolve<TState>();
+        }
     }
 }

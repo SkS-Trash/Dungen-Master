@@ -1,4 +1,4 @@
 ﻿public static class ScenesPaths
 {
-    public const string EMPTY = "Empty";
+    public const string EMPTY = "Scenes/Empty";
 }

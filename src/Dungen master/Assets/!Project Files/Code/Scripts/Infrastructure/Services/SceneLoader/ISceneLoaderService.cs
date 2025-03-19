@@ -14,8 +14,15 @@ namespace Services
         /// </summary>
         /// <param name="sceneKey">Ключ сцены.</param>
         /// <param name="loadMode">Режим загрузки сцены (Single или Additive).</param>
+        /// <param name="activateOnLoad">Активировать ли сцену после загрузки.</param>
+        /// <param name="saveInCache">Сохранить ли экземпляр сцены в кеше.</param>
         /// <returns>Экземпляр загруженной сцены (SceneInstance).</returns>
-        UniTask<SceneInstance> LoadSceneAsync(string sceneKey, LoadSceneMode loadMode = LoadSceneMode.Single);
+        UniTask<SceneInstance> LoadSceneAsync(
+            string sceneKey,
+            LoadSceneMode loadMode = LoadSceneMode.Single,
+            bool activateOnLoad = true,
+            bool saveInCache = true
+        );
 
         /// <summary>
         /// Выгружает ранее загруженную сцену.

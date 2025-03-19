@@ -1,14 +1,12 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Core.Project.Initialization;
+using Cysharp.Threading.Tasks;
 using Services;
 using StateMachines.DirectControlMultiLayer;
-using UnityEngine;
 
-namespace Core.Project
+namespace Core.Project.Base
 {
-    public class BootstrapState : IState
+    public class BootstrapState : IState, IEnterable
     {
-        public bool IsReusable => false;
-
         private readonly IProjectEngine _stateMachine;
 
         public BootstrapState(
@@ -18,15 +16,11 @@ namespace Core.Project
             _stateMachine = stateMachine;
         }
 
-        public UniTask Initialize()
+        public UniTask OnEnterAsync(Unit _)
         {
-            // _stateMachine.ChangeState<OpenLoadingScreenState>();
+            _stateMachine.ChangeState<InitializationState>();
             
             return UniTask.CompletedTask;
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

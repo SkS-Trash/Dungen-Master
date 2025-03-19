@@ -1,9 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using Providers;
-using Reflex.Core;
-using Reflex.Injectors;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using VContainer;
+using VContainer.Unity;
 
 namespace Factories
 {
@@ -12,16 +12,16 @@ namespace Factories
     /// </summary>
     public class GameObjectFactory : IGameObjectFactory
     {
-        private readonly Container _container;
         private readonly IAssetsProvider _assetsProvider;
+        private readonly IObjectResolver _container;
 
         public GameObjectFactory(
-            Container container,
-            IAssetsProvider assetsProvider
+            IAssetsProvider assetsProvider,
+            IObjectResolver container
         )
         {
-            _container = container;
             _assetsProvider = assetsProvider;
+            _container = container;
         }
 
         /// <inheritdoc/>
@@ -61,14 +61,12 @@ namespace Factories
         private GameObject InstantiateAsync(GameObject prefab, Vector3? position = null, Quaternion? rotation = null,
             Transform parent = null)
         {
-            var instance = Object.Instantiate(
+            var instance = _container.Instantiate(
                 prefab,
                 position ?? Vector3.zero,
                 rotation ?? Quaternion.identity,
                 parent
             );
-
-            GameObjectInjector.InjectRecursive(instance, _container);
 
             return instance;
         }

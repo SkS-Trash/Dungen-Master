@@ -1,13 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using StateMachines.DirectControlMultiLayer;
 
-namespace Core.Project
+namespace Core.Project.Base
 {
-    public class ExitFromApplicationState : IState
+    public class ExitFromApplicationState : IStateOneShot
     {
-        public bool IsReusable => true;
-
-        public UniTask Initialize()
+        public UniTask OnEnterAsync(Unit _)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -16,10 +14,6 @@ namespace Core.Project
 #endif
 
             return UniTask.CompletedTask;
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

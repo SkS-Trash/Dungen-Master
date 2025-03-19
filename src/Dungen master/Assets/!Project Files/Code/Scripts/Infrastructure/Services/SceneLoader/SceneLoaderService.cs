@@ -13,25 +13,36 @@ namespace Services
     /// </summary>
     public class SceneLoaderService : ISceneLoaderService
     {
-        private readonly List<SceneInstance> _loadedScenes = new List<SceneInstance>();
+        private readonly List<SceneInstance> _loadedScenes = new();
 
         /// <inheritdoc/>
-        public async UniTask<SceneInstance> LoadSceneAsync(string sceneKey,
-            LoadSceneMode loadMode = LoadSceneMode.Single)
+        public async UniTask<SceneInstance> LoadSceneAsync(
+            string sceneKey,
+            LoadSceneMode loadMode = LoadSceneMode.Single,
+            bool activateOnLoad = true,
+            bool saveInCache = true
+        )
         {
-            var loadHandle = Addressables.LoadSceneAsync(sceneKey, loadMode);
+            var loadHandle = Addressables.LoadSceneAsync(sceneKey, loadMode, activateOnLoad);
 
             await loadHandle.Task;
 
             if (loadHandle.Status == AsyncOperationStatus.Succeeded)
             {
-                _loadedScenes.Add(loadHandle.Result);
+                var sceneInstance = loadHandle.Result;
 
-                Debug.Log($"Сцена '{sceneKey}' успешно загружена.");
-                return loadHandle.Result;
+                if (saveInCache)
+                {
+                    _loadedScenes.Add(sceneInstance);
+                }
+
+                Debug.Log($"Сцена '{sceneInstance.Scene.name}' успешно загружена.");
+
+                return sceneInstance;
             }
 
             Debug.LogError($"Не удалось загрузить сцену '{sceneKey}'. Статус: {loadHandle.Status}");
+
             return default;
         }
 
