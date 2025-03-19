@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
@@ -20,14 +21,17 @@ public class PlayerAnimationController : MonoBehaviour
         // Управление параметром IsJumping для прыжка
         if (Input.GetButtonDown("Jump") && characterController.isGrounded)
         {
-            Debug.Log("Jump started");
             animator.SetBool("IsJumping", true);
         }
         else
         {
             animator.SetBool("IsJumping", false);
         }
-
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            animator.SetFloat("Speed",5);
+        }
+        
         // Управление параметром IsAttackingMelee для атаки ближнего боя
         if (Input.GetKeyDown(KeyCode.Mouse0)) // Левая кнопка мыши
         {
