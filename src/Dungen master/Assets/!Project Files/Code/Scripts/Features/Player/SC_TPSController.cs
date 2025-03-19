@@ -58,6 +58,7 @@ public class SC_TPSController : MonoBehaviour
                 isRunning = false;
                 currentSpeed = Mathf.Lerp(currentSpeed, speed, Time.deltaTime * 5);
             }
+            Debug.Log(currentSpeed);
         }
 
         // Apply gravity
