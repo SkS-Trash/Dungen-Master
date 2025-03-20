@@ -1,55 +1,37 @@
-using Unity.VisualScripting;
+using Infrastructure.Observers.Input;
 using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
 {
-    private Animator animator;
-    private CharacterController characterController;
+    private static readonly int IsAttackingMelee = Animator.StringToHash("IsAttackingMelee");
+    private static readonly int IsAttackingMagic = Animator.StringToHash("IsAttackingMagic");
+    private static readonly int Speed = Animator.StringToHash("Speed");
+    private static readonly int IsJumping = Animator.StringToHash("IsJumping");
 
-    void Start()
+    [SerializeField] private InputActionReader inputActionReader;
+
+    private Animator _animator;
+    private CharacterController _characterController;
+
+    private void Start()
     {
-        animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
     }
 
-    void Update()
+    private void Update()
     {
-        // Управление параметром Speed для ходьбы и бега
-        float moveInput = Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"));
-        animator.SetFloat("Speed", moveInput);
+        _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude);
 
-        // Управление параметром IsJumping для прыжка
-        if (Input.GetButtonDown("Jump") && characterController.isGrounded)
+        _animator.SetBool(IsJumping, inputActionReader.IsJumping && _characterController.isGrounded);
+
+        if (inputActionReader.IsSprinting)
         {
-            animator.SetBool("IsJumping", true);
-        }
-        else
-        {
-            animator.SetBool("IsJumping", false);
-        }
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            animator.SetFloat("Speed",5);
-        }
-        
-        // Управление параметром IsAttackingMelee для атаки ближнего боя
-        if (Input.GetKeyDown(KeyCode.Mouse0)) // Левая кнопка мыши
-        {
-            animator.SetBool("IsAttackingMelee", true);
-        }
-        else
-        {
-            animator.SetBool("IsAttackingMelee", false);
+            _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude * 2);
         }
 
-        // Управление параметром IsAttackingMagic для атаки магией
-        if (Input.GetKeyDown(KeyCode.Mouse1)) // Правая кнопка мыши
-        {
-            animator.SetBool("IsAttackingMagic", true);
-        }
-        else
-        {
-            animator.SetBool("IsAttackingMagic", false);
-        }
+        _animator.SetBool(IsAttackingMelee, Input.GetKeyDown(KeyCode.Mouse0));
+
+        _animator.SetBool(IsAttackingMagic, Input.GetKeyDown(KeyCode.Mouse1));
     }
 }
