@@ -7,16 +7,16 @@ namespace Infrastructure.Observers.Input
     [CreateAssetMenu(menuName = "Data/Input/InputActionReader")]
     public class InputActionReader : ScriptableObject, IInputActionReader
     {
-        public event Action<Vector2> OnMoveChange;
-        public event Action<Vector2> OnLookChange;
-        public event Action<bool> OnAttackPhysicalChange;
-        public event Action<bool> OnAttackMagicalChange;
-        public event Action<bool> OnInteractChange;
-        public event Action<bool> OnCrouchChange;
-        public event Action<bool> OnJumpChange;
+        public event Action<Vector2> OnMoveChanged;
+        public event Action<Vector2> OnLookChanged;
+        public event Action<bool> OnAttackPhysicalChanged;
+        public event Action<bool> OnAttackMagicalChanged;
+        public event Action<bool> OnInteractChanged;
+        public event Action<bool> OnCrouchChanged;
+        public event Action<bool> OnJumpChanged;
+        public event Action<bool> OnSprintChanged;
         public event Action OnPreviousTrigger;
         public event Action OnNextTrigger;
-        public event Action<bool> OnSprintChange;
 
         public Vector2 MoveValue { get; private set; }
         public Vector2 LookValue { get; private set; }
@@ -48,43 +48,43 @@ namespace Infrastructure.Observers.Input
         public void OnMove(InputAction.CallbackContext context)
         {
             MoveValue = context.ReadValue<Vector2>();
-            OnMoveChange?.Invoke(MoveValue);
+            OnMoveChanged?.Invoke(MoveValue);
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
             LookValue = context.ReadValue<Vector2>();
-            OnLookChange?.Invoke(LookValue);
+            OnLookChanged?.Invoke(LookValue);
         }
 
         public void OnAttackPhysical(InputAction.CallbackContext context)
         {
             IsAttackingPhysical = context.ReadValueAsButton();
-            OnAttackPhysicalChange?.Invoke(IsAttackingPhysical);
+            OnAttackPhysicalChanged?.Invoke(IsAttackingPhysical);
         }
 
         public void OnAttackMagical(InputAction.CallbackContext context)
         {
             IsAttackingMagical = context.ReadValueAsButton();
-            OnAttackMagicalChange?.Invoke(IsAttackingMagical);
+            OnAttackMagicalChanged?.Invoke(IsAttackingMagical);
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
             IsInteracting = context.ReadValueAsButton();
-            OnInteractChange?.Invoke(IsInteracting);
+            OnInteractChanged?.Invoke(IsInteracting);
         }
 
         public void OnCrouch(InputAction.CallbackContext context)
         {
             IsCrouching = context.ReadValueAsButton();
-            OnCrouchChange?.Invoke(IsCrouching);
+            OnCrouchChanged?.Invoke(IsCrouching);
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
             IsJumping = context.ReadValueAsButton();
-            OnJumpChange?.Invoke(IsJumping);
+            OnJumpChanged?.Invoke(IsJumping);
         }
 
         public void OnPrevious(InputAction.CallbackContext context)
@@ -100,7 +100,7 @@ namespace Infrastructure.Observers.Input
         public void OnSprint(InputAction.CallbackContext context)
         {
             IsSprinting = context.ReadValueAsButton();
-            OnSprintChange?.Invoke(IsSprinting);
+            OnSprintChanged?.Invoke(IsSprinting);
         }
     }
 }
