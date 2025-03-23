@@ -1,0 +1,15 @@
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\bin\Debug\net9.0\ProceduralDungeon.exe
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\bin\Debug\net9.0\ProceduralDungeon.deps.json
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\bin\Debug\net9.0\ProceduralDungeon.runtimeconfig.json
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\bin\Debug\net9.0\ProceduralDungeon.dll
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\bin\Debug\net9.0\ProceduralDungeon.pdb
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.AssemblyInfoInputs.cache
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.AssemblyInfo.cs
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.csproj.CoreCompileInputs.cache
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.sourcelink.json
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.dll
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\refint\ProceduralDungeon.dll
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.pdb
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ProceduralDungeon.genruntimeconfig.cache
+C:\Users\evgen\OneDrive\Рабочий стол\Dungen-Master\src\ProceduralDungeon\ProceduralDungeon\obj\Debug\net9.0\ref\ProceduralDungeon.dll
