@@ -1,41 +1,44 @@
 using UnityEngine;
 
-public class SC_CameraCollision : MonoBehaviour
+namespace Player
 {
-    public Transform referenceTransform;
-    public float collisionOffset = 0.3f;
-    public float cameraSpeed = 15f;
-
-    Vector3 defaultPos;
-    Vector3 directionNormalized;
-    Transform parentTransform;
-    float defaultDistance;
-
-    void Start()
+    public class SC_CameraCollision : MonoBehaviour
     {
-        defaultPos = transform.localPosition;
-        directionNormalized = defaultPos.normalized;
-        parentTransform = transform.parent;
-        defaultDistance = Vector3.Distance(defaultPos, Vector3.zero);
+        public Transform referenceTransform;
+        public float collisionOffset = 0.3f;
+        public float cameraSpeed = 15f;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+        Vector3 defaultPos;
+        Vector3 directionNormalized;
+        Transform parentTransform;
+        float defaultDistance;
 
-    void LateUpdate()
-    {
-        Vector3 currentPos = defaultPos;
-        RaycastHit hit;
-        Vector3 dirTmp = parentTransform.TransformPoint(defaultPos) - referenceTransform.position;
-        if (Physics.SphereCast(referenceTransform.position, collisionOffset, dirTmp, out hit, defaultDistance))
+        void Start()
         {
-            currentPos = (directionNormalized * (hit.distance - collisionOffset));
+            defaultPos = transform.localPosition;
+            directionNormalized = defaultPos.normalized;
+            parentTransform = transform.parent;
+            defaultDistance = Vector3.Distance(defaultPos, Vector3.zero);
 
-            transform.localPosition = currentPos;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
-        else
+
+        void LateUpdate()
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, currentPos, Time.deltaTime * cameraSpeed);
+            Vector3 currentPos = defaultPos;
+            RaycastHit hit;
+            Vector3 dirTmp = parentTransform.TransformPoint(defaultPos) - referenceTransform.position;
+            if (Physics.SphereCast(referenceTransform.position, collisionOffset, dirTmp, out hit, defaultDistance))
+            {
+                currentPos = (directionNormalized * (hit.distance - collisionOffset));
+
+                transform.localPosition = currentPos;
+            }
+            else
+            {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, currentPos, Time.deltaTime * cameraSpeed);
+            }
         }
     }
 }

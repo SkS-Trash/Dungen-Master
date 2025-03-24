@@ -1,4 +1,4 @@
-﻿using Dungeon;
+﻿using ProceduralDungeon;
 using Progress;
 
 namespace Infrastructure.Providers.Data

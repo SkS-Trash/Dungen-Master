@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
-using Dungeon;
 using Infrastructure.Providers.Data;
 using Infrastructure.Services.ProjectManager;
 using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using ProceduralDungeon;
 using UnityEngine;
 
 namespace Core.Project.Dungeon

@@ -1,37 +1,40 @@
 using Infrastructure.Observers.Input;
 using UnityEngine;
 
-public class PlayerAnimationController : MonoBehaviour
+namespace Player
 {
-    private static readonly int IsAttackingMelee = Animator.StringToHash("IsAttackingMelee");
-    private static readonly int IsAttackingMagic = Animator.StringToHash("IsAttackingMagic");
-    private static readonly int Speed = Animator.StringToHash("Speed");
-    private static readonly int IsJumping = Animator.StringToHash("IsJumping");
-
-    [SerializeField] private InputActionReader inputActionReader;
-
-    private Animator _animator;
-    private CharacterController _characterController;
-
-    private void Start()
+    public class PlayerAnimationController : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
-    }
+        private static readonly int IsAttackingMelee = Animator.StringToHash("IsAttackingMelee");
+        private static readonly int IsAttackingMagic = Animator.StringToHash("IsAttackingMagic");
+        private static readonly int Speed = Animator.StringToHash("Speed");
+        private static readonly int IsJumping = Animator.StringToHash("IsJumping");
 
-    private void Update()
-    {
-        _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude);
+        [SerializeField] private InputActionReader inputActionReader;
 
-        _animator.SetBool(IsJumping, inputActionReader.IsJumping && _characterController.isGrounded);
+        private Animator _animator;
+        private CharacterController _characterController;
 
-        if (inputActionReader.IsSprinting)
+        private void Start()
         {
-            _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude * 2);
+            _animator = GetComponent<Animator>();
+            _characterController = GetComponent<CharacterController>();
         }
 
-        _animator.SetBool(IsAttackingMelee, Input.GetKeyDown(KeyCode.Mouse0));
+        private void Update()
+        {
+            _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude);
 
-        _animator.SetBool(IsAttackingMagic, Input.GetKeyDown(KeyCode.Mouse1));
+            _animator.SetBool(IsJumping, inputActionReader.IsJumping && _characterController.isGrounded);
+
+            if (inputActionReader.IsSprinting)
+            {
+                _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude * 2);
+            }
+
+            _animator.SetBool(IsAttackingMelee, Input.GetKeyDown(KeyCode.Mouse0));
+
+            _animator.SetBool(IsAttackingMagic, Input.GetKeyDown(KeyCode.Mouse1));
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
-using Features.ProceduralDungeon;
 using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using ProceduralDungeon;
 
 namespace Core.Project.Dungeon
 {
@@ -8,7 +8,11 @@ namespace Core.Project.Dungeon
     {
         public UniTask OnEnterAsync(DungeonGenerationData data)
         {
-            var generator = new DungeonGenerator(data.Width, data.Height);
+            var generator = new DungeonGenerator(
+                new MapGenerator(data.Width, data.Height),
+                new DecorGenerator(data.Width, data.Height),
+                new EnemySpawner(data.Width, data.Height)
+            );
 
             generator.GenerateDungeon(data.RoomCount, data.RoomMinSize, data.RoomMaxSize);
 
