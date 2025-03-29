@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Infrastructure.Providers.Assets
+namespace Providers.Assets
 {
     /// <summary>
     /// Интерфейс для провайдера ассетов.

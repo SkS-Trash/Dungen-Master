@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Infrastructure.StateMachines.TransitionMultiLayer.ForState;
+using StateMachines.TransitionMultiLayer.ForState;
 using UnityEngine;
 
-namespace Infrastructure.StateMachines.TransitionMultiLayer
+namespace StateMachines.TransitionMultiLayer
 {
     public sealed class StateMachine : IStateMachine
     {

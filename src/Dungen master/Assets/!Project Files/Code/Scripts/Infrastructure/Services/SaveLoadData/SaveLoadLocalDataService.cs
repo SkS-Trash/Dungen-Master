@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Infrastructure.Services.SaveLoadData
+namespace Services.SaveLoadData
 {
     /// <summary>
     /// Сервис для сохранения и загрузки данных локально.

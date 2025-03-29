@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Infrastructure.Observers.Input
+namespace Observers.Input
 {
     [CreateAssetMenu(menuName = "Data/Input/InputActionReader")]
     public class InputActionReader : ScriptableObject, IInputActionReader

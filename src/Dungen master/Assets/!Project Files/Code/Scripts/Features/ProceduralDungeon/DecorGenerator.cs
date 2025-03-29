@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dungeon;
 
-namespace Features.ProceduralDungeon
+namespace ProceduralDungeon
 {
-    public class DecorGenerator
+    public class DecorGenerator : IDecorGenerator
     {
-        public readonly DecorType[,] DecorLayer;
+        public DecorType[,] DecorLayer { get; }
 
         private readonly Random _random = new();
 
@@ -14,11 +13,9 @@ namespace Features.ProceduralDungeon
         {
             DecorLayer = new DecorType[width, height];
             for (var x = 0; x < width; x++)
+            for (var y = 0; y < height; y++)
             {
-                for (var y = 0; y < height; y++)
-                {
-                    DecorLayer[x, y] = DecorType.None;
-                }
+                DecorLayer[x, y] = DecorType.None;
             }
         }
 
@@ -26,24 +23,41 @@ namespace Features.ProceduralDungeon
         {
             foreach (var room in rooms)
             {
-                // Чтобы декор встречался чаще, делаем несколько попыток на комнату
-                // Например, 5 попыток разместить что-то
-                var decorAttempts = 5;
+                int decorAttempts;
+                switch (room.Type)
+                {
+                    case RoomType.Treatment:
+                        decorAttempts = _random.Next(3, 6); // Больше сундуков
+                        break;
+                    case RoomType.Trap:
+                        decorAttempts = _random.Next(2, 4); // Больше ловушек
+                        break;
+                    case RoomType.Hard:
+                        decorAttempts = _random.Next(0, 2); // Минимум декораций
+                        break;
+                    default:
+                        decorAttempts = _random.Next(0, 3); // Обычное количество
+                        break;
+                }
+
                 for (var i = 0; i < decorAttempts; i++)
                 {
-                    // Случайная точка внутри комнаты
                     var x = _random.Next(room.X + 1, room.X + room.Width - 1);
                     var y = _random.Next(room.Y + 1, room.Y + room.Height - 1);
 
-                    // Выбираем случайный тип декора с большей вероятностью
-                    var roll = _random.NextDouble();
-                    
-                    DecorLayer[x, y] = roll switch
+                    if (DecorLayer[x, y] != DecorType.None) continue; // Не перезаписываем
+
+                    DecorLayer[x, y] = room.Type switch
                     {
-                        < 0.3 => DecorType.Chest,
-                        < 0.6 => DecorType.Column,
-                        < 0.8 => DecorType.PressurePlate,
-                        _ => DecorType.Barrel
+                        RoomType.Treatment => DecorType.Chest,
+                        RoomType.Trap => DecorType.PressurePlate,
+                        _ => _random.NextDouble() switch
+                        {
+                            < 0.3 => DecorType.Chest,
+                            < 0.6 => DecorType.Column,
+                            < 0.8 => DecorType.PressurePlate,
+                            _ => DecorType.Barrel
+                        }
                     };
                 }
             }

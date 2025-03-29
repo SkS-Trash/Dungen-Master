@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Infrastructure.Services.Window;
+using Services.Window;
 using UnityEngine;
 
-namespace Infrastructure.Factories.UI
+namespace Factories.UI
 {
     /// <summary>
     /// Интерфейс для фабрики UI.

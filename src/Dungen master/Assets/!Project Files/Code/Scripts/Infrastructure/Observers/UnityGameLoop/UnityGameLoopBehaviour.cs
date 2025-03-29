@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Infrastructure.Observers.UnityGameLoop
+namespace Observers.UnityGameLoop
 {
     /// <summary>
     /// Компонент, реализующий интерфейс <see cref="IUnityGameLoopObserver"/> для наблюдения за игровым циклом Unity.

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Dungeon
+namespace ProceduralDungeon
 {
     [System.Serializable]
     public class CellConfig<TTile> where TTile : System.Enum

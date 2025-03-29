@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Infrastructure.Factories.GameObject
+namespace Factories.GameObject
 {
     /// <summary>
     /// Интерфейс для фабрики, которая создает и управляет GameObject.

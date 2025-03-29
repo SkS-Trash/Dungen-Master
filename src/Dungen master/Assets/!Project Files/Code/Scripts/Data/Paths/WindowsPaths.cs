@@ -6,6 +6,7 @@
     public const string SETTINGS_PATH = "UI/Settings";
     
     public const string GAME_PATH = "UI/Game";
+    public const string HUD_PATH = "UI/Hud";
     
     public const string PAUSE_MENU_PATH = "UI/PauseMenu";
     public const string GAME_OVER_PATH = "UI/GameOver";

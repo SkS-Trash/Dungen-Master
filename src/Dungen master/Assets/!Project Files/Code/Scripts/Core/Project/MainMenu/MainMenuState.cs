@@ -1,9 +1,9 @@
 ﻿using Core.Project.Base;
 using Core.Project.Dungeon;
 using Cysharp.Threading.Tasks;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.Services.Window;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using Services.ProjectManager;
+using Services.Window;
+using StateMachines.DirectControlMultiLayer.ForState;
 using UI.MainMenu;
 using UnityEngine;
 

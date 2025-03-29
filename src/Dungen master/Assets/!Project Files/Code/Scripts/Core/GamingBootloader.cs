@@ -1,5 +1,5 @@
 ﻿using Core.Project.Base;
-using Infrastructure.Services.ProjectManager;
+using Services.ProjectManager;
 using VContainer.Unity;
 
 namespace Core

@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
-using Infrastructure.StateMachines.DirectControlMultiLayer;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
+using StateMachines.DirectControlMultiLayer.ForState;
 
-namespace Infrastructure.Services.ProjectManager
+namespace Services.ProjectManager
 {
     public class ProjectEngineAdapter : IProjectEngine
     {

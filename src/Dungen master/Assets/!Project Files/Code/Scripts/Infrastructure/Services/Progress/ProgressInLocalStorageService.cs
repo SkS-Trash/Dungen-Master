@@ -1,8 +1,8 @@
-﻿using Infrastructure.Services.SaveLoadData;
-using Progress;
+﻿using Progress;
+using Services.SaveLoadData;
 using UnityEngine;
 
-namespace Infrastructure.Services.Progress
+namespace Services.Progress
 {
     /// <summary>
     /// Сервис для работы с прогрессом игры, сохраняемым в локальном хранилище.

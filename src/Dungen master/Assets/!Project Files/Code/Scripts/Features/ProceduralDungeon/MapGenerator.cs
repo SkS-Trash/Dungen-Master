@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dungeon;
+using System.Linq;
 
-namespace Features.ProceduralDungeon
+namespace ProceduralDungeon
 {
-    public class MapGenerator
+    public class MapGenerator : IMapGenerator
     {
         public readonly int MapWidth;
         public readonly int MapHeight;
-        public readonly TileType[,] Map;
-        public readonly List<Room> Rooms;
+
+        public TileType[,] Map { get; }
+        public List<Room> Rooms { get; }
+
         private readonly Random _random = new();
 
         public MapGenerator(int width, int height)
@@ -19,13 +21,10 @@ namespace Features.ProceduralDungeon
             Map = new TileType[MapWidth, MapHeight];
             Rooms = new List<Room>();
 
-            // Изначально заполняем карту стенами
             for (var x = 0; x < MapWidth; x++)
+            for (var y = 0; y < MapHeight; y++)
             {
-                for (var y = 0; y < MapHeight; y++)
-                {
-                    Map[x, y] = TileType.Wall;
-                }
+                Map[x, y] = TileType.Wall;
             }
         }
 
@@ -38,48 +37,40 @@ namespace Features.ProceduralDungeon
                 var roomX = _random.Next(1, MapWidth - roomWidth - 1);
                 var roomY = _random.Next(1, MapHeight - roomHeight - 1);
 
-                var newRoom = new Room(roomX, roomY, roomWidth, roomHeight);
-
-                // Проверяем пересечения с уже созданными комнатами
-                var overlaps = false;
-                foreach (var otherRoom in Rooms)
+                var roll = _random.NextDouble();
+                var roomType = roll switch
                 {
-                    if (newRoom.Intersects(otherRoom))
-                    {
-                        overlaps = true;
-                        break;
-                    }
+                    < 0.05 => RoomType.Hard,
+                    < 0.1 => RoomType.Treatment,
+                    < 0.25 => RoomType.Trap,
+                    _ => RoomType.Normal
+                };
+
+                var newRoom = new Room(roomX, roomY, roomWidth, roomHeight, roomType);
+
+                if (Rooms.Any(otherRoom => newRoom.Intersects(otherRoom))) continue;
+
+                CreateRoom(newRoom);
+
+                if (Rooms.Count > 0)
+                {
+                    var prevRoom = Rooms[^1];
+                    CreateCorridor(prevRoom, newRoom);
                 }
 
-                // Если не пересекается, "вырезаем" комнату
-                if (!overlaps)
-                {
-                    CreateRoom(newRoom);
-
-                    // Соединяем с предыдущей комнатой коридором
-                    if (Rooms.Count > 0)
-                    {
-                        var prevRoom = Rooms[Rooms.Count - 1];
-                        CreateCorridor(prevRoom, newRoom);
-                    }
-
-                    Rooms.Add(newRoom);
-                }
+                Rooms.Add(newRoom);
             }
         }
 
         private void CreateRoom(Room room)
         {
             for (var x = room.X; x < room.X + room.Width; x++)
+            for (var y = room.Y; y < room.Y + room.Height; y++)
             {
-                for (var y = room.Y; y < room.Y + room.Height; y++)
-                {
-                    Map[x, y] = TileType.Floor;
-                }
+                Map[x, y] = TileType.Floor;
             }
         }
 
-        // Соединяем центры двух комнат "толстым" коридором
         private void CreateCorridor(Room roomA, Room roomB)
         {
             var x1 = roomA.CenterX;
@@ -87,55 +78,58 @@ namespace Features.ProceduralDungeon
             var x2 = roomB.CenterX;
             var y2 = roomB.CenterY;
 
-            // Случайный порядок прокладывания коридора
             if (_random.Next(0, 2) == 0)
             {
                 CreateHorizontalCorridor(x1, x2, y1);
                 CreateVerticalCorridor(y1, y2, x2);
+                PlaceDoor(Math.Min(x1, x2), y1, roomA);
+                PlaceDoor(x2, Math.Min(y1, y2), roomB);
             }
             else
             {
                 CreateVerticalCorridor(y1, y2, x1);
                 CreateHorizontalCorridor(x1, x2, y2);
+                PlaceDoor(x1, Math.Min(y1, y2), roomA);
+                PlaceDoor(Math.Min(x1, x2), y2, roomB);
             }
         }
 
-        // Горизонтальный "толстый" коридор
+        private void PlaceDoor(int x, int y, Room room)
+        {
+            if (x >= room.X && x < room.X + room.Width && y >= room.Y && y < room.Y + room.Height)
+            {
+                Map[x, y] = TileType.Door;
+            }
+        }
+
         private void CreateHorizontalCorridor(int x1, int x2, int y)
         {
             var start = Math.Min(x1, x2);
             var end = Math.Max(x1, x2);
 
             for (var x = start; x <= end; x++)
+            for (var dy = -1; dy <= 1; dy++)
             {
-                // Делаем коридор шириной 3 клетки (y-1, y, y+1)
-                for (var dy = -1; dy <= 1; dy++)
+                var ny = y + dy;
+                if (ny >= 0 && ny < MapHeight)
                 {
-                    var ny = y + dy;
-                    if (ny >= 0 && ny < MapHeight)
-                    {
-                        Map[x, ny] = TileType.Floor;
-                    }
+                    Map[x, ny] = TileType.Floor;
                 }
             }
         }
 
-        // Вертикальный "толстый" коридор
         private void CreateVerticalCorridor(int y1, int y2, int x)
         {
             var start = Math.Min(y1, y2);
             var end = Math.Max(y1, y2);
 
             for (var y = start; y <= end; y++)
+            for (var dx = -1; dx <= 1; dx++)
             {
-                // Делаем коридор шириной 3 клетки (x-1, x, x+1)
-                for (var dx = -1; dx <= 1; dx++)
+                var nx = x + dx;
+                if (nx >= 0 && nx < MapWidth)
                 {
-                    var nx = x + dx;
-                    if (nx >= 0 && nx < MapWidth)
-                    {
-                        Map[nx, y] = TileType.Floor;
-                    }
+                    Map[nx, y] = TileType.Floor;
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace Dungeon
+﻿namespace ProceduralDungeon
 {
     public enum TileType
     {

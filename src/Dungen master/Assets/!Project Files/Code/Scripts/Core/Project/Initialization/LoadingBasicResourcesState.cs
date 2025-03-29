@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer.ForState;
 using UnityEngine.AddressableAssets;
 
 namespace Core.Project.Initialization

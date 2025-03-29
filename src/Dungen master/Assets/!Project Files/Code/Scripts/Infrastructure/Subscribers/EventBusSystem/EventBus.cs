@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Infrastructure.Subscribers.EventBusSystem
+namespace Subscribers.EventBusSystem
 {
     public static class EventBus
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Dungeon
+namespace ProceduralDungeon
 {
     [CreateAssetMenu(fileName = "LevelStyleConfig", menuName = "Data/LevelStyleConfig")]
     public class LevelStyleConfig : ScriptableObject

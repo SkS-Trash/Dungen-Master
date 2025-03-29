@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.StateMachines.TransitionMultiLayer.ForState
+﻿namespace StateMachines.TransitionMultiLayer.ForState
 {
     /// <summary>
     /// Интерфейс для описания состояний.
