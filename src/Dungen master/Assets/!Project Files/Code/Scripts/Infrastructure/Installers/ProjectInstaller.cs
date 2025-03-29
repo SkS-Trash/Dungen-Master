@@ -68,6 +68,7 @@ namespace Installers
             builder.Register<ConstructionMapState>(Lifetime.Transient).AsSelf();
             builder.Register<ConstructionDecorState>(Lifetime.Transient).AsSelf();
             builder.Register<ConstructionEnemyState>(Lifetime.Transient).AsSelf();
+            builder.Register<InstantiateUIState>(Lifetime.Transient).AsSelf();
         }
     }
 }
