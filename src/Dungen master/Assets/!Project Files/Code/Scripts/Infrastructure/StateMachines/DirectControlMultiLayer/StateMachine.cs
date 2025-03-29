@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer.ForState;
 
-namespace Infrastructure.StateMachines.DirectControlMultiLayer
+namespace StateMachines.DirectControlMultiLayer
 {
     /// <summary>
     /// Реализация контроллера "машины состояний".

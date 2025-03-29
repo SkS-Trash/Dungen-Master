@@ -1,11 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
-using Infrastructure.Providers.Assets;
+using Providers.Assets;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using VContainer;
 using VContainer.Unity;
 
-namespace Infrastructure.Factories.GameObject
+namespace Factories.GameObject
 {
     /// <summary>
     /// Фабрика для создания игровых объектов.

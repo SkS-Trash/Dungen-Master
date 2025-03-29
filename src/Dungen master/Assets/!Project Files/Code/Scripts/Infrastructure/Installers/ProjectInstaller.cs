@@ -2,25 +2,25 @@
 using Core.Project.Dungeon;
 using Core.Project.Initialization;
 using Core.Project.MainMenu;
-using Infrastructure.Factories.GameObject;
-using Infrastructure.Factories.UI;
-using Infrastructure.Observers.Input;
-using Infrastructure.Observers.UnityGameLoop;
-using Infrastructure.Providers.Assets;
-using Infrastructure.Providers.Containers.Scene;
-using Infrastructure.Providers.Data;
-using Infrastructure.Services.CoroutineRunner;
-using Infrastructure.Services.Progress;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.Services.SaveLoadData;
-using Infrastructure.Services.SceneLoader;
-using Infrastructure.Services.Window;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using Factories.GameObject;
+using Factories.UI;
+using Observers.Input;
+using Observers.UnityGameLoop;
+using Providers.Assets;
+using Providers.Containers.Scene;
+using Providers.Data;
+using Services.CoroutineRunner;
+using Services.Progress;
+using Services.ProjectManager;
+using Services.SaveLoadData;
+using Services.SceneLoader;
+using Services.Window;
+using StateMachines.DirectControlMultiLayer.ForState;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Infrastructure.Installers
+namespace Installers
 {
     public class ProjectInstaller : LifetimeScope
     {

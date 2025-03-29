@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.StateMachines.DirectControlMultiLayer.ForState
+﻿namespace StateMachines.DirectControlMultiLayer.ForState
 {
     /// <summary>
     /// Общий интерфейс для состояний.

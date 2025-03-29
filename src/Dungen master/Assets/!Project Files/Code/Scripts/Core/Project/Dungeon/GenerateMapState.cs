@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
 using ProceduralDungeon;
+using StateMachines.DirectControlMultiLayer.ForState;
 
 namespace Core.Project.Dungeon
 {

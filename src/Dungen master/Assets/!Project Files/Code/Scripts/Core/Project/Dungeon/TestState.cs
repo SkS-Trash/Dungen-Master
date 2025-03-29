@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
-using Infrastructure.Providers.Data;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
 using ProceduralDungeon;
+using Providers.Data;
+using Services.ProjectManager;
+using StateMachines.DirectControlMultiLayer.ForState;
 using UnityEngine;
 
 namespace Core.Project.Dungeon
@@ -31,28 +31,18 @@ namespace Core.Project.Dungeon
                 RoomMinSize = 5,
                 RoomMaxSize = 10
             };
-            Debug.Log("Созданы данные для генерации карты");
 
             var levelStyleConfigs = _staticDataProvider.GetLevelStyleConfigs();
-            Debug.Log("Получены конфиги уровней");
-            
             var styleConfig = levelStyleConfigs[Random.Range(0, levelStyleConfigs.Length)];
-            Debug.Log("Выбран случайный конфиг уровня");
-
             await _projectEngine.RunOneShot<GenerateMapState, DungeonGenerationData>(data);
-            Debug.Log("Сгенерирована карта");
+            await _projectEngine.RunOneShot<ConstructionMapState, (TileType[,], LevelStyleConfig)>((data.MapLayer, styleConfig));
+            await _projectEngine.RunOneShot<ConstructionDecorState, (DecorType[,], LevelStyleConfig)>((data.DecorLayer, styleConfig));
+            await _projectEngine.RunOneShot<ConstructionEnemyState, (EnemyType[,], LevelStyleConfig)>((data.EnemyLayer, styleConfig));
 
-            await _projectEngine.RunOneShot<ConstructionMapState, (TileType[,], LevelStyleConfig)>(
-                (data.MapLayer, styleConfig));
-            Debug.Log("Построен слой карты");
-
-            await _projectEngine.RunOneShot<ConstructionDecorState, (DecorType[,], LevelStyleConfig)>(
-                (data.DecorLayer, styleConfig));
-
-            await _projectEngine.RunOneShot<ConstructionEnemyState, (EnemyType[,], LevelStyleConfig)>(
-                (data.EnemyLayer, styleConfig));
+            await _projectEngine.RunOneShot<InstantiateUIState>();
+            
+            // await _projectEngine.RunOneShot<InstantiatePlayerState>();
         }
-
     }
 
     public class DungeonGenerationData

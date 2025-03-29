@@ -86,6 +86,8 @@ GameObject:
   - component: {fileID: 9013746411162286307}
   - component: {fileID: 5618438404083902225}
   - component: {fileID: 3788064274250227378}
+  - component: {fileID: 4822549587531555843}
+  - component: {fileID: 1825447492004347336}
   m_Layer: 5
   m_Name: Magic Cooldown
   m_TagString: Untagged
@@ -150,6 +152,31 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &4822549587531555843
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034967304345216533}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1825447492004347336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034967304345216533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d027b1c3234805a51e50f21d4a0277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicCooldown: {fileID: 3788064274250227378}
 --- !u!1 &4555451024435902216
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +225,8 @@ GameObject:
   - component: {fileID: 7816130200403801868}
   - component: {fileID: 4271372146161169220}
   - component: {fileID: 4391273903445974492}
+  - component: {fileID: 1472353077817038343}
+  - component: {fileID: 5599367881475489208}
   m_Layer: 5
   m_Name: HUD Canvas
   m_TagString: Untagged
@@ -289,6 +318,30 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 55
+--- !u!225 &1472353077817038343
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5863312710501481265}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &5599367881475489208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5863312710501481265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6f5b9d0ced4b7a8dc543145cf42cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6784747985495416866
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +427,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4321487943368593725}
   - component: {fileID: 8232150329790852912}
+  - component: {fileID: 7972993950613848612}
+  - component: {fileID: 5744465253949560705}
   m_Layer: 5
   m_Name: Hero's HP Bar
   m_TagString: Untagged
@@ -453,3 +508,28 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &7972993950613848612
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687542335113021444}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &5744465253949560705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687542335113021444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b344188d9b244432967b9ea55795090b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 8232150329790852912}

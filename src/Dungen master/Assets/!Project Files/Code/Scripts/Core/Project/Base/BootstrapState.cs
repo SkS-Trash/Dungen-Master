@@ -1,7 +1,7 @@
 ﻿using Core.Project.Initialization;
 using Cysharp.Threading.Tasks;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using Services.ProjectManager;
+using StateMachines.DirectControlMultiLayer.ForState;
 
 namespace Core.Project.Base
 {

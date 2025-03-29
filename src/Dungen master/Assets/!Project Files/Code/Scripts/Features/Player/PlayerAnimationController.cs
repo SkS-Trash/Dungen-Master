@@ -1,4 +1,4 @@
-using Infrastructure.Observers.Input;
+using Observers.Input;
 using UnityEngine;
 
 namespace Player

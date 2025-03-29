@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
-using Infrastructure.Factories.UI;
+using Factories.UI;
 using UnityEngine;
 
-namespace Infrastructure.Services.Window
+namespace Services.Window
 {
     /// <summary>
     /// Сервис для управления окнами в приложении.
@@ -53,7 +53,10 @@ namespace Infrastructure.Services.Window
                 WindowID.GameLoading => WindowsPaths.GAME_LOADING_PATH,
                 WindowID.MainMenu => WindowsPaths.MAIN_MENU_PATH,
                 WindowID.Settings => WindowsPaths.SETTINGS_PATH,
+                
                 WindowID.Game => WindowsPaths.GAME_PATH,
+                WindowID.HUD => WindowsPaths.HUD_PATH,
+                
                 WindowID.PauseMenu => WindowsPaths.PAUSE_MENU_PATH,
                 WindowID.GameOver => WindowsPaths.GAME_OVER_PATH,
                 WindowID.Victory => WindowsPaths.VICTORY_PATH,

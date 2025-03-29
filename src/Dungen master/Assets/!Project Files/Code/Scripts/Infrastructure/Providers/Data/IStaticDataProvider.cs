@@ -1,7 +1,7 @@
 ﻿using ProceduralDungeon;
 using Progress;
 
-namespace Infrastructure.Providers.Data
+namespace Providers.Data
 {
     /// <summary>
     /// Интерфейс для предоставления статических данных.

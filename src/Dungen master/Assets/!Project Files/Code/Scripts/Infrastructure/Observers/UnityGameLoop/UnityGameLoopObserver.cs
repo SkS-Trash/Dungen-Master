@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Infrastructure.Observers.UnityGameLoop
+namespace Observers.UnityGameLoop
 {
     /// <summary>
     /// Класс, реализующий интерфейс <see cref="IUnityGameLoopObserver"/> для наблюдения за игровым циклом Unity.

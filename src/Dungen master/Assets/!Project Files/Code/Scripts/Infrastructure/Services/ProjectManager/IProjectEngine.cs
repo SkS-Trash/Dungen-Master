@@ -1,6 +1,6 @@
-﻿using Infrastructure.StateMachines.DirectControlMultiLayer;
+﻿using StateMachines.DirectControlMultiLayer;
 
-namespace Infrastructure.Services.ProjectManager
+namespace Services.ProjectManager
 {
     public interface IProjectEngine : IStateMachine
     {

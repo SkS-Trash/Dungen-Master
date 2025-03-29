@@ -1,10 +1,10 @@
-using Infrastructure.Observers.Input;
+using Observers.Input;
 using UnityEngine;
 
 namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
-    public class SC_TPSController : MonoBehaviour
+    public class TPSController : MonoBehaviour
     {
         [SerializeField] private InputActionReader inputActionReader;
         [Space] 
@@ -24,9 +24,10 @@ namespace Player
         private CharacterController _characterController;
         private Vector3 _moveDirection = Vector3.zero;
         private Vector2 _rotation = Vector2.zero;
-        private float _currentSpeed;
-        private bool _isRunning = false;
 
+        private float _currentSpeed;
+
+        private bool _isRunning = false;
         private bool _canMove = true;
 
         private void Start()

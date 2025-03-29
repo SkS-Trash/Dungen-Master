@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Services.Window
+﻿namespace Services.Window
 {
     /// <summary>
     /// Типы окон
@@ -11,6 +11,7 @@
         Settings,
         
         Game,
+        HUD,
 
         PauseMenu,
         GameOver,

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.StateMachines.DirectControlMultiLayer.ForState
+﻿namespace StateMachines.DirectControlMultiLayer.ForState
 {
     /// <summary>
     /// Интерфейс для состояний, которые могут быть входными.

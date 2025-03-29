@@ -1,6 +1,6 @@
 ﻿using Progress;
 
-namespace Infrastructure.Services.Progress
+namespace Services.Progress
 {
     /// <summary>
     /// Сервис для работы с прогрессом игры.

@@ -3,7 +3,7 @@ using Progress;
 using UnityEngine;
 using static DataPaths;
 
-namespace Infrastructure.Providers.Data
+namespace Providers.Data
 {
     /// <summary>
     /// Поставщик статических данных.

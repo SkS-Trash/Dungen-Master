@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class SC_CameraCollision : MonoBehaviour
+    public class CameraCollision : MonoBehaviour
     {
         public Transform referenceTransform;
         public float collisionOffset = 0.3f;
