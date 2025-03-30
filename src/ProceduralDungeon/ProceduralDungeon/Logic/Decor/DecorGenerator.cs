@@ -16,7 +16,7 @@
             foreach (var room in rooms)
             {
                 GenerateRoomDecor(map, room);
-                GenerateWallDecor(map, room);
+                // GenerateWallDecor(map, room);
             }
 
             GenerateCorridorDecor(map, rooms);
@@ -27,7 +27,7 @@
             var (baseDensity, specialObjects) = GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
-            for (int i = 0; i < attempts; i++)
+            for (var i = 0; i < attempts; i++)
             {
                 var (x, y) = FindValidPosition(room, map, 1);
                 if (x < 0 || y < 0) continue;
@@ -50,9 +50,9 @@
         {
             return type switch
             {
-                RoomType.Treatment => (4, new List<DecorType> { DecorType.MedicalTable, DecorType.Altar }),
+                RoomType.Treatment => (4, new List<DecorType> { DecorType.Altar }),
                 RoomType.Trap => (3, new List<DecorType> { DecorType.Spikes, DecorType.PressurePlate }),
-                RoomType.Hard => (2, new List<DecorType> { DecorType.Bones, DecorType.Campfire }),
+                RoomType.Hard => (2, new List<DecorType> { DecorType.Campfire }),
                 _ => (2, new List<DecorType> { DecorType.Barrel, DecorType.Column })
             };
         }
@@ -75,8 +75,6 @@
                 [DecorType.Chest] = roomType == RoomType.Trap ? 5 : 15,
                 [DecorType.Barrel] = 30,
                 [DecorType.Column] = 20,
-                [DecorType.Torch] = 25,
-                [DecorType.BookShelf] = roomType == RoomType.Treatment ? 10 : 5,
                 [DecorType.Campfire] = 10
             };
 
@@ -85,34 +83,21 @@
 
         private void PlaceDecorWithSize(int x, int y, DecorType decor, TileType[,] map)
         {
-            var size = GetDecorSize(decor);
-            if (CanPlaceDecor(x, y, size, map))
+            if (CanPlaceDecor(x, y, (1, 1), map))
             {
-                for (int dx = 0; dx < size.Width; dx++)
+                for (var dx = 0; dx < 1; dx++)
+                for (var dy = 0; dy < 1; dy++)
                 {
-                    for (int dy = 0; dy < size.Height; dy++)
-                    {
-                        DecorLayer[x + dx, y + dy] = decor;
-                    }
+                    DecorLayer[x + dx, y + dy] = decor;
                 }
             }
         }
 
-        private (int Width, int Height) GetDecorSize(DecorType decor)
-        {
-            return decor switch
-            {
-                DecorType.BookShelf => (2, 1),
-                DecorType.MedicalTable => (2, 2),
-                _ => (1, 1)
-            };
-        }
-
         private bool CanPlaceDecor(int x, int y, (int W, int H) size, TileType[,] map)
         {
-            for (int dx = 0; dx < size.W; dx++)
+            for (var dx = 0; dx < size.W; dx++)
             {
-                for (int dy = 0; dy < size.H; dy++)
+                for (var dy = 0; dy < size.H; dy++)
                 {
                     if (x + dx >= map.GetLength(0) ||
                         y + dy >= map.GetLength(1) ||
@@ -125,21 +110,6 @@
             return true;
         }
 
-        private void GenerateWallDecor(TileType[,] map, Room room)
-        {
-            var wallSides = new[] { room.X, room.X + room.Width - 1 };
-            foreach (var x in wallSides)
-            {
-                for (int y = room.Y; y < room.Y + room.Height; y++)
-                {
-                    if (_random.NextDouble() < 0.1 && map[x, y] == TileType.Wall)
-                    {
-                        DecorLayer[x, y] = DecorType.Torch;
-                    }
-                }
-            }
-        }
-
         private void GenerateCorridorDecor(TileType[,] map, List<Room> rooms)
         {
             foreach (var room in rooms)
@@ -149,9 +119,7 @@
                     var (x, y) = FindValidPosition(room, map, 0);
                     if (x > 0 && y > 0)
                     {
-                        DecorLayer[x, y] = _random.NextDouble() < 0.5
-                            ? DecorType.Barrel
-                            : DecorType.Bones;
+                        DecorLayer[x, y] = DecorType.Barrel;
                     }
                 }
             }
@@ -159,10 +127,10 @@
 
         private (int x, int y) FindValidPosition(Room room, TileType[,] map, int border)
         {
-            for (int attempt = 0; attempt < 50; attempt++)
+            for (var attempt = 0; attempt < 50; attempt++)
             {
-                int x = _random.Next(room.X + border, room.X + room.Width - border);
-                int y = _random.Next(room.Y + border, room.Y + room.Height - border);
+                var x = _random.Next(room.X + border, room.X + room.Width - border);
+                var y = _random.Next(room.Y + border, room.Y + room.Height - border);
 
                 if (IsPositionValid(x, y, map) &&
                     !HasNearbyDecor(x, y, MinDistanceBetweenObjects))
@@ -176,12 +144,12 @@
 
         private bool HasNearbyDecor(int x, int y, int radius)
         {
-            for (int dx = -radius; dx <= radius; dx++)
+            for (var dx = -radius; dx <= radius; dx++)
             {
-                for (int dy = -radius; dy <= radius; dy++)
+                for (var dy = -radius; dy <= radius; dy++)
                 {
-                    int nx = x + dx;
-                    int ny = y + dy;
+                    var nx = x + dx;
+                    var ny = y + dy;
                     if (nx >= 0 && nx < DecorLayer.GetLength(0) &&
                         ny >= 0 && ny < DecorLayer.GetLength(1) &&
                         DecorLayer[nx, ny] != DecorType.None)

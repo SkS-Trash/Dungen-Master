@@ -51,12 +51,8 @@ namespace ProceduralDungeon
             DecorType.PressurePlate => 'P',
             DecorType.Column => 'O',
             DecorType.Altar => 'A',
-            DecorType.Torch => 'T',
-            DecorType.Bones => 'X',
-            DecorType.BookShelf => 'S',
             DecorType.Campfire => 'F',
             DecorType.Spikes => 'I',
-            DecorType.MedicalTable => 'M',
             _ => ' '
         };
 

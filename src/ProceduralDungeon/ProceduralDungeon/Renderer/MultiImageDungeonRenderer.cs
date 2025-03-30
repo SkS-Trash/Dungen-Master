@@ -31,12 +31,8 @@ namespace ProceduralDungeon
                 DecorType.PressurePlate => Color.DarkGray,
                 DecorType.Column => Color.DimGray,
                 DecorType.Altar => Color.DarkRed,
-                DecorType.Torch => Color.Orange,
-                DecorType.Bones => Color.White,
-                DecorType.BookShelf => Color.SandyBrown,
                 DecorType.Campfire => Color.OrangeRed,
                 DecorType.Spikes => Color.DarkRed,
-                DecorType.MedicalTable => Color.White,
                 _ => Color.Magenta
             };
         }
