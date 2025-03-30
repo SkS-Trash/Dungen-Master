@@ -21,6 +21,6 @@ namespace ProceduralDungeon
 
         [field: SerializeField, HideLabel]
         [field: ListDrawerSettings(ShowFoldout = false, ShowPaging = false, ShowItemCount = false)]
-        public AssetReference[] Prefabs { get; private set; } = new AssetReference[1];
+        public AssetReference[] Prefabs { get; private set; } = new AssetReference[0];
     }
 }
