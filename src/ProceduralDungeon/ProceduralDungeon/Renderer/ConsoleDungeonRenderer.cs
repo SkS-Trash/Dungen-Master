@@ -39,7 +39,6 @@ namespace ProceduralDungeon
         {
             TileType.Wall => '#',
             TileType.Floor => '.',
-            TileType.Door => 'D',
             _ => ' '
         };
 

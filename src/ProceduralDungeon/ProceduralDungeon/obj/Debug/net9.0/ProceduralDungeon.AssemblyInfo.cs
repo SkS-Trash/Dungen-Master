@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProceduralDungeon")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+745861eed92be7c1498fec7d542ed27bf99ea00a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cf5f4fd34c915d94256b39e1cdb6a58eda53c89")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProceduralDungeon")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProceduralDungeon")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

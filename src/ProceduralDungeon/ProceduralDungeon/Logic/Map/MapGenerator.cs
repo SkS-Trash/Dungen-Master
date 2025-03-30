@@ -129,22 +129,12 @@
             {
                 CreateHorizontalCorridor(x1, x2, y1);
                 CreateVerticalCorridor(y1, y2, x2);
-                PlaceDoor(Math.Min(x1, x2), y1, roomA);
-                PlaceDoor(x2, Math.Min(y1, y2), roomB);
             }
             else
             {
                 CreateVerticalCorridor(y1, y2, x1);
                 CreateHorizontalCorridor(x1, x2, y2);
-                PlaceDoor(x1, Math.Min(y1, y2), roomA);
-                PlaceDoor(Math.Min(x1, x2), y2, roomB);
             }
-        }
-
-        private void PlaceDoor(int x, int y, Room room)
-        {
-            if (x >= room.X && x < room.X + room.Width && y >= room.Y && y < room.Y + room.Height)
-                Map[x, y] = TileType.Door;
         }
 
         private void CreateHorizontalCorridor(int x1, int x2, int y)
