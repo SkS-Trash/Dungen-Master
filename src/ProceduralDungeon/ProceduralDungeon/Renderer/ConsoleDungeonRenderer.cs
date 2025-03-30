@@ -39,6 +39,8 @@ namespace ProceduralDungeon
         {
             TileType.Wall => '#',
             TileType.Floor => '.',
+            TileType.Start => 'S',
+            TileType.Exit => 'E',
             _ => ' '
         };
 
@@ -49,8 +51,12 @@ namespace ProceduralDungeon
             DecorType.PressurePlate => 'P',
             DecorType.Column => 'O',
             DecorType.Altar => 'A',
-            DecorType.Statue => 'S',
-            DecorType.BrokenWall => 'W',
+            DecorType.Torch => 'T',
+            DecorType.Bones => 'X',
+            DecorType.BookShelf => 'S',
+            DecorType.Campfire => 'F',
+            DecorType.Spikes => 'I',
+            DecorType.MedicalTable => 'M',
             _ => ' '
         };
 
