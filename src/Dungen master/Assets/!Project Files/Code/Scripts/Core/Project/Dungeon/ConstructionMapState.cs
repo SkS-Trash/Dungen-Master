@@ -40,8 +40,12 @@ namespace Core.Project.Dungeon
         private async UniTask InstantCell(TileType[,] mapLayer, LevelStyleConfig dataConfig, int x, int y)
         {
             var tileType = mapLayer[x, y];
+            
             var prefabs = dataConfig.GetTileConfig(tileType).Prefabs;
+            
             var assetReference = prefabs[Random.Range(0, prefabs.Length)];
+            
+            if (assetReference == null) return;
 
             await _gameObjectFactory.InstantiateAsync(
                 assetReference,

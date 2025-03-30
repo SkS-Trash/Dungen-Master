@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "3M9MmzJC6U0=",
+  "dgSpecHash": "MUjnSooMPCs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\evgen\\OneDrive\\Рабочий стол\\Dungen-Master\\src\\ProceduralDungeon\\ProceduralDungeon\\ProceduralDungeon.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Projects\\Dungen-Master\\src\\ProceduralDungeon\\ProceduralDungeon\\ProceduralDungeon.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.win32.systemevents\\10.0.0-preview.2.25163.2\\microsoft.win32.systemevents.10.0.0-preview.2.25163.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.drawing.common\\10.0.0-preview.2.25163.9\\system.drawing.common.10.0.0-preview.2.25163.9.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ProceduralDungeon
+﻿namespace ProceduralDungeon
 {
     public class EnemySpawner : IEnemySpawner
     {
@@ -36,6 +33,8 @@ namespace ProceduralDungeon
                     var y = _random.Next(room.Y + 1, room.Y + room.Height - 1);
 
                     if (EnemyLayer[x, y] != EnemyType.None) continue;
+
+                    if (map[x, y] != TileType.Floor) continue;
 
                     EnemyLayer[x, y] = room.Type == RoomType.Hard
                         ? EnemyType.Boss

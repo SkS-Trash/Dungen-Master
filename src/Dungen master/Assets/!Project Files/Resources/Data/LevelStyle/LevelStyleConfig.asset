@@ -34,6 +34,13 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 4
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: d29ba7e4cafb6a646b36e334d0021a66
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
   enemyConfigs:
   - <Type>k__BackingField: 1
     <Prefabs>k__BackingField:
@@ -49,6 +56,27 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 3
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - <Type>k__BackingField: 4
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - <Type>k__BackingField: 5
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
   decorConfigs:
   - <Type>k__BackingField: 1
     <Prefabs>k__BackingField:
@@ -78,3 +106,24 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 5
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - <Type>k__BackingField: 6
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - <Type>k__BackingField: 7
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
