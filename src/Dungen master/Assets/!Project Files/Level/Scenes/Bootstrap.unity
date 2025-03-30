@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 1210633684}
   - component: {fileID: 1210633685}
   m_Layer: 0
-  m_Name: SceneScope
+  m_Name: Scene context
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: Infrastructure.Installers.ProjectInstaller
+    TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
 --- !u!1660057539 &9223372036854775807

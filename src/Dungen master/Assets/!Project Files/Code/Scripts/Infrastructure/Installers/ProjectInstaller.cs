@@ -1,8 +1,4 @@
 ﻿using System.Linq;
-using Core.Project.Base;
-using Core.Project.Dungeon;
-using Core.Project.Initialization;
-using Core.Project.MainMenu;
 using Factories.GameObject;
 using Factories.UI;
 using Observers.Input;
@@ -47,10 +43,12 @@ namespace Installers
             builder.Register<IWindowService, WindowService>(Lifetime.Singleton);
 
             builder.Register<IStatesFactory, StatesFactory>(Lifetime.Singleton);
-            builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine, StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);
+            builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine,
+                StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);
 
-            builder.Register<StateMachines.TransitionMultiLayer.IStateMachine, StateMachines.TransitionMultiLayer.StateMachine>(Lifetime.Transient);
-            
+            builder.Register<StateMachines.TransitionMultiLayer.IStateMachine,
+                StateMachines.TransitionMultiLayer.StateMachine>(Lifetime.Transient);
+
             BindProjectStates(builder);
         }
 
