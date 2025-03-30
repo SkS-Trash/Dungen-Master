@@ -1,4 +1,5 @@
-﻿using Core.Project.Base;
+﻿using System.Linq;
+using Core.Project.Base;
 using Core.Project.Dungeon;
 using Core.Project.Initialization;
 using Core.Project.MainMenu;
@@ -50,24 +51,17 @@ namespace Installers
 
             builder.Register<StateMachines.TransitionMultiLayer.IStateMachine, StateMachines.TransitionMultiLayer.StateMachine>(Lifetime.Transient);
             
-            // States
-            
-            builder.Register<BootstrapState>(Lifetime.Transient).AsSelf();
-            builder.Register<ExitFromApplicationState>(Lifetime.Transient).AsSelf();
+            BindProjectStates(builder);
+        }
 
-            builder.Register<InitializationState>(Lifetime.Transient).AsSelf();
-            builder.Register<LoadEmptySceneState>(Lifetime.Transient).AsSelf();
-            builder.Register<LoadingBasicResourcesState>(Lifetime.Transient).AsSelf();
-            builder.Register<LoadProgressState>(Lifetime.Transient).AsSelf();
-            builder.Register<OpenLoadingScreenState>(Lifetime.Transient).AsSelf();
-
-            builder.Register<MainMenuState>(Lifetime.Transient).AsSelf();
-            
-            builder.Register<TestState>(Lifetime.Transient).AsSelf();
-            builder.Register<GenerateMapState>(Lifetime.Transient).AsSelf();
-            builder.Register<ConstructionMapState>(Lifetime.Transient).AsSelf();
-            builder.Register<ConstructionDecorState>(Lifetime.Transient).AsSelf();
-            builder.Register<ConstructionEnemyState>(Lifetime.Transient).AsSelf();
+        private static void BindProjectStates(IContainerBuilder builder)
+        {
+            var states = typeof(IState).Assembly.GetTypes().Where(x => x.IsClass && typeof(IState).IsAssignableFrom(x));
+            foreach (var state in states)
+            {
+                if (state.IsAbstract || state.IsInterface) continue;
+                builder.Register(state, Lifetime.Transient).AsSelf();
+            }
         }
     }
 }

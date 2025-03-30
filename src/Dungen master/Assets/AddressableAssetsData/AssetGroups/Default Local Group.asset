@@ -72,7 +72,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f01cb13ed96fedc46b60997fb97ba2c9
-    m_Address: Assets/!Project Files/Level/Prefabs/UI/HUD Canvas.prefab
+    m_Address: UI/Hud
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
