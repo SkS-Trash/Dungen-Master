@@ -1,4 +1,5 @@
-﻿using Core.Project.MainMenu;
+﻿using Core.Project.Dungeon;
+using Core.Project.MainMenu;
 using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer.ForState;
@@ -23,7 +24,7 @@ namespace Core.Project.Initialization
             await _projectEngine.RunOneShot<LoadingBasicResourcesState>();
             await _projectEngine.RunOneShot<LoadProgressState>();
 
-            _projectEngine.ChangeState<MainMenuState>();
+            _projectEngine.ChangeState<TestState>();
         }
     }
 }

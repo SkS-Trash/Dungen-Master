@@ -5,6 +5,7 @@
         Empty,
         Wall,
         Floor,
-        Door
+        Start,
+        Exit,
     }
 }

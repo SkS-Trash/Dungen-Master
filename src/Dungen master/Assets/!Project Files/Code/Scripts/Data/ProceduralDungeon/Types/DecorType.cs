@@ -2,13 +2,13 @@
 {
     public enum DecorType
     {
-        None,
-        Chest,
-        Barrel,
-        PressurePlate,
-        Column,
-        Altar,
-        Statue,
-        BrokenWall
+        None, // Ничего
+        Chest, // Сундук
+        Barrel, // Бочка
+        PressurePlate, // Нажимная плита
+        Column, // Колонна
+        Altar, // Алтарь
+        Campfire, // Костер
+        Spikes, // Шипы
     }
 }
