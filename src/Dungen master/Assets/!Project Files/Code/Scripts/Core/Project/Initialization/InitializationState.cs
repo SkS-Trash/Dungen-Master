@@ -2,7 +2,6 @@
 using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer.ForState;
-using UnityEngine;
 
 namespace Core.Project.Initialization
 {

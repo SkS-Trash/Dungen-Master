@@ -57,6 +57,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a15ef7bef7b38f44c9ce368bb64057d9
+    m_Address: Objects/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a6a51ff08a9c08141847fefc1823c905
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/Wall.prefab
     m_ReadOnly: 0

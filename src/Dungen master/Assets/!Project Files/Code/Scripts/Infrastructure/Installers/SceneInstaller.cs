@@ -11,7 +11,7 @@ namespace Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Container.Resolve<ISceneContainerProvider>().Set(sceneContainer);
+            Parent.Container.Resolve<ISceneContainerProvider>().Set(sceneContainer);
 
             BindLevelServices();
         }

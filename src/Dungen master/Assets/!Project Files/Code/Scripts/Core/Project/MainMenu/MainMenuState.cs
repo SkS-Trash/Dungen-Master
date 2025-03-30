@@ -1,11 +1,10 @@
 ﻿using Core.Project.Base;
-using Core.Project.Dungeon;
+using Core.Project.Home;
 using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
 using Services.Window;
 using StateMachines.DirectControlMultiLayer.ForState;
 using UI.MainMenu;
-using UnityEngine;
 
 namespace Core.Project.MainMenu
 {
@@ -50,9 +49,7 @@ namespace Core.Project.MainMenu
 
         private void OnStartGame()
         {
-            _projectEngine.ChangeState<TestState>();
-
-            Debug.Log("Start Game");
+            _projectEngine.ChangeState<HomeLoadState>();
         }
 
         private void OnExit()

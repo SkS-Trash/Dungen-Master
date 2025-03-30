@@ -32,9 +32,9 @@ namespace Player
                 _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude * 2);
             }
 
-            _animator.SetBool(IsAttackingMelee, Input.GetKeyDown(KeyCode.Mouse0));
+            _animator.SetBool(IsAttackingMelee, inputActionReader.IsAttackingPhysical);
 
-            _animator.SetBool(IsAttackingMagic, Input.GetKeyDown(KeyCode.Mouse1));
+            _animator.SetBool(IsAttackingMagic, inputActionReader.IsAttackingMagical);
         }
     }
 }
