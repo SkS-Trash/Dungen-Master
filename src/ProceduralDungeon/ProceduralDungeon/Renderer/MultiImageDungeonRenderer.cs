@@ -16,6 +16,8 @@ namespace ProceduralDungeon
                 TileType.Floor => Color.LightGray,
                 TileType.Door => Color.Brown,
                 TileType.Empty => Color.Black,
+                TileType.Start => Color.Red,
+                TileType.Exit => Color.Green,
                 _ => Color.Magenta
             };
         }
