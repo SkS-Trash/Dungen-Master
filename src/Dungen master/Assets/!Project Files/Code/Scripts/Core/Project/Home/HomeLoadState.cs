@@ -19,7 +19,7 @@ namespace Core.Project.Home
         {
             await _projectEngine.RunOneShot<LoadHomeSceneState>();
             await _projectEngine.RunOneShot<InstantiatePlayerState>();
-
+            
             _projectEngine.ChangeState<HomeState>();
         }
 

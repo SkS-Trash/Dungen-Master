@@ -237,10 +237,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanMale_Character
       objectReference: {fileID: 0}
+    - target: {fileID: 3748359892381204692, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3748359892381204692, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: adbe5cb818026374fb8993c58a0941e0, type: 2}
+    - target: {fileID: 8879528566716807029, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -292,9 +316,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActionReader: {fileID: 11400000, guid: d3fcc1e0a01764b45bd1286c424b3642, type: 2}
-  speed: 7.5
-  runSpeed: 12
-  jumpSpeed: 8
+  speed: 2.5
+  runSpeed: 3.5
+  jumpSpeed: 6
   gravity: 20
   playerCameraParent: {fileID: 7316835778213882064}
   lookSpeed: 2
@@ -322,13 +346,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.9
-  m_Radius: 0.5
+  m_Height: 1.2
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!54 &7848042981145319774
 Rigidbody:
   m_ObjectHideFlags: 0
