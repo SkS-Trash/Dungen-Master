@@ -57,21 +57,49 @@
                 Rooms.Add(newRoom);
             }
 
-
             if (Rooms.Count > 0)
             {
                 PlaceStartAndExit();
             }
-            else
+            else throw new InvalidOperationException("Комнаты не сгенерированы.");
+
+            CleanDungeon();
+        }
+
+        private void CleanDungeon()
+        {
+            for (var x = 0; x < MapWidth; x++)
+            for (var y = 0; y < MapHeight; y++)
             {
-                throw new InvalidOperationException("No rooms generated.");
+                if (Map[x, y] != TileType.Wall) continue;
+
+                var keepWall = false;
+                for (var dx = -1; dx <= 1 && !keepWall; dx++)
+                for (var dy = -1; dy <= 1; dy++)
+                {
+                    if (dx == 0 && dy == 0) continue;
+
+                    int nx = x + dx, ny = y + dy;
+
+                    if (nx < 0 || ny < 0 || nx >= MapWidth || ny >= MapHeight) continue;
+
+                    var neighbor = Map[nx, ny];
+
+                    if (neighbor is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+
+                    keepWall = true;
+                    break;
+                }
+
+                if (!keepWall)
+                    Map[x, y] = TileType.Empty;
             }
         }
 
         private void PlaceStartAndExit()
         {
-            Room startRoom = null;
-            Room exitRoom = null;
+            Room? startRoom = null;
+            Room? exitRoom = null;
             float maxDistance = 0;
 
             foreach (var roomA in Rooms)
@@ -106,8 +134,8 @@
 
         private float CalculateDistance(Room a, Room b)
         {
-            int dx = a.CenterX - b.CenterX;
-            int dy = a.CenterY - b.CenterY;
+            var dx = a.CenterX - b.CenterX;
+            var dy = a.CenterY - b.CenterY;
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
 
