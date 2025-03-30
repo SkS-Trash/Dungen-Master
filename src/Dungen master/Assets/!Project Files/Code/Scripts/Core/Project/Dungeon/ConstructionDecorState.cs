@@ -38,10 +38,12 @@ namespace Core.Project.Dungeon
             var tileType = mapLayer[x, y];
 
             var prefabs = dataConfig.GetDecorConfig(tileType).Prefabs;
+            
+            if (prefabs == null || prefabs.Length == 0) return;
 
             var assetReference = prefabs[Random.Range(0, prefabs.Length)];
             
-            if (assetReference == null) return;
+            if (assetReference == null || !assetReference.IsValid()) return;
             
             await _gameObjectFactory.InstantiateAsync(
                 assetReference,

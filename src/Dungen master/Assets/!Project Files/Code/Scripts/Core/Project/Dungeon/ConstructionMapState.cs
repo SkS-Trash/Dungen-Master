@@ -43,6 +43,8 @@ namespace Core.Project.Dungeon
             
             var prefabs = dataConfig.GetTileConfig(tileType).Prefabs;
             
+            if (prefabs == null || prefabs.Length == 0) return;
+            
             var assetReference = prefabs[Random.Range(0, prefabs.Length)];
             
             if (assetReference == null) return;
