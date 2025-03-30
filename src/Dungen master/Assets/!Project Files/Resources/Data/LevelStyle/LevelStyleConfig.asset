@@ -57,26 +57,11 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
   - <Type>k__BackingField: 3
-    <Prefabs>k__BackingField:
-    - m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    <Prefabs>k__BackingField: []
   - <Type>k__BackingField: 4
-    <Prefabs>k__BackingField:
-    - m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    <Prefabs>k__BackingField: []
   - <Type>k__BackingField: 5
-    <Prefabs>k__BackingField:
-    - m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    <Prefabs>k__BackingField: []
   decorConfigs:
   - <Type>k__BackingField: 1
     <Prefabs>k__BackingField:
