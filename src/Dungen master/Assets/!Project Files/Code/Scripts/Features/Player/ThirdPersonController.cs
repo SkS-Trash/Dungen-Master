@@ -15,6 +15,7 @@ namespace Player
 
         [SerializeField] private CharacterController characterController;
         [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private float runSpeed = 10f;
 
         [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference sprintAction;
@@ -64,7 +65,7 @@ namespace Player
         {
             IsSprinting = sprintAction.action.inProgress;
 
-            _currentSpeed = IsSprinting ? moveSpeed * 2 : moveSpeed;
+            _currentSpeed = IsSprinting ? runSpeed : moveSpeed;
         }
     }
 }
