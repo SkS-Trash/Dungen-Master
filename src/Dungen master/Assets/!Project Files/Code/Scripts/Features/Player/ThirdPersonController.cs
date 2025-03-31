@@ -5,6 +5,10 @@ namespace Player
 {
     public class ThirdPersonController : MonoBehaviour
     {
+        public bool IsGrounded { get; private set; }
+        public bool IsSprinting { get; private set; }
+        public Vector3 MoveSpeed { get; private set; }
+
         [SerializeField] private Transform camera;
         [SerializeField] private float turnSmoothVelocity = 2f;
         [SerializeField] private float turnSmoothTime = 0.1f;
@@ -15,7 +19,6 @@ namespace Player
         [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference sprintAction;
         [SerializeField] private InputActionReference jumpAction;
-
 
         private Vector2 _moveInput;
         private float _currentSpeed;
@@ -29,14 +32,16 @@ namespace Player
         {
             _moveInput = moveAction.action.ReadValue<Vector2>();
 
-            Jump();
+            if (!(_moveInput.magnitude >= 0.1f))
+            {
+                MoveSpeed = Vector3.zero;
+                return;
+            }
+
             Sprint();
 
-            if (_moveInput.magnitude >= 0.1f)
-            {
-                Rotate();
-                Move();
-            }
+            Rotate();
+            Move();
         }
 
         private void Rotate()
@@ -48,26 +53,18 @@ namespace Player
 
         private void Move()
         {
-            var move = new Vector3(_moveInput.x, 0, _moveInput.y);
-            move = Vector3.ClampMagnitude(move, 1f);
-            move *= _currentSpeed * Time.deltaTime;
-            move = characterController.transform.TransformDirection(move);
-            characterController.Move(move);
+            MoveSpeed = new Vector3(_moveInput.x, 0, _moveInput.y);
+            MoveSpeed = Vector3.ClampMagnitude(MoveSpeed, 1f);
+            MoveSpeed *= _currentSpeed * Time.deltaTime;
+            MoveSpeed = characterController.transform.TransformDirection(MoveSpeed);
+            characterController.Move(MoveSpeed);
         }
 
         private void Sprint()
         {
-            _currentSpeed = sprintAction.action.inProgress
-                ? moveSpeed * 2
-                : moveSpeed;
-        }
+            IsSprinting = sprintAction.action.inProgress;
 
-        private void Jump()
-        {
-            if (jumpAction.action.triggered)
-            {
-                characterController.Move(Vector3.up * 5f);
-            }
+            _currentSpeed = IsSprinting ? moveSpeed * 2 : moveSpeed;
         }
     }
 }
