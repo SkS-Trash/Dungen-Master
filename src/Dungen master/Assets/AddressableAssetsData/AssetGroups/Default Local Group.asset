@@ -82,6 +82,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e70bcd0fc0318342b234d458980a507
+    m_Address: Objects/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 59046ce6232db37489d4fbd4225e08a5
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Statue/Statue 1.prefab
     m_ReadOnly: 0
@@ -150,11 +155,6 @@ MonoBehaviour:
   - m_GUID: 9fe397c370ecedc489625921de4b7995
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Floor/Floor Variant
       5.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a15ef7bef7b38f44c9ce368bb64057d9
-    m_Address: Objects/Player
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
