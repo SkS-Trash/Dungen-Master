@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c46638448ced4b4aa587a7d236388eef, type: 3}
+  m_Name: LevelStyleConfig
+  m_EditorClassIdentifier: 
+  tileConfigs:
+  - <Type>k__BackingField: 1
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: a6a51ff08a9c08141847fefc1823c905
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 2
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 6220e3898dba6d543bd216b647e480a8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 3
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: d29ba7e4cafb6a646b36e334d0021a66
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 4
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: d29ba7e4cafb6a646b36e334d0021a66
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  enemyConfigs:
+  - <Type>k__BackingField: 1
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 1c894a722c9f361489310eca98720568
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 2
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: c658eb53f4b402c41985b34d6c2da6ea
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 3
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - <Type>k__BackingField: 4
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - <Type>k__BackingField: 5
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  decorConfigs:
+  - <Type>k__BackingField: 1
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 0ced51762a78071469eb620233046af2
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 2
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 9068c21008185b94cbf663832b45a8ae
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 3
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 2afdd7cfcd5397d42a26ec56df0c5142
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 4
+    <Prefabs>k__BackingField:
+    - m_AssetGUID: 3167b2396a815d343a14386af1393e1b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+  - <Type>k__BackingField: 5
+    <Prefabs>k__BackingField: []
+  - <Type>k__BackingField: 6
+    <Prefabs>k__BackingField: []
+  - <Type>k__BackingField: 7
+    <Prefabs>k__BackingField: []

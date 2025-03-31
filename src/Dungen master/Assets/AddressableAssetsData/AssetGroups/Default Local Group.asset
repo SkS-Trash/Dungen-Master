@@ -21,11 +21,38 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08433118ee6d4a54986fd16f86a3d64e
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Altar/Altar.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0ced51762a78071469eb620233046af2
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/Chest.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e6d47d02d990794c855a0ea68b57ed9
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Wall Variant 3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ff53996f95706448815131630e245f0
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Column/Column Variant
+      2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10511afa50decfa47a00df81326b64ff
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Spikes/spikes (1).prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 132adb952a3ac014dbac54f9ed8b2ec1
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Column/Column Variant
+      1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c894a722c9f361489310eca98720568
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/EnemyIsCloseCombat.prefab
@@ -45,17 +72,86 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ae0da4b9f92c0b419f354fabaa5776e
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Wall Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41eb1dff70712f3469ca881ad19136c8
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Wall Variant 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59046ce6232db37489d4fbd4225e08a5
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Statue/Statue 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c0a824682bc50a4d90eb106e5e2d1eb
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Barrel/Barrel Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5dd16d52d6a3d7f4eb4b57c6a9ac8f70
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Column/Column Variant
+      3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6220e3898dba6d543bd216b647e480a8
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/Floor.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71a55d5f58a144349870ab26e41181b6
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Floor/Floor Variant
+      1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71d4a54c2f899c64983d895191ed361f
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Wall Variant 2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 769cb2ff7a8c63248bfb4475d8a28307
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Chest/Chest Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b0776cec2929a34da42047939aaaf92
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Altar/Altar 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fcd3526d958b894db7e5b7dfd7ce716
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Spikes/spikes.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9068c21008185b94cbf663832b45a8ae
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/Barrel.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92663619cb8e79549843b6b07c494b61
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Statue/Statue.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e50d8f3eea65f341ab0e899b5f7f4e0
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Chest/Chest Variant
+      1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fe397c370ecedc489625921de4b7995
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Floor/Floor Variant
+      5.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a15ef7bef7b38f44c9ce368bb64057d9
     m_Address: Objects/Player
@@ -86,6 +182,24 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c99740371203c0a458d26618d2a5c114
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Barrel/Barrel Variant
+      1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc67288ff7084b14ab966c8f92f9b44e
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/PressurePlate/PressurePlate
+      Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2481c89c93562c48ad5447062e30267
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/PressurePlate/PressurePlate
+      Variant 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d29ba7e4cafb6a646b36e334d0021a66
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/Door.prefab
     m_ReadOnly: 0
@@ -97,6 +211,22 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f11db410e05b92349888e0756ae2b1d5
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Floor/Floor Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f185508ccdc7e31418f79f7407a19800
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Column/Column Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f814c662c57f5444d8fa012c26298f3e
+    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Floor/Floor Variant
+      2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bc6d34526371ac64da585fdf58175687, type: 2}
