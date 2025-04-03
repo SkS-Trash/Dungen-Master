@@ -10,7 +10,7 @@ public class ScreenshotMaker : MonoBehaviour
         if (Input.GetButtonDown("Submit"))
         {
             var dir = Directory.GetParent((Application.dataPath)).ToString();
-            int counter = 0;
+            var counter = 0;
             while (true)
             {
                 var path = Path.Combine(dir, $"Screenshot_{counter}.png");
