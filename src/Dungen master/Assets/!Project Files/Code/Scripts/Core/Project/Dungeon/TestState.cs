@@ -48,14 +48,9 @@ namespace Core.Project.Dungeon
 
             await _projectEngine.RunOneShot<InstantiateUIState>();
 
-            for (var x = 0; x < data.MapLayer.GetLength(0); x++)
-            for (var y = 0; y < data.MapLayer.GetLength(1); y++)
-            {
-                if (data.MapLayer[x, y] == TileType.Start)
-                {
-                    await _projectEngine.RunOneShot<InstantiatePlayerState, Vector2Int>(new Vector2Int(x, y));
-                }
-            }
+            await _projectEngine.RunOneShot<InstantiatePlayerState, TileType[,]>(data.MapLayer);
+
+            await _projectEngine.RunOneShot<ConfiguredGameState>();
         }
     }
 }
