@@ -119,6 +119,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6dca04c533cff1745a44462dc5add829
+    m_Address: EmptyGameObject
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 71a55d5f58a144349870ab26e41181b6
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Floor/Floor Variant
       1.prefab
