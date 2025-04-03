@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProceduralDungeon
+namespace ProceduralDungeon.Decor
 {
     public interface IDecorGenerator
     {

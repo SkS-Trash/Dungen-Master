@@ -5,23 +5,18 @@ namespace Player
 {
     public class ThirdPersonController : MonoBehaviour
     {
-        public bool IsGrounded { get; private set; }
-        public bool IsSprinting { get; private set; }
-        public Vector3 MoveSpeed { get; private set; }
-
         [SerializeField] private Transform camera;
         [SerializeField] private float turnSmoothVelocity = 2f;
         [SerializeField] private float turnSmoothTime = 0.1f;
-
-        [SerializeField] private CharacterController characterController;
+        [Space] [SerializeField] private CharacterController characterController;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float runSpeed = 10f;
-
-        [SerializeField] private InputActionReference moveAction;
+        [Space] [SerializeField] private PlayerAnimationController animationController;
+        [Space] [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference sprintAction;
-        [SerializeField] private InputActionReference jumpAction;
 
         private Vector2 _moveInput;
+        private Vector3 _moveVelocity;
         private float _currentSpeed;
 
         public void Start()
@@ -33,16 +28,16 @@ namespace Player
         {
             _moveInput = moveAction.action.ReadValue<Vector2>();
 
-            if (!(_moveInput.magnitude >= 0.1f))
+            if (_moveInput.magnitude >= 0.1f)
             {
-                MoveSpeed = Vector3.zero;
-                return;
+                Sprint();
+                Rotate();
+                Move();
             }
-
-            Sprint();
-
-            Rotate();
-            Move();
+            else
+            {
+                animationController.SetSpeed(0);
+            }
         }
 
         private void Rotate()
@@ -54,18 +49,27 @@ namespace Player
 
         private void Move()
         {
-            MoveSpeed = new Vector3(_moveInput.x, 0, _moveInput.y);
-            MoveSpeed = Vector3.ClampMagnitude(MoveSpeed, 1f);
-            MoveSpeed *= _currentSpeed * Time.deltaTime;
-            MoveSpeed = characterController.transform.TransformDirection(MoveSpeed);
-            characterController.Move(MoveSpeed);
+            _moveVelocity = new Vector3(_moveInput.x, 0, _moveInput.y);
+            _moveVelocity = Vector3.ClampMagnitude(_moveVelocity, 1f);
+            _moveVelocity *= _currentSpeed * Time.deltaTime;
+            _moveVelocity = characterController.transform.TransformDirection(_moveVelocity);
+            characterController.Move(_moveVelocity);
+
+            animationController.SetSpeed(_moveInput.magnitude);
         }
 
         private void Sprint()
         {
-            IsSprinting = sprintAction.action.inProgress;
+            _currentSpeed = sprintAction.action.inProgress ? runSpeed : moveSpeed;
 
-            _currentSpeed = IsSprinting ? runSpeed : moveSpeed;
+            if (sprintAction.action.inProgress)
+            {
+                animationController.StartSprint();
+            }
+            else
+            {
+                animationController.EndSprint();
+            }
         }
     }
 }

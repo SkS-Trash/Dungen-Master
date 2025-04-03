@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProceduralDungeon
+namespace ProceduralDungeon.Map
 {
     public class MapGenerator : IMapGenerator
     {

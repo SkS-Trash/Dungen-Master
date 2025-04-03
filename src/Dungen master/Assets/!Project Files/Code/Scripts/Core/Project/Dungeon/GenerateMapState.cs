@@ -1,5 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using ProceduralDungeon;
+using ProceduralDungeon.Decor;
+using ProceduralDungeon.Enemy;
+using ProceduralDungeon.Map;
 using StateMachines.DirectControlMultiLayer.ForState;
 
 namespace Core.Project.Dungeon
