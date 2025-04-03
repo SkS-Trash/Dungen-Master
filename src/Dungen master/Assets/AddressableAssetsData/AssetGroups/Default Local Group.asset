@@ -173,6 +173,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a018389a406dd714396ef5bb17c45f31
+    m_Address: Assets/!Project Files/Level/Prefabs/Environment/Other/Start.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a6a51ff08a9c08141847fefc1823c905
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/Wall.prefab
     m_ReadOnly: 0
