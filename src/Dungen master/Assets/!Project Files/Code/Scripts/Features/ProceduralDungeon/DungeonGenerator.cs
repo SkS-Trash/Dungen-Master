@@ -1,4 +1,7 @@
 ﻿using System;
+using ProceduralDungeon.Decor;
+using ProceduralDungeon.Enemy;
+using ProceduralDungeon.Map;
 
 namespace ProceduralDungeon
 {

@@ -1,40 +1,22 @@
-using Observers.Input;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
     public class PlayerAnimationController : MonoBehaviour
     {
-        private static readonly int IsAttackingMelee = Animator.StringToHash("IsAttackingMelee");
-        private static readonly int IsAttackingMagic = Animator.StringToHash("IsAttackingMagic");
         private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int IsJumping = Animator.StringToHash("IsJumping");
+        private static readonly int Sprint = Animator.StringToHash("IsSprint");
+        private static readonly int AttackingMelee = Animator.StringToHash("AttackingMelee");
+        private static readonly int AttackingMagic = Animator.StringToHash("AttackingMagic");
 
-        [SerializeField] private InputActionReader inputActionReader;
+        [SerializeField] private Animator animator;
 
-        private Animator _animator;
-        private CharacterController _characterController;
+        public void SetSpeed(float speed) => animator.SetFloat(Speed, speed);
 
-        private void Start()
-        {
-            _animator = GetComponent<Animator>();
-            _characterController = GetComponent<CharacterController>();
-        }
+        public void StartSprint() => animator.SetBool(Sprint, true);
+        public void EndSprint() => animator.SetBool(Sprint, false);
 
-        private void Update()
-        {
-            _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude);
-
-            _animator.SetBool(IsJumping, inputActionReader.IsJumping && _characterController.isGrounded);
-
-            if (inputActionReader.IsSprinting)
-            {
-                _animator.SetFloat(Speed, inputActionReader.MoveValue.magnitude * 2);
-            }
-
-            _animator.SetBool(IsAttackingMelee, inputActionReader.IsAttackingPhysical);
-
-            _animator.SetBool(IsAttackingMagic, inputActionReader.IsAttackingMagical);
-        }
+        public void MagicAttack() => animator.SetTrigger(AttackingMagic);
+        public void MeleeAttack() => animator.SetTrigger(AttackingMelee);
     }
 }
