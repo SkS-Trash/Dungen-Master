@@ -87,6 +87,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42913affeef760d488191ffbbfeef5df
+    m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e70bcd0fc0318342b234d458980a507
     m_Address: Objects/Player
     m_ReadOnly: 0

@@ -22,8 +22,8 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        var x = Input.GetAxis("Horizontal");
+        var z = Input.GetAxis("Vertical");
 
         if (Input.GetButton("Fire3"))
             speedBoost = sprintSpeed;
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
             speedBoost = 1f;
 
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        var move = transform.right * x + transform.forward * z;
 
         controller.Move(move * (baseSpeed + speedBoost) * Time.deltaTime);
 
