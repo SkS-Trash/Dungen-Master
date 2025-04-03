@@ -66,6 +66,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c59362f1b2f4334d839f2acd8ffa4d7
+    m_Address: Assets/!Project Files/Level/Prefabs/Weapons/Weapon - cutter01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3167b2396a815d343a14386af1393e1b
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/Column.prefab
     m_ReadOnly: 0
