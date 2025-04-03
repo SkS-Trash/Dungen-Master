@@ -37,8 +37,12 @@ namespace Core.Project.Dungeon
             await _projectEngine.RunOneShot<GenerateMapState, DungeonGenerationData>(data);
             await _projectEngine.RunOneShot<ConstructionMapState, (TileType[,], LevelStyleConfig)>((data.MapLayer,
                 styleConfig));
+
             await _projectEngine.RunOneShot<ConstructionDecorState, (DecorType[,], LevelStyleConfig)>((data.DecorLayer,
                 styleConfig));
+
+            await _projectEngine.RunOneShot<BakeNavMeshState>();
+
             await _projectEngine.RunOneShot<ConstructionEnemyState, (EnemyType[,], LevelStyleConfig)>((data.EnemyLayer,
                 styleConfig));
 
