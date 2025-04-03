@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using Subscribers;
+using Subscribers.EventBusSystem;
+using UnityEngine;
 
 namespace Magic
 {
@@ -27,15 +30,33 @@ namespace Magic
 
         public void CastSpell()
         {
-            _spellCastToTime = Time.time;
-            _spellCooldown = spell.Cooldown;
-
             spell.Cast(magicCastPoint);
+
+            StartCoroutine(CooldownCoroutine());
         }
 
         public void SetSpell(Spell newSpell)
         {
             spell = newSpell;
         }
+
+        private IEnumerator CooldownCoroutine()
+        {
+            _spellCastToTime = Time.time;
+            _spellCooldown = spell.Cooldown;
+
+            float currentSpellCooldown = 0;
+            while (currentSpellCooldown < _spellCooldown)
+            {
+                currentSpellCooldown += Time.deltaTime;
+                EventBus.RaiseEvent<IPlayerMagicCooldownSubscriber>(x =>
+                    x.OnPlayerMagicCooldownChanged(CurrentSpellCooldown(currentSpellCooldown)));
+
+                yield return null;
+            }
+        }
+
+        private float CurrentSpellCooldown(float currentSpellCooldown) => 
+            1 - currentSpellCooldown / _spellCooldown;
     }
 }
