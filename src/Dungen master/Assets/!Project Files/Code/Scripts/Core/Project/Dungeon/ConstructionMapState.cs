@@ -35,8 +35,11 @@ namespace Core.Project.Dungeon
             for (var y = 0; y < mapLayer.GetLength(1); y++)
             {
                 if (mapLayer[x, y] == TileType.Empty) continue;
+    
+                if (mapLayer[x, y] == TileType.Start || mapLayer[x, y] == TileType.Exit)
+                    await InstantCell(TileType.Floor, dataConfig, x, y, parent);
 
-                await InstantCell(mapLayer, dataConfig, x, y, parent);
+                await InstantCell(mapLayer[x, y], dataConfig, x, y, parent);
             }
         }
 
@@ -48,11 +51,9 @@ namespace Core.Project.Dungeon
             return parent;
         }
 
-        private async UniTask InstantCell(TileType[,] mapLayer, LevelStyleConfig dataConfig, int x, int y,
+        private async UniTask InstantCell(TileType tileType, LevelStyleConfig dataConfig, int x, int y,
             Transform parent)
         {
-            var tileType = mapLayer[x, y];
-
             var prefabs = dataConfig.GetTileConfig(tileType).Prefabs;
 
             if (prefabs == null || prefabs.Length == 0) return;
