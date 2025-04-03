@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: b59165d0bb3c5b14082c0c0f6eb00422
+AssetOrigin:
+  serializedVersion: 1
+  productId: 281809
+  packageName: LowPoly Mysterious Dungeon
+  packageVersion: 1.2
+  assetPath: Assets/LowPoly Mysterious Dungeon/Models/Props/Greave_01.fbx
+  uploadId: 730096
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -16,8 +23,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -40,6 +45,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -100,15 +106,9 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 281809
-  packageName: LowPoly Mysterious Dungeon
-  packageVersion: 1.2
-  assetPath: Assets/LowPoly Mysterious Dungeon/Models/Props/Greave_01.fbx
-  uploadId: 730096
