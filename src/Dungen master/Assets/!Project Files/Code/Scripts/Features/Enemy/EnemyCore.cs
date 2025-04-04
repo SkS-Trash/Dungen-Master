@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StateMachines.TransitionMultiLayer;
+using UnityEngine;
 
 namespace Enemy
 {
@@ -7,11 +8,17 @@ namespace Enemy
     {
         private EnemyHealth _enemyHealth;
         private EnemyMovement _enemyMovement;
+        private IStateMachine _stateMachine;
 
         private void Awake()
         {
             _enemyHealth = GetComponent<EnemyHealth>();
             _enemyMovement = GetComponent<EnemyMovement>();
+        }
+
+        private void Start()
+        {
+            _stateMachine = new StateMachine();
         }
 
         private void OnEnable()
