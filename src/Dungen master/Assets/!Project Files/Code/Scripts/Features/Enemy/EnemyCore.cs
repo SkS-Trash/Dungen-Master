@@ -1,5 +1,6 @@
-﻿using StateMachines.TransitionMultiLayer;
-using StateMachines.TransitionMultiLayer.ForState;
+﻿using System;
+using System.Collections;
+using StateMachines.TransitionMultiLayer;
 using UnityEngine;
 
 namespace Enemy
@@ -7,14 +8,22 @@ namespace Enemy
     [RequireComponent(typeof(EnemyHealth), typeof(EnemyMovement))]
     public class EnemyCore : MonoBehaviour
     {
-        private EnemyHealth _enemyHealth;
-        private EnemyMovement _enemyMovement;
+        [SerializeField] private float aggroRange = 10f;
+        [SerializeField] private float attackRange = 2f;
+        [SerializeField] private float attackCooldown = 1f;
+
         private IStateMachine _stateMachine;
+
+        private EnemyHealth _health;
+        private EnemyMovement _movement;
+        // private EnemyAnimator _animator;
+
+        private Transform _playerTransform;
 
         private void Awake()
         {
-            _enemyHealth = GetComponent<EnemyHealth>();
-            _enemyMovement = GetComponent<EnemyMovement>();
+            _movement = GetComponent<EnemyMovement>();
+            _health = GetComponent<EnemyHealth>();
         }
 
         private void Start()
@@ -22,9 +31,33 @@ namespace Enemy
             _stateMachine = new StateMachine();
 
             // Create states
-            var idleState = new IdleState(this);
+            var idleState = new IdleState(this, _movement);
+            var patrolState = new PatrolState(this, _movement);
+            var followState = new FollowState(this, _movement, _playerTransform);
+            var attackState = new AttackState(this, _movement, 1f);
+            var damageState = new DamageState(this, _movement, _health);
+            var deathState = new DeathState(this, _movement);
 
-            // Add transitions
+            // Create
+            Func<bool> isPlayerInRange = () => DistanceToPlayer() < aggroRange;
+            Func<bool> isPlayerInAttackRange = () => DistanceToPlayer() < attackRange;
+            Func<bool> isPlayerOutOfRange = () => _playerTransform == null || DistanceToPlayer() > aggroRange;
+            Func<bool> isPlayerInDamageState = () => damageState.IsGetHitEnd;
+            Func<bool> isInDeathState = () => _health.CurrentHealth <= 0;
+
+            // Set up transitions
+            _stateMachine.AddTransition(idleState, followState, false, isPlayerInRange);
+            _stateMachine.AddTransition(idleState, patrolState, false, isPlayerOutOfRange);
+
+            _stateMachine.AddTransition(followState, idleState, false, isPlayerOutOfRange);
+            _stateMachine.AddTransition(followState, attackState, false, isPlayerInAttackRange);
+
+            _stateMachine.AddTransition(attackState, followState, false, isPlayerOutOfRange);
+            _stateMachine.AddTransition(attackState, damageState, false, isPlayerInDamageState);
+
+            _stateMachine.AddTransition(damageState, followState, false, isPlayerInDamageState);
+
+            _stateMachine.AddGlobalTransition(deathState, isInDeathState);
 
             // Set initial state
             _stateMachine.SetInitialState(idleState);
@@ -32,42 +65,46 @@ namespace Enemy
 
         private void OnEnable()
         {
-            _enemyHealth.OnHealthChanged += HandleHealthChanged;
+            _health.OnHealthChanged += HandleHealthChanged;
         }
 
         private void OnDisable()
         {
-            _enemyHealth.OnHealthChanged -= HandleHealthChanged;
+            _health.OnHealthChanged -= HandleHealthChanged;
+        }
+
+        private void Update()
+        {
+            _stateMachine.Tick();
         }
 
         private void HandleHealthChanged(int currentHealth)
         {
+            // TODO: Update health UI
+
             if (currentHealth <= 0)
             {
                 Destroy(gameObject);
             }
         }
-    }
 
-    public class IdleState : IState
-    {
-        private readonly EnemyCore _enemyCore;
-
-        public IdleState(EnemyCore enemyCore)
+        private float DistanceToPlayer()
         {
-            _enemyCore = enemyCore;
+            if (_playerTransform == null)
+                return float.PositiveInfinity;
+
+            return Vector3.Distance(transform.position, _playerTransform.position);
         }
 
-        public void OnEnter()
+        public void StartDeathCoroutine()
         {
+            StartCoroutine(DestroyAfterDelay(2f));
         }
 
-        public void OnExecute()
+        private IEnumerator DestroyAfterDelay(float delay)
         {
-        }
-
-        public void OnExit()
-        {
+            yield return new WaitForSeconds(delay);
+            Destroy(gameObject);
         }
     }
 }

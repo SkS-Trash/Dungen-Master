@@ -7,8 +7,6 @@ namespace Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyMovement : MonoBehaviour
     {
-        public event Action<Vector3> OnDestinationReached;
-
         public Vector3 CurrentDestination => _agent.destination;
 
         private NavMeshAgent _agent;
@@ -18,19 +16,10 @@ namespace Enemy
             _agent = GetComponent<NavMeshAgent>();
         }
 
-        private void FixedUpdate()
-        {
-            if (_agent.hasPath &&
-                _agent.isStopped == false &&
-                _agent.remainingDistance <= _agent.stoppingDistance)
-            {
-                OnDestinationReached?.Invoke(CurrentDestination);
-            }
-        }
-
         public void MoveTo(Vector3 targetPosition)
         {
             _agent.SetDestination(targetPosition);
+            _agent.isStopped = false;
         }
 
         public void StopMoving()
@@ -42,5 +31,10 @@ namespace Enemy
         {
             _agent.isStopped = false;
         }
+
+        public bool HasReachedDestination() =>
+            _agent.hasPath &&
+            _agent.isStopped == false &&
+            _agent.remainingDistance <= _agent.stoppingDistance;
     }
 }

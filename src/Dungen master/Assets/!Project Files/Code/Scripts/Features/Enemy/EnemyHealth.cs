@@ -8,6 +8,9 @@ namespace Enemy
     {
         public event Action<int> OnHealthChanged;
 
+        [field: ShowInInspector, HideInEditorMode]
+        public bool WasDamaged { get; set; }
+
         [field: SerializeField, ReadOnly] public int CurrentHealth { get; private set; }
 
         [SerializeField, HideInEditorMode] private int maxHealth = 100;

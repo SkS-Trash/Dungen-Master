@@ -43,12 +43,12 @@ namespace Core.Project.Dungeon
 
             await _projectEngine.RunOneShot<BakeNavMeshState>();
 
+            await _projectEngine.RunOneShot<InstantiatePlayerState, TileType[,]>(data.MapLayer);
+            
+            await _projectEngine.RunOneShot<InstantiateUIState>();
+            
             await _projectEngine.RunOneShot<ConstructionEnemyState, (EnemyType[,], LevelStyleConfig)>((data.EnemyLayer,
                 styleConfig));
-
-            await _projectEngine.RunOneShot<InstantiateUIState>();
-
-            await _projectEngine.RunOneShot<InstantiatePlayerState, TileType[,]>(data.MapLayer);
 
             await _projectEngine.RunOneShot<ConfiguredGameState>();
         }

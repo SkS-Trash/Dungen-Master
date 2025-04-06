@@ -39,7 +39,7 @@ namespace Core.Project.Dungeon
         private async Task<Transform> CreatedParent()
         {
             var parentObject = await _gameObjectFactory.InstantiateAsync(GameObjectsPaths.EMPTY_GAME_OBJECT);
-            parentObject.name = "Dungeon map";
+            parentObject.name = "Dungeon enemies";
             var parent = parentObject.transform;
             return parent;
         }
