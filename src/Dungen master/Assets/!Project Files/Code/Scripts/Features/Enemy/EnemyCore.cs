@@ -1,4 +1,5 @@
 ﻿using StateMachines.TransitionMultiLayer;
+using StateMachines.TransitionMultiLayer.ForState;
 using UnityEngine;
 
 namespace Enemy
@@ -19,6 +20,14 @@ namespace Enemy
         private void Start()
         {
             _stateMachine = new StateMachine();
+
+            // Create states
+            var idleState = new IdleState(this);
+
+            // Add transitions
+
+            // Set initial state
+            _stateMachine.SetInitialState(idleState);
         }
 
         private void OnEnable()
@@ -37,6 +46,28 @@ namespace Enemy
             {
                 Destroy(gameObject);
             }
+        }
+    }
+
+    public class IdleState : IState
+    {
+        private readonly EnemyCore _enemyCore;
+
+        public IdleState(EnemyCore enemyCore)
+        {
+            _enemyCore = enemyCore;
+        }
+
+        public void OnEnter()
+        {
+        }
+
+        public void OnExecute()
+        {
+        }
+
+        public void OnExit()
+        {
         }
     }
 }
