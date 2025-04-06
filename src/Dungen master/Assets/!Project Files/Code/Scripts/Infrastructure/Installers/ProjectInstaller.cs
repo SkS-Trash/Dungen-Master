@@ -4,6 +4,7 @@ using Factories.UI;
 using Observers.Input;
 using Observers.UnityGameLoop;
 using Providers.Assets;
+using Providers.Containers.Game;
 using Providers.Containers.Scene;
 using Providers.Data;
 using Services.CoroutineRunner;
@@ -31,6 +32,7 @@ namespace Installers
             builder.RegisterInstance(inputActionReader).AsImplementedInterfaces().AsSelf();
             builder.Register<IUnityGameLoopObserver, UnityGameLoopObserver>(Lifetime.Singleton);
 
+            builder.Register<IGameContainerProvider, GameContainerProvider>(Lifetime.Singleton);
             builder.Register<ISceneContainerProvider, SceneContainerProvider>(Lifetime.Singleton);
             builder.Register<IStaticDataProvider, StaticDataProvider>(Lifetime.Singleton);
             builder.Register<IAssetsProvider, AssetsAddressablesProvider>(Lifetime.Singleton);
