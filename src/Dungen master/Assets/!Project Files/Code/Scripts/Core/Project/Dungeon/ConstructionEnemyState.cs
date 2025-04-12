@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Enemy;
 using Factories.GameObject;
 using ProceduralDungeon;
 using Providers.Containers.Game;
@@ -12,6 +13,8 @@ namespace Core.Project.Dungeon
     {
         private readonly IGameObjectFactory _gameObjectFactory;
         private readonly IGameContainerProvider _containerProvider;
+
+        private Transform _playerTransform;
 
         public ConstructionEnemyState(
             IGameObjectFactory gameObjectFactory,
@@ -26,6 +29,7 @@ namespace Core.Project.Dungeon
         public async UniTask OnEnterAsync(Unit _)
         {
             var container = _containerProvider.Container;
+            _playerTransform = container.PlayerTransform;
 
             await ConstructionLayer(container.EnemyLayer, container.LevelStyleConfig);
         }
@@ -39,7 +43,7 @@ namespace Core.Project.Dungeon
             {
                 if (mapLayer[x, y] == EnemyType.None) continue;
 
-                await InstantCell(mapLayer, dataConfig, x, y, parent);
+                await InstantCell(mapLayer[x, y], dataConfig, x, y, parent);
             }
         }
 
@@ -51,12 +55,10 @@ namespace Core.Project.Dungeon
             return parent;
         }
 
-        private async UniTask InstantCell(EnemyType[,] mapLayer, LevelStyleConfig dataConfig, int x, int y,
+        private async UniTask InstantCell(EnemyType enemyType, LevelStyleConfig dataConfig, int x, int y,
             Transform parent)
         {
-            var tileType = mapLayer[x, y];
-
-            var prefabs = dataConfig.GetEnemyConfig(tileType).Prefabs;
+            var prefabs = dataConfig.GetEnemyConfig(enemyType).Prefabs;
 
             if (prefabs == null || prefabs.Length == 0) return;
 
@@ -64,12 +66,15 @@ namespace Core.Project.Dungeon
 
             if (assetReference == null) return;
 
-            await _gameObjectFactory.InstantiateAsync(
+            var enemyInstance = await _gameObjectFactory.InstantiateAsync(
                 assetReference,
                 new Vector3(x, 0, y),
                 Quaternion.identity,
                 parent
             );
+
+            var enemyCore = enemyInstance.GetComponent<EnemyCore>();
+            enemyCore.SetPlayerTransform(_playerTransform);
         }
     }
 }

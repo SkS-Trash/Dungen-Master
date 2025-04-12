@@ -77,6 +77,8 @@ namespace Enemy
         {
             _stateMachine.Tick();
         }
+        
+        public void SetPlayerTransform(Transform playerTransform) => _playerTransform = playerTransform;
 
         private void HandleHealthChanged(int currentHealth)
         {
