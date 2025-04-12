@@ -126,9 +126,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5943024134203254504, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7537753012608484210, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
       propertyPath: m_Name
-      value: Skeleton Magician 2 Variant
+      value: Skeleton Magician 2
       objectReference: {fileID: 0}
     - target: {fileID: 7977033827393699512, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
       propertyPath: m_AnchorMax.x

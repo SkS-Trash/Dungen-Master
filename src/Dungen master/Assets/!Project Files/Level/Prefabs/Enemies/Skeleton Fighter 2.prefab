@@ -88,7 +88,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 568952307317875859, guid: 1c894a722c9f361489310eca98720568, type: 3}
       propertyPath: m_Name
-      value: Skeleton Fighter 2 Variant
+      value: Skeleton Fighter 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115265446724533437, guid: 1c894a722c9f361489310eca98720568, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5083747239707541271, guid: 1c894a722c9f361489310eca98720568, type: 3}
       propertyPath: m_LocalPosition.x
