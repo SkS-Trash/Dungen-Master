@@ -51,8 +51,6 @@ namespace StateMachines.TransitionMultiLayer
             var transition = GetValidTransition();
             if (transition != null)
             {
-                Debug.Log($"Переход от {CurrentState?.GetType().Name} к {transition.To.GetType().Name}");
-
                 if (transition.Removing)
                 {
                     RemoveState();
@@ -117,7 +115,8 @@ namespace StateMachines.TransitionMultiLayer
                 if (transition.CanTransition())
                     return transition;
 
-            if (!_stateTransitions.TryGetValue(CurrentState, out var transitions)) return null;
+            if (!_stateTransitions.TryGetValue(CurrentState, out var transitions)) 
+                return null;
 
             foreach (var transition in transitions)
                 if (transition.CanTransition())

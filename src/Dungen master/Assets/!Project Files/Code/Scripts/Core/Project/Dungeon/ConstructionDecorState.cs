@@ -2,25 +2,31 @@
 using Cysharp.Threading.Tasks;
 using Factories.GameObject;
 using ProceduralDungeon;
+using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer.ForState;
 using UnityEngine;
 
 namespace Core.Project.Dungeon
 {
-    public class ConstructionDecorState : IStateOneShot<(DecorType[,] map, LevelStyleConfig config)>
+    public class ConstructionDecorState : IStateOneShot
     {
         private readonly IGameObjectFactory _gameObjectFactory;
+        private readonly IGameContainerProvider _containerProvider;
 
         public ConstructionDecorState(
-            IGameObjectFactory gameObjectFactory
+            IGameObjectFactory gameObjectFactory,
+            IGameContainerProvider containerProvider
         )
         {
             _gameObjectFactory = gameObjectFactory;
+            _containerProvider = containerProvider;
         }
 
-        public async UniTask OnEnterAsync((DecorType[,] map, LevelStyleConfig config) data)
+        public async UniTask OnEnterAsync(Unit _)
         {
-            await ConstructionLayer(data.map, data.config);
+            var container = _containerProvider.Container;
+
+            await ConstructionLayer(container.DecorLayer, container.LevelStyleConfig);
         }
 
         private async UniTask ConstructionLayer(DecorType[,] mapLayer, LevelStyleConfig dataConfig)

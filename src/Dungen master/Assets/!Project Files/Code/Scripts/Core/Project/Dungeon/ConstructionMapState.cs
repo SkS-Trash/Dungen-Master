@@ -2,29 +2,32 @@
 using Cysharp.Threading.Tasks;
 using Factories.GameObject;
 using ProceduralDungeon;
-using Providers.Assets;
+using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer.ForState;
 using UnityEngine;
 
 namespace Core.Project.Dungeon
 {
-    public class ConstructionMapState : IStateOneShot<(TileType[,] map, LevelStyleConfig config)>
+    public class ConstructionMapState : IStateOneShot
     {
         private readonly IGameObjectFactory _gameObjectFactory;
-        private readonly IAssetsProvider _assetsProvider;
+        private readonly IGameContainerProvider _containerProvider;
 
         public ConstructionMapState(
             IGameObjectFactory gameObjectFactory,
-            IAssetsProvider assetsProvider
+            IGameContainerProvider containerProvider
         )
         {
             _gameObjectFactory = gameObjectFactory;
-            _assetsProvider = assetsProvider;
+            _containerProvider = containerProvider;
         }
 
-        public async UniTask OnEnterAsync((TileType[,] map, LevelStyleConfig config) data)
+
+        public async UniTask OnEnterAsync(Unit _)
         {
-            await ConstructionLayer(data.map, data.config);
+            var container = _containerProvider.Container;
+
+            await ConstructionLayer(container.MapLayer, container.LevelStyleConfig);
         }
 
         private async UniTask ConstructionLayer(TileType[,] mapLayer, LevelStyleConfig dataConfig)
@@ -35,7 +38,7 @@ namespace Core.Project.Dungeon
             for (var y = 0; y < mapLayer.GetLength(1); y++)
             {
                 if (mapLayer[x, y] == TileType.Empty) continue;
-    
+
                 if (mapLayer[x, y] == TileType.Start || mapLayer[x, y] == TileType.Exit)
                     await InstantCell(TileType.Floor, dataConfig, x, y, parent);
 
