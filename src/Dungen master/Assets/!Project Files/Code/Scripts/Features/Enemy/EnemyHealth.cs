@@ -11,13 +11,14 @@ namespace Enemy
         [field: ShowInInspector, HideInEditorMode]
         public bool WasDamaged { get; set; }
 
-        [field: SerializeField, ReadOnly] public int CurrentHealth { get; private set; }
+        [field: ShowInInspector, ReadOnly, HideInEditorMode]
+        public int CurrentHealth { get; private set; }
 
-        [SerializeField, HideInEditorMode] private int maxHealth = 100;
+        [field: SerializeField] public int MaxHealth { get; private set; } = 100;
 
         private void Start()
         {
-            CurrentHealth = maxHealth;
+            CurrentHealth = MaxHealth;
         }
 
         public void TakeDamage(int damage)
@@ -37,9 +38,9 @@ namespace Enemy
         public void Heal(int healAmount)
         {
             CurrentHealth += healAmount;
-            if (CurrentHealth > maxHealth)
+            if (CurrentHealth > MaxHealth)
             {
-                CurrentHealth = maxHealth;
+                CurrentHealth = MaxHealth;
             }
 
             OnHealthChanged?.Invoke(CurrentHealth);

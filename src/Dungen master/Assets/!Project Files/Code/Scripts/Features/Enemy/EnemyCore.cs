@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using Sirenix.OdinInspector;
 using StateMachines.TransitionMultiLayer;
@@ -16,7 +16,7 @@ namespace Enemy
         [SerializeField] private float attackCooldown = 1f;
 
         private IStateMachine _stateMachine;
-
+        [SerializeField] private EnemyCurrentStateDraw stateDraw;
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyHealth _health;
 
@@ -111,7 +111,7 @@ namespace Enemy
 
         private void HandleHealthChanged(int currentHealth)
         {
-            // TODO: Update health UI
+            healthBar.SetHealthPercentage((float)currentHealth / _health.MaxHealth);
 
             if (currentHealth <= 0)
             {
