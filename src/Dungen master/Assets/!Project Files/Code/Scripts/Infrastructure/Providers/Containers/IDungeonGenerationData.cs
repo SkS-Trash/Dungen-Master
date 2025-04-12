@@ -1,6 +1,6 @@
 ﻿using ProceduralDungeon;
 
-namespace Providers.Containers.Game
+namespace Providers.Containers
 {
     public interface IDungeonGenerationData
     {
