@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using Sirenix.OdinInspector;
 using StateMachines.TransitionMultiLayer;
+using UI.Game;
 using UnityEngine;
 
 namespace Enemy
@@ -9,14 +10,14 @@ namespace Enemy
     [RequireComponent(typeof(EnemyHealth), typeof(EnemyMovement))]
     public class EnemyCore : MonoBehaviour
     {
+        [SerializeField] private float multiplierOutOfRanges = 1.25f;
         [SerializeField] private float aggroRange = 10f;
         [SerializeField] private float attackRange = 2f;
-        [SerializeField] private float multiplierOutOfRanges = 1.25f;
-
         [SerializeField] private float attackCooldown = 1f;
-
-        private IStateMachine _stateMachine;
+        [Space]
+        [SerializeField] private HealthBar healthBar;
         [SerializeField] private EnemyCurrentStateDraw stateDraw;
+        
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyHealth _health;
 
@@ -29,6 +30,8 @@ namespace Enemy
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private Transform _playerTransform;
 
+        private IStateMachine _stateMachine;
+
         private void Awake()
         {
             _movement = GetComponent<EnemyMovement>();
@@ -38,6 +41,7 @@ namespace Enemy
         public void Initialize()
         {
             _stateMachine = new StateMachine();
+            _stateMachine.OnStateChanged += state => stateDraw.SetCurrentState(state.ToString());
 
             // Create states
             var idleState = new IdleState(this, _movement);
@@ -54,11 +58,13 @@ namespace Enemy
             _stateMachine.AddTransition(followState, idleState, false, IsPlayerOutOfRange);
             _stateMachine.AddTransition(followState, attackState, false, IsPlayerInAttackRange);
 
+            _stateMachine.AddTransition(patrolState, followState, false, IsPlayerInRange);
+
             _stateMachine.AddTransition(attackState, followState, false, IsPlayerOutOfAttackRange);
-            _stateMachine.AddTransition(attackState, damageState, false, IsDamage);
 
             _stateMachine.AddTransition(damageState, idleState, false, IsDamageEnd);
 
+            _stateMachine.AddGlobalTransition(damageState, IsDamage);
             _stateMachine.AddGlobalTransition(deathState, IsInDeathState);
 
             // Set initial state

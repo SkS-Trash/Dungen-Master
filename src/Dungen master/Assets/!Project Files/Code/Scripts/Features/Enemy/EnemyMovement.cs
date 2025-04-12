@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +8,7 @@ namespace Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyMovement : MonoBehaviour
     {
-        public Vector3 CurrentDestination => _agent.destination;
+        [ShowInInspector, HideInEditorMode] public Vector3 CurrentDestination => _agent.destination;
 
         private NavMeshAgent _agent;
 

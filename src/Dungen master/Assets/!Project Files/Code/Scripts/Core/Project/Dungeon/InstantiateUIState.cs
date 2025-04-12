@@ -30,7 +30,7 @@ namespace Core.Project.Dungeon
         private void SetupHudUI()
         {
             var hudUI = _windowService.Get<HudUI>(WindowID.HUD);
-            hudUI.HealthBar.SetHealthPercentage(1f);
+            hudUI.PlayerHealthBar.SetHealthPercentage(1f);
             hudUI.MagicCooldown.SetMagicCooldownPercentage(0f);
         }
     }
