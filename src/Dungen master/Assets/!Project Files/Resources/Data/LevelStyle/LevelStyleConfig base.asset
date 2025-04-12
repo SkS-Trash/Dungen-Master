@@ -69,14 +69,24 @@ MonoBehaviour:
   enemyConfigs:
   - <Type>k__BackingField: 1
     <Prefabs>k__BackingField:
-    - m_AssetGUID: 1c894a722c9f361489310eca98720568
+    - m_AssetGUID: 4147f4aff28a6fd479ec336f4ac232ad
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+    - m_AssetGUID: e277583cc8101354bb83777e92fb30bc
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 1
   - <Type>k__BackingField: 2
     <Prefabs>k__BackingField:
-    - m_AssetGUID: c658eb53f4b402c41985b34d6c2da6ea
+    - m_AssetGUID: 280e43da94c984e49bfceb5c994bcff7
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
+    - m_AssetGUID: e599bf126aa68d44f9af1d8668dd5256
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 

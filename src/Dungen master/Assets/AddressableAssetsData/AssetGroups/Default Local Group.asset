@@ -60,6 +60,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 280e43da94c984e49bfceb5c994bcff7
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemies/Skeleton Magician 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2afdd7cfcd5397d42a26ec56df0c5142
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/PressurePlate.prefab
     m_ReadOnly: 0
@@ -79,6 +84,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ae0da4b9f92c0b419f354fabaa5776e
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Wall Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4147f4aff28a6fd479ec336f4ac232ad
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemies/Skeleton Fighter 1.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -225,6 +235,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e277583cc8101354bb83777e92fb30bc
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemies/Skeleton Fighter 2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e599bf126aa68d44f9af1d8668dd5256
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemies/Skeleton Magician 2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f01cb13ed96fedc46b60997fb97ba2c9
     m_Address: UI/Hud
