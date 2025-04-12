@@ -6,6 +6,7 @@ namespace Enemy
     {
         private readonly EnemyMovement _movement;
         private readonly EnemyHealth _health;
+
         public bool IsGetHitEnd => _damageTimer <= 0;
 
         private const float DAMAGE_ANIMATION_TIME = 0.5f;

@@ -73,8 +73,9 @@ namespace Core.Project.Dungeon
                 parent
             );
 
-            var enemyCore = enemyInstance.GetComponent<EnemyCore>();
-            enemyCore.SetPlayerTransform(_playerTransform);
+            enemyInstance.GetComponent<EnemyCore>()
+                .SetPlayerTransform(_playerTransform)
+                .Initialize();
         }
     }
 }

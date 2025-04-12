@@ -22,6 +22,8 @@ namespace Enemy
 
         public void TakeDamage(int damage)
         {
+            WasDamaged = true;
+
             CurrentHealth -= damage;
 
             if (CurrentHealth <= 0)

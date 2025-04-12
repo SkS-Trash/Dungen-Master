@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Sirenix.OdinInspector;
 using StateMachines.TransitionMultiLayer;
 using UnityEngine;
 
@@ -10,14 +11,22 @@ namespace Enemy
     {
         [SerializeField] private float aggroRange = 10f;
         [SerializeField] private float attackRange = 2f;
+        [SerializeField] private float multiplierOutOfRanges = 1.25f;
+
         [SerializeField] private float attackCooldown = 1f;
 
         private IStateMachine _stateMachine;
 
+        [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyHealth _health;
+
+        [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyMovement _movement;
+
+        // [ShowInInspector, ReadOnly, HideInEditorMode]
         // private EnemyAnimator _animator;
 
+        [ShowInInspector, ReadOnly, HideInEditorMode]
         private Transform _playerTransform;
 
         private void Awake()
@@ -26,7 +35,7 @@ namespace Enemy
             _health = GetComponent<EnemyHealth>();
         }
 
-        private void Start()
+        public void Initialize()
         {
             _stateMachine = new StateMachine();
 
@@ -38,29 +47,45 @@ namespace Enemy
             var damageState = new DamageState(this, _movement, _health);
             var deathState = new DeathState(this, _movement);
 
-            // Create
-            Func<bool> isPlayerInRange = () => DistanceToPlayer() < aggroRange;
-            Func<bool> isPlayerInAttackRange = () => DistanceToPlayer() < attackRange;
-            Func<bool> isPlayerOutOfRange = () => _playerTransform == null || DistanceToPlayer() > aggroRange;
-            Func<bool> isPlayerInDamageState = () => damageState.IsGetHitEnd;
-            Func<bool> isInDeathState = () => _health.CurrentHealth <= 0;
-
             // Set up transitions
-            _stateMachine.AddTransition(idleState, followState, false, isPlayerInRange);
-            _stateMachine.AddTransition(idleState, patrolState, false, isPlayerOutOfRange);
+            _stateMachine.AddTransition(idleState, followState, false, IsPlayerInRange);
+            _stateMachine.AddTransition(idleState, patrolState, false, IsPlayerOutOfRange);
 
-            _stateMachine.AddTransition(followState, idleState, false, isPlayerOutOfRange);
-            _stateMachine.AddTransition(followState, attackState, false, isPlayerInAttackRange);
+            _stateMachine.AddTransition(followState, idleState, false, IsPlayerOutOfRange);
+            _stateMachine.AddTransition(followState, attackState, false, IsPlayerInAttackRange);
 
-            _stateMachine.AddTransition(attackState, followState, false, isPlayerOutOfRange);
-            _stateMachine.AddTransition(attackState, damageState, false, isPlayerInDamageState);
+            _stateMachine.AddTransition(attackState, followState, false, IsPlayerOutOfAttackRange);
+            _stateMachine.AddTransition(attackState, damageState, false, IsDamage);
 
-            _stateMachine.AddTransition(damageState, followState, false, isPlayerInDamageState);
+            _stateMachine.AddTransition(damageState, idleState, false, IsDamageEnd);
 
-            _stateMachine.AddGlobalTransition(deathState, isInDeathState);
+            _stateMachine.AddGlobalTransition(deathState, IsInDeathState);
 
             // Set initial state
             _stateMachine.SetInitialState(idleState);
+
+            return;
+
+            bool IsPlayerInRange() =>
+                DistanceToPlayer() < aggroRange;
+
+            bool IsPlayerOutOfRange() =>
+                _playerTransform == null || DistanceToPlayer() > aggroRange * multiplierOutOfRanges;
+
+            bool IsPlayerInAttackRange() =>
+                DistanceToPlayer() < attackRange;
+
+            bool IsPlayerOutOfAttackRange() =>
+                _playerTransform == null || DistanceToPlayer() > attackRange * multiplierOutOfRanges;
+
+            bool IsDamage() =>
+                _health.WasDamaged;
+
+            bool IsDamageEnd() =>
+                damageState.IsGetHitEnd;
+
+            bool IsInDeathState() =>
+                _health.CurrentHealth <= 0;
         }
 
         private void OnEnable()
@@ -77,8 +102,12 @@ namespace Enemy
         {
             _stateMachine.Tick();
         }
-        
-        public void SetPlayerTransform(Transform playerTransform) => _playerTransform = playerTransform;
+
+        public EnemyCore SetPlayerTransform(Transform playerTransform)
+        {
+            _playerTransform = playerTransform;
+            return this;
+        }
 
         private void HandleHealthChanged(int currentHealth)
         {
@@ -96,17 +125,6 @@ namespace Enemy
                 return float.PositiveInfinity;
 
             return Vector3.Distance(transform.position, _playerTransform.position);
-        }
-
-        public void StartDeathCoroutine()
-        {
-            StartCoroutine(DestroyAfterDelay(2f));
-        }
-
-        private IEnumerator DestroyAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            Destroy(gameObject);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Factories.GameObject;
+using Player;
 using ProceduralDungeon;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer.ForState;
@@ -68,7 +69,7 @@ namespace Core.Project.Dungeon
                 Quaternion.identity
             );
 
-            container.PlayerTransform = player.transform;
+            container.PlayerTransform = player.GetComponentInChildren<ThirdPersonController>().transform;
         }
     }
 }
