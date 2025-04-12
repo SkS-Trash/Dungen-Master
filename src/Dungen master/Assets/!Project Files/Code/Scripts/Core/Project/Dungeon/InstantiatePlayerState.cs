@@ -1,25 +1,32 @@
 ﻿using Cysharp.Threading.Tasks;
 using Factories.GameObject;
 using ProceduralDungeon;
+using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer.ForState;
 using UnityEngine;
 
 namespace Core.Project.Dungeon
 {
-    public class InstantiatePlayerState : IStateOneShot<TileType[,]>
+    public class InstantiatePlayerState : IStateOneShot
     {
         private readonly IGameObjectFactory _gameObjectFactory;
+        private readonly IGameContainerProvider _containerProvider;
 
         public InstantiatePlayerState(
-            IGameObjectFactory gameObjectFactory
+            IGameObjectFactory gameObjectFactory,
+            IGameContainerProvider containerProvider
         )
         {
             _gameObjectFactory = gameObjectFactory;
+            _containerProvider = containerProvider;
         }
 
-        public async UniTask OnEnterAsync(TileType[,] mapLayer)
+
+        public async UniTask OnEnterAsync(Unit _)
         {
-            var spawnPoint = GetSpawnPoint(mapLayer);
+            var container = _containerProvider.Container;
+
+            var spawnPoint = GetSpawnPoint(container.MapLayer);
 
             await InstantiatePlayerUI(spawnPoint);
         }

@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using ProceduralDungeon;
+using Providers.Containers.Game;
 using Providers.Data;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer.ForState;
@@ -11,44 +12,39 @@ namespace Core.Project.Dungeon
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IStaticDataProvider _staticDataProvider;
+        private readonly IGameContainerProvider _containerProvider;
 
         public TestState(
             IProjectEngine projectEngine,
-            IStaticDataProvider staticDataProvider
+            IStaticDataProvider staticDataProvider,
+            IGameContainerProvider containerProvider
         )
         {
             _projectEngine = projectEngine;
             _staticDataProvider = staticDataProvider;
+            _containerProvider = containerProvider;
         }
 
         public async UniTask OnEnterAsync(Unit _)
         {
-            var data = new DungeonGenerationData
-            {
-                Width = 50,
-                Height = 50,
-                RoomCount = 10,
-                RoomMinSize = 5,
-                RoomMaxSize = 10
-            };
+            var container = _containerProvider.Container;
+
+            container.Width = 50;
+            container.Height = 50;
+            container.RoomCount = 10;
+            container.RoomMinSize = 5;
+            container.RoomMaxSize = 10;
 
             var levelStyleConfigs = _staticDataProvider.GetLevelStyleConfigs();
-            var styleConfig = levelStyleConfigs[Random.Range(0, levelStyleConfigs.Length)];
-            await _projectEngine.RunOneShot<GenerateMapState, DungeonGenerationData>(data);
-            await _projectEngine.RunOneShot<ConstructionMapState, (TileType[,], LevelStyleConfig)>((data.MapLayer,
-                styleConfig));
+            container.LevelStyleConfig = levelStyleConfigs[Random.Range(0, levelStyleConfigs.Length)];
 
-            await _projectEngine.RunOneShot<ConstructionDecorState, (DecorType[,], LevelStyleConfig)>((data.DecorLayer,
-                styleConfig));
-
+            await _projectEngine.RunOneShot<GenerateMapState>();
+            await _projectEngine.RunOneShot<ConstructionMapState>();
+            await _projectEngine.RunOneShot<ConstructionDecorState>();
             await _projectEngine.RunOneShot<BakeNavMeshState>();
-
-            await _projectEngine.RunOneShot<InstantiatePlayerState, TileType[,]>(data.MapLayer);
-            
+            await _projectEngine.RunOneShot<InstantiatePlayerState>();
             await _projectEngine.RunOneShot<InstantiateUIState>();
-            
-            await _projectEngine.RunOneShot<ConstructionEnemyState, (EnemyType[,], LevelStyleConfig)>((data.EnemyLayer,
-                styleConfig));
+            await _projectEngine.RunOneShot<ConstructionEnemyState>();
 
             await _projectEngine.RunOneShot<ConfiguredGameState>();
         }

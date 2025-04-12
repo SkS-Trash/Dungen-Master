@@ -3,14 +3,26 @@ using ProceduralDungeon;
 using ProceduralDungeon.Decor;
 using ProceduralDungeon.Enemy;
 using ProceduralDungeon.Map;
+using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer.ForState;
 
 namespace Core.Project.Dungeon
 {
-    public class GenerateMapState : IStateOneShot<DungeonGenerationData>
+    public class GenerateMapState : IStateOneShot
     {
-        public UniTask OnEnterAsync(DungeonGenerationData data)
+        private readonly IGameContainerProvider _containerProvider;
+
+        public GenerateMapState(
+            IGameContainerProvider containerProvider
+        )
         {
+            _containerProvider = containerProvider;
+        }
+
+        public UniTask OnEnterAsync(Unit _)
+        {
+            var data = _containerProvider.Container;
+
             var generator = new DungeonGenerator(
                 new MapGenerator(data.Width, data.Height),
                 new DecorGenerator(data.Width, data.Height),
