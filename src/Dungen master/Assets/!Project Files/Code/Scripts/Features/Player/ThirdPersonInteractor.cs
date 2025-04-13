@@ -1,15 +1,14 @@
 using UnityEngine;
-using System.Collections;
 
 public class ThirdPersonInteractor : MonoBehaviour
 {
-    [Header("Настройки взаимодействия")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public float interactionRange = 2f; 
     public KeyCode interactionKey = KeyCode.E; 
     public LayerMask interactableLayer; 
     public Transform interactionPoint; 
 
-    [Header("Визуализация")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public GameObject interactionUI; 
 
     private Interactable currentInteractable; 

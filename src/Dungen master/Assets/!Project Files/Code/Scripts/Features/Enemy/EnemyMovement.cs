@@ -1,6 +1,4 @@
-﻿using System;
-using Sirenix.OdinInspector;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace Enemy
@@ -34,8 +32,16 @@ namespace Enemy
         }
 
         public bool HasReachedDestination() =>
-            _agent.hasPath &&
-            _agent.isStopped == false &&
-            _agent.remainingDistance <= _agent.stoppingDistance;
+            !_agent.pathPending &&
+            _agent.remainingDistance < 0.5f;
+
+        public void SetSpeed(float chaseSpeed) =>
+            _agent.speed = chaseSpeed;
+
+        public void SetStoppingDistance(float stoppingDistance, bool autoBraking)
+        {
+            _agent.stoppingDistance = stoppingDistance;
+            _agent.autoBraking = autoBraking;
+        }
     }
 }

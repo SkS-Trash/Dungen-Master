@@ -4,18 +4,20 @@ namespace Enemy
 {
     public class DeathState : EnemyState
     {
-        private readonly EnemyMovement _movement;
+        private readonly EnemyAnimator _animator;
 
-        public DeathState(EnemyCore core, EnemyMovement movement) : base(core)
+        public DeathState(EnemyCore core,
+            EnemyAnimator animator, EnemyAnimationEvents animationEvents) : base(core)
         {
-            _movement = movement;
+            _animator = animator;
         }
 
         public override void OnEnter()
         {
-            _movement.StopMoving();
             // Core.GetComponent<Collider>().enabled = false;
             Object.Destroy(Core.gameObject, 2f);
+            
+            _animator.LaunchDeath();
         }
     }
 }

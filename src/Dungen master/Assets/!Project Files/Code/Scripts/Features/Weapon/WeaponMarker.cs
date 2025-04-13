@@ -8,6 +8,11 @@ namespace Weapon
 
         [SerializeField] private Collider hitDetector;
 
+        private void Awake()
+        {
+            DisableWeaponColliders();
+        }
+
         public void SetDamage(float damage)
         {
             Damage = damage;

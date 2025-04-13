@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using StateMachines.TransitionMultiLayer;
 using UI.Game;
 using UnityEngine;
 
 namespace Enemy
 {
-    [RequireComponent(typeof(EnemyHealth), typeof(EnemyMovement))]
+    [RequireComponent(typeof(EnemyHealth), typeof(EnemyMovement), typeof(EnemyAnimator))]
     public class EnemyCore : MonoBehaviour
     {
         [SerializeField] private float multiplierOutOfRanges = 1.25f;
         [SerializeField] private float aggroRange = 10f;
         [SerializeField] private float attackRange = 2f;
         [SerializeField] private float attackCooldown = 1f;
-        [Space]
-        [SerializeField] private HealthBar healthBar;
+        [Space] [SerializeField] private float patrolSpeed = 2f;
+        [SerializeField] private float chaseSpeed = 4f;
+        [Space] [SerializeField] private HealthBar healthBar;
         [SerializeField] private EnemyCurrentStateDraw stateDraw;
-        
-        [ShowInInspector, ReadOnly, HideInEditorMode]
+
+        [Space] [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyHealth _health;
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
@@ -26,6 +25,9 @@ namespace Enemy
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyAnimator _animator;
+
+        [ShowInInspector, ReadOnly, HideInEditorMode]
+        private EnemyAnimationEvents _animationEvents;
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private Transform _playerTransform;
@@ -36,6 +38,8 @@ namespace Enemy
         {
             _movement = GetComponent<EnemyMovement>();
             _health = GetComponent<EnemyHealth>();
+            _animator = GetComponent<EnemyAnimator>();
+            _animationEvents = GetComponentInChildren<EnemyAnimationEvents>();
         }
 
         public void Initialize()
@@ -44,23 +48,27 @@ namespace Enemy
             _stateMachine.OnStateChanged += state => stateDraw.SetCurrentState(state.ToString());
 
             // Create states
-            var idleState = new IdleState(this, _movement);
-            var patrolState = new PatrolState(this, _movement);
-            var followState = new FollowState(this, _movement, _playerTransform);
-            var attackState = new AttackState(this, _movement, 1f);
-            var damageState = new DamageState(this, _movement, _health);
-            var deathState = new DeathState(this, _movement);
+            var idleState = new IdleState(this);
+            var patrolState = new PatrolState(this, _movement, _animator, patrolSpeed);
+            var followState = new FollowState(this, _movement, _animator, chaseSpeed, _playerTransform);
+            var attackState = new AttackState(this, _animator, _animationEvents, 1f);
+            var damageState = new DamageState(this, _animator, _animationEvents, _health);
+            var deathState = new DeathState(this, _animator, _animationEvents);
 
+            // Есть баг с переходами между Idle - Follow - Attack - между ними
+            
             // Set up transitions
-            _stateMachine.AddTransition(idleState, followState, false, IsPlayerInRange);
+            _stateMachine.AddTransition(idleState, attackState, false, IsPlayerInAttackRange, IsAttackReady);
+            _stateMachine.AddTransition(idleState, followState, false, IsPlayerInRange, IsPlayerOutOfAttackRange);
             _stateMachine.AddTransition(idleState, patrolState, false, IsPlayerOutOfRange);
 
-            _stateMachine.AddTransition(followState, idleState, false, IsPlayerOutOfRange);
-            _stateMachine.AddTransition(followState, attackState, false, IsPlayerInAttackRange);
+            _stateMachine.AddTransition(followState, patrolState, false, IsPlayerOutOfRange);
+            _stateMachine.AddTransition(followState, attackState, false, IsPlayerInAttackRange, IsAttackReady);
 
-            _stateMachine.AddTransition(patrolState, followState, false, IsPlayerInRange);
+            _stateMachine.AddTransition(patrolState, followState, false, IsPlayerInRange, IsPlayerOutOfAttackRange);
 
-            _stateMachine.AddTransition(attackState, followState, false, IsPlayerOutOfAttackRange);
+            _stateMachine.AddTransition(attackState, idleState, false, IsPlayerOutOfAttackRange);
+            _stateMachine.AddTransition(attackState, idleState, false, IsAttackEnd);
 
             _stateMachine.AddTransition(damageState, idleState, false, IsDamageEnd);
 
@@ -76,13 +84,13 @@ namespace Enemy
                 DistanceToPlayer() < aggroRange;
 
             bool IsPlayerOutOfRange() =>
-                _playerTransform == null || DistanceToPlayer() > aggroRange * multiplierOutOfRanges;
+                !_playerTransform || DistanceToPlayer() > aggroRange * multiplierOutOfRanges;
 
             bool IsPlayerInAttackRange() =>
                 DistanceToPlayer() < attackRange;
 
             bool IsPlayerOutOfAttackRange() =>
-                _playerTransform == null || DistanceToPlayer() > attackRange * multiplierOutOfRanges;
+                !_playerTransform || DistanceToPlayer() > attackRange * multiplierOutOfRanges;
 
             bool IsDamage() =>
                 _health.WasDamaged;
@@ -92,6 +100,12 @@ namespace Enemy
 
             bool IsInDeathState() =>
                 _health.CurrentHealth <= 0;
+
+            bool IsAttackReady() =>
+                attackState.IsAttackReady;
+
+            bool IsAttackEnd() =>
+                attackState.IsAttackEnd;
         }
 
         private void OnEnable()

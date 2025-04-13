@@ -5,15 +5,29 @@ namespace Enemy
     public class PatrolState : EnemyState
     {
         private readonly EnemyMovement _movement;
+        private readonly EnemyAnimator _animator;
+        private readonly float _patrolSpeed;
 
-        public PatrolState(EnemyCore core, EnemyMovement movement) : base(core)
+        public PatrolState(EnemyCore core,
+            EnemyMovement movement,
+            EnemyAnimator animator,
+            float patrolSpeed
+        ) : base(core)
         {
             _movement = movement;
+            _animator = animator;
+            _patrolSpeed = patrolSpeed;
         }
 
         public override void OnEnter()
         {
             MoveToNextPoint();
+
+            _movement.ResumeMoving();
+            _animator.SetIsWalk(true);
+
+            _movement.SetSpeed(_patrolSpeed);
+            _movement.SetStoppingDistance(0f, false);
         }
 
         public override void OnExecute()
@@ -22,6 +36,12 @@ namespace Enemy
             {
                 MoveToNextPoint();
             }
+        }
+
+        public override void OnExit()
+        {
+            _movement.StopMoving();
+            _animator.SetIsWalk(false);
         }
 
         private void MoveToNextPoint()
