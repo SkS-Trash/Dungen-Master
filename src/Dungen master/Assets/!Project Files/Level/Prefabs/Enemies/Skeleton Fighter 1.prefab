@@ -8,13 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1209455857843799621, guid: 1c894a722c9f361489310eca98720568, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 3863252703955033871}
     - target: {fileID: 568952307317875859, guid: 1c894a722c9f361489310eca98720568, type: 3}
       propertyPath: m_Name
       value: Skeleton Fighter 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3115265446724533437, guid: 1c894a722c9f361489310eca98720568, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5083747239707541271, guid: 1c894a722c9f361489310eca98720568, type: 3}
       propertyPath: m_LocalPosition.x
@@ -151,6 +151,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94025afe18059204e901d3bec7d70224, type: 3}
+--- !u!95 &3863252703955033871 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6659670115249032763, guid: 94025afe18059204e901d3bec7d70224, type: 3}
+  m_PrefabInstance: {fileID: 7635538101694796084}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7168933500265121141 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 759923595828384833, guid: 94025afe18059204e901d3bec7d70224, type: 3}

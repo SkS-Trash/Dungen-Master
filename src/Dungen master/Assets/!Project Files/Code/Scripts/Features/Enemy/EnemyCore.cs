@@ -24,8 +24,8 @@ namespace Enemy
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyMovement _movement;
 
-        // [ShowInInspector, ReadOnly, HideInEditorMode]
-        // private EnemyAnimator _animator;
+        [ShowInInspector, ReadOnly, HideInEditorMode]
+        private EnemyAnimator _animator;
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private Transform _playerTransform;

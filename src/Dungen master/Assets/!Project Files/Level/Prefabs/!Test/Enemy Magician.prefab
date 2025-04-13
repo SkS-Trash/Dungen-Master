@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: -2226559417867269707}
   - component: {fileID: -8445184255985146414}
   - component: {fileID: 2891633480795269639}
+  - component: {fileID: 2572658098659461394}
   - component: {fileID: 5943024134203254504}
   - component: {fileID: 648161320975585524}
   m_Layer: 0
@@ -230,9 +231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb3f1a4ef86469ba1f0609593f06c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  multiplierOutOfRanges: 1.25
   aggroRange: 3
   attackRange: 1
-  multiplierOutOfRanges: 1.25
   attackCooldown: 3
   healthBar: {fileID: 5174517999173247577}
   stateDraw: {fileID: 8398165066976688474}
@@ -261,6 +262,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eee9cabae584e539819ef04b3aada19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2572658098659461394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537753012608484210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aedb04a845de4283bd743bc074db7f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!54 &5943024134203254504
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -284,7 +298,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
