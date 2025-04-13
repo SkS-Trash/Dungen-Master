@@ -68,11 +68,39 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wraith_II
       objectReference: {fileID: 0}
+    - target: {fileID: 8559799070492344383, guid: 06b5c058b87339541a56cdd22b4e8670, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7641313ddec9a5d4ab194ee264617fed, type: 2}
+    - target: {fileID: 8559799070492344383, guid: 06b5c058b87339541a56cdd22b4e8670, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3125919938299543807, guid: 06b5c058b87339541a56cdd22b4e8670, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1325083361158799619}
   m_SourcePrefab: {fileID: 100100000, guid: 06b5c058b87339541a56cdd22b4e8670, type: 3}
+--- !u!1 &2373213032694230923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3125919938299543807, guid: 06b5c058b87339541a56cdd22b4e8670, type: 3}
+  m_PrefabInstance: {fileID: 832646080313618292}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1325083361158799619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2373213032694230923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121f6239529f4167af4ae41c80a638a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3144787979644532017 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2317857594566744645, guid: 06b5c058b87339541a56cdd22b4e8670, type: 3}
@@ -91,6 +119,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: aggroRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: chaseSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: attackRange
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: patrolSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: attackCooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: multiplierOutOfRanges
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 648161320975585524, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2572658098659461394, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
       propertyPath: animator
       value: 
