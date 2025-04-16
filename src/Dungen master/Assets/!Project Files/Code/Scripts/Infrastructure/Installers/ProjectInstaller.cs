@@ -13,10 +13,12 @@ using Services.ProjectManager;
 using Services.SaveLoadData;
 using Services.SceneLoader;
 using Services.Window;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using IStateMachine = StateMachines.Transition.IStateMachine;
+using StateMachine = StateMachines.Transition.StateMachine;
 
 namespace Installers
 {
@@ -48,8 +50,8 @@ namespace Installers
             builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine,
                 StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);
 
-            builder.Register<StateMachines.TransitionMultiLayer.IStateMachine,
-                StateMachines.TransitionMultiLayer.StateMachine>(Lifetime.Transient);
+            builder.Register<IStateMachine,
+                StateMachine>(Lifetime.Transient);
 
             BindProjectStates(builder);
         }

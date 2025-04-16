@@ -3,7 +3,7 @@ using Core.Project.Home;
 using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
 using Services.Window;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UI.MainMenu;
 
 namespace Core.Project.MainMenu

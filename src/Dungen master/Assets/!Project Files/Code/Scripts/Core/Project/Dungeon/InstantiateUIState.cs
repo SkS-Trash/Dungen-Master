@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Services.Window;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UI.Game;
 
 namespace Core.Project.Dungeon

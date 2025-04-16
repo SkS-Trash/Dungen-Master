@@ -13,7 +13,6 @@ namespace Animation
             var eventType = Enum.Parse(typeof(TEventType), eventName);
             if (eventType is TEventType eventEnum)
             {
-                Debug.Log(eventEnum.ToString());
                 OnAnimationEvent?.Invoke(eventEnum);
                 return;
             }

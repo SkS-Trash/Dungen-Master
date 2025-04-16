@@ -1,4 +1,5 @@
 ﻿using Items;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -6,19 +7,34 @@ namespace Weapon
 {
     public class WeaponInHandController : MonoBehaviour
     {
-        [SerializeField] private WeaponConfig startingWeapon;
+        private bool WeaponInHand => isInHand;
+        private bool NotInHand => isInHand == false;
 
+        [SerializeField] private bool isInHand;
         [SerializeField] private Transform weaponParent;
+
+        [Space] [SerializeField, HideIf(nameof(WeaponInHand))]
+        private WeaponConfig startingWeapon;
+
+        [SerializeField, HideIf(nameof(NotInHand))]
+        private WeaponMarker weaponMarker;
 
         private WeaponMarker _currentWeapon;
 
         private void Start()
         {
-            if (startingWeapon)
+            if (isInHand)
+            {
+                _currentWeapon = weaponMarker;
+            }
+            else if (startingWeapon)
+            {
                 EquipWeapon(startingWeapon);
+            }
         }
 
-        public bool HasWeapon() => _currentWeapon != null;
+        public bool HasWeapon() =>
+            _currentWeapon != null;
 
         public async void EquipWeapon(WeaponConfig config)
         {
@@ -47,7 +63,7 @@ namespace Weapon
 
         private void UnequipCurrentWeapon()
         {
-            if (_currentWeapon != null)
+            if (HasWeapon())
             {
                 Destroy(_currentWeapon.gameObject);
             }
@@ -55,7 +71,7 @@ namespace Weapon
 
         public void EnableWeaponCollider()
         {
-            if (_currentWeapon == null)
+            if (!HasWeapon())
             {
                 Debug.LogWarning("Нет оружия в руке!");
                 return;
@@ -66,7 +82,7 @@ namespace Weapon
 
         public void DisableWeaponCollider()
         {
-            if (_currentWeapon == null)
+            if (!HasWeapon())
             {
                 Debug.LogWarning("Нет оружия в руке!");
                 return;

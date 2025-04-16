@@ -57,7 +57,7 @@ ModelImporter:
       events:
       - time: 0.94832826
         functionName: AnimationEventHandler
-        data: GetHitEnd
+        data: AttackEnd
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

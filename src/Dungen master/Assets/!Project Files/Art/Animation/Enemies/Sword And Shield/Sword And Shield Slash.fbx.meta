@@ -55,9 +55,23 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.24373576
+        functionName: AnimationEventHandler
+        data: EnablePhysicalAttack
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.9452887
         functionName: AnimationEventHandler
-        data: GetHitEnd
+        data: EnablePhysicalAttack
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.44512197
+        functionName: AnimationEventHandler
+        data: DisablePhysicalAttack
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
       propertyPath: attackCooldown
-      value: 5
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: -2226559417867269707, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
       propertyPath: multiplierOutOfRanges

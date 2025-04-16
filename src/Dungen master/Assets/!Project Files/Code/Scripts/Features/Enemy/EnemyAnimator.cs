@@ -12,10 +12,44 @@ namespace Enemy
 
         [SerializeField] private Animator animator;
 
-        public void SetIsWalk(bool value) => animator.SetBool(Walk, value);
-        public void SetIsRun(bool value) => animator.SetBool(Run, value);
-        public void LaunchHit() => animator.SetTrigger(Hit);
-        public void LaunchAttack() => animator.SetTrigger(Attack);
-        public void LaunchDeath() => animator.SetTrigger(Death);
+        private void Awake()
+        {
+            animator ??= GetComponent<Animator>();
+            if (!animator)
+            {
+                Debug.LogError("Компонент аниматора не найден на GameObject.");
+                enabled = false;
+            }
+        }
+
+        public void SetIsWalk(bool value)
+        {
+            if (animator)
+                animator.SetBool(Walk, value);
+        }
+
+        public void SetIsRun(bool value)
+        {
+            if (animator)
+                animator.SetBool(Run, value);
+        }
+
+        public void LaunchHit()
+        {
+            if (animator)
+                animator.SetTrigger(Hit);
+        }
+
+        public void LaunchAttack()
+        {
+            if (animator)
+                animator.SetTrigger(Attack);
+        }
+
+        public void LaunchDeath()
+        {
+            if (animator)
+                animator.SetTrigger(Death);
+        }
     }
 }

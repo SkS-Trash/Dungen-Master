@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Factories.GameObject;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;

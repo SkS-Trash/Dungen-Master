@@ -1,7 +1,6 @@
 ﻿using System;
-using StateMachines.TransitionMultiLayer.ForState;
 
-namespace StateMachines.TransitionMultiLayer
+namespace StateMachines.Transition
 {
     /// <summary>
     /// Интерфейс контроллера "машины состояний" с переходами.
@@ -32,9 +31,8 @@ namespace StateMachines.TransitionMultiLayer
         /// </summary>
         /// <param name="from">Исходное состояние.</param>
         /// <param name="to">Целевое состояние (или null для удаления).</param>
-        /// <param name="replacing">Флаг замены состояния.</param>
         /// <param name="conditions">Набор условий для выполнения перехода.</param>
-        void AddTransition(IState from, IState to, bool replacing = false, params Func<bool>[] conditions);
+        void AddTransition(IState from, IState to, params Func<bool>[] conditions);
 
         /// <summary>
         /// Добавляет глобальный (непривязанный) переход, который проверяется независимо от текущего состояния.

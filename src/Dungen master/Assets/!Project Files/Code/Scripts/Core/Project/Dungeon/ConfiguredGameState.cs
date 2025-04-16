@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
 namespace Core.Project.Dungeon

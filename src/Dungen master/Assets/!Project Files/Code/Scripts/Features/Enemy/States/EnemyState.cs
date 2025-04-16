@@ -1,4 +1,4 @@
-﻿using StateMachines.TransitionMultiLayer.ForState;
+﻿using StateMachines.Transition;
 
 namespace Enemy
 {

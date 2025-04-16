@@ -2,7 +2,7 @@
 using Factories.GameObject;
 using Providers.Containers;
 using Providers.Containers.Scene;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 using static GameObjectsPaths;
 

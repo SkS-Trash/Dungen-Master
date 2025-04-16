@@ -3,7 +3,7 @@ using Factories.GameObject;
 using Player;
 using ProceduralDungeon;
 using Providers.Containers.Game;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 using static GameObjectsPaths;
 

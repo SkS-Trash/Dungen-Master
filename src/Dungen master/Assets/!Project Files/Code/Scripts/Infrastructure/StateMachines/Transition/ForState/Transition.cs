@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace StateMachines.TransitionMultiLayer.ForState
+namespace StateMachines.Transition
 {
     /// <summary>
     /// Внутренний класс, описывающий переход между состояниями.
@@ -14,24 +14,13 @@ namespace StateMachines.TransitionMultiLayer.ForState
         public IState To { get; }
 
         /// <summary>
-        /// Флаг, указывающий, что переход должен заменить текущее состояние.
-        /// </summary>
-        public bool Replacing { get; }
-
-        /// <summary>
-        /// Возвращает true, если переход означает удаление состояния.
-        /// </summary>
-        public bool Removing => To == null;
-
-        /// <summary>
         /// Массив условий, которые должны быть выполнены для осуществления перехода.
         /// </summary>
         public Func<bool>[] Conditions { get; }
-        
-        public Transition(IState to, bool replacing, params Func<bool>[] conditions)
+
+        public Transition(IState to, params Func<bool>[] conditions)
         {
             To = to;
-            Replacing = replacing;
             Conditions = conditions;
         }
 
@@ -39,9 +28,7 @@ namespace StateMachines.TransitionMultiLayer.ForState
         /// Проверяет, что все условия перехода выполнены.
         /// </summary>
         /// <returns>Возвращает true, если все условия выполнены.</returns>
-        public bool CanTransition()
-        {
-            return Conditions.All(condition => condition());
-        }
+        public bool CanTransition() =>
+            Conditions.All(condition => condition.Invoke());
     }
 }

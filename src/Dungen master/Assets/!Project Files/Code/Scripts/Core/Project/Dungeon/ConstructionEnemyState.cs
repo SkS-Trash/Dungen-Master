@@ -4,7 +4,7 @@ using Enemy;
 using Factories.GameObject;
 using ProceduralDungeon;
 using Providers.Containers.Game;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
 namespace Core.Project.Dungeon

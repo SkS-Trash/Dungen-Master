@@ -1,7 +1,8 @@
 ﻿using Sirenix.OdinInspector;
-using StateMachines.TransitionMultiLayer;
+using StateMachines.Transition;
 using UI.Game;
 using UnityEngine;
+using Weapon;
 
 namespace Enemy
 {
@@ -14,8 +15,6 @@ namespace Enemy
         [SerializeField] private float attackCooldown = 1f;
         [Space] [SerializeField] private float patrolSpeed = 2f;
         [SerializeField] private float chaseSpeed = 4f;
-        [Space] [SerializeField] private HealthBar healthBar;
-        [SerializeField] private EnemyCurrentStateDraw stateDraw;
 
         [Space] [ShowInInspector, ReadOnly, HideInEditorMode]
         private EnemyHealth _health;
@@ -30,9 +29,19 @@ namespace Enemy
         private EnemyAnimationEvents _animationEvents;
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
+        private WeaponInHandController _weapon;
+
+        [ShowInInspector, ReadOnly, HideInEditorMode]
         private Transform _playerTransform;
 
+        [ShowInInspector, ReadOnly, HideInEditorMode]
+        private float PlayerDistance => _playerTransform == null
+            ? float.PositiveInfinity
+            : Vector3.Distance(_playerTransform.position, transform.position);
+
+        private EnemyCurrentStateDraw _stateDraw;
         private IStateMachine _stateMachine;
+        private HealthBar _healthBar;
 
         private void Awake()
         {
@@ -40,37 +49,51 @@ namespace Enemy
             _health = GetComponent<EnemyHealth>();
             _animator = GetComponent<EnemyAnimator>();
             _animationEvents = GetComponentInChildren<EnemyAnimationEvents>();
+            _weapon = GetComponentInChildren<WeaponInHandController>();
+            _stateDraw = GetComponentInChildren<EnemyCurrentStateDraw>();
+            _healthBar = GetComponentInChildren<HealthBar>();
         }
 
         public void Initialize()
         {
             _stateMachine = new StateMachine();
-            _stateMachine.OnStateChanged += state => stateDraw.SetCurrentState(state.ToString());
+            // _stateMachine.OnStateChanged += state => stateDraw.SetCurrentState(state.ToString());
+
+            IState currentState = null;
+            _stateMachine.OnStateChanged += state =>
+            {
+                Debug.Log($"{currentState} -> {state}");
+                if (_stateDraw)
+                    _stateDraw.SetCurrentState(state.ToString());
+                currentState = state;
+            };
+
 
             // Create states
             var idleState = new IdleState(this);
             var patrolState = new PatrolState(this, _movement, _animator, patrolSpeed);
             var followState = new FollowState(this, _movement, _animator, chaseSpeed, _playerTransform);
-            var attackState = new AttackState(this, _animator, _animationEvents, 1f);
+            var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon,
+                _playerTransform);
             var damageState = new DamageState(this, _animator, _animationEvents, _health);
             var deathState = new DeathState(this, _animator, _animationEvents);
 
-            // Есть баг с переходами между Idle - Follow - Attack - между ними
-            
+            // Есть баг с переходами между Attack - Idle - Follow
+
             // Set up transitions
-            _stateMachine.AddTransition(idleState, attackState, false, IsPlayerInAttackRange, IsAttackReady);
-            _stateMachine.AddTransition(idleState, followState, false, IsPlayerInRange, IsPlayerOutOfAttackRange);
-            _stateMachine.AddTransition(idleState, patrolState, false, IsPlayerOutOfRange);
+            _stateMachine.AddTransition(idleState, attackState, IsPlayerInAttackRange, IsAttackReady);
+            _stateMachine.AddTransition(idleState, followState, IsPlayerInRange, IsPlayerOutOfAttackRange);
+            _stateMachine.AddTransition(idleState, patrolState, IsPlayerOutOfRange);
 
-            _stateMachine.AddTransition(followState, patrolState, false, IsPlayerOutOfRange);
-            _stateMachine.AddTransition(followState, attackState, false, IsPlayerInAttackRange, IsAttackReady);
+            _stateMachine.AddTransition(followState, idleState, IsPlayerOutOfRange);
+            _stateMachine.AddTransition(followState, idleState, IsPlayerInAttackRange);
 
-            _stateMachine.AddTransition(patrolState, followState, false, IsPlayerInRange, IsPlayerOutOfAttackRange);
+            _stateMachine.AddTransition(patrolState, idleState, IsPlayerInRange);
 
-            _stateMachine.AddTransition(attackState, idleState, false, IsPlayerOutOfAttackRange);
-            _stateMachine.AddTransition(attackState, idleState, false, IsAttackEnd);
+            _stateMachine.AddTransition(attackState, idleState, IsPlayerOutOfAttackRange);
+            _stateMachine.AddTransition(attackState, idleState, IsAttackEnd);
 
-            _stateMachine.AddTransition(damageState, idleState, false, IsDamageEnd);
+            _stateMachine.AddTransition(damageState, idleState, IsDamageEnd);
 
             _stateMachine.AddGlobalTransition(damageState, IsDamage);
             _stateMachine.AddGlobalTransition(deathState, IsInDeathState);
@@ -80,17 +103,17 @@ namespace Enemy
 
             return;
 
-            bool IsPlayerInRange() =>
+            bool IsPlayerInRange() => 
                 DistanceToPlayer() < aggroRange;
 
-            bool IsPlayerOutOfRange() =>
-                !_playerTransform || DistanceToPlayer() > aggroRange * multiplierOutOfRanges;
+            bool IsPlayerOutOfRange() => 
+                DistanceToPlayer() > aggroRange * multiplierOutOfRanges;
 
-            bool IsPlayerInAttackRange() =>
+            bool IsPlayerInAttackRange() => 
                 DistanceToPlayer() < attackRange;
 
-            bool IsPlayerOutOfAttackRange() =>
-                !_playerTransform || DistanceToPlayer() > attackRange * multiplierOutOfRanges;
+            bool IsPlayerOutOfAttackRange() => 
+                DistanceToPlayer() > attackRange * multiplierOutOfRanges;
 
             bool IsDamage() =>
                 _health.WasDamaged;
@@ -101,7 +124,7 @@ namespace Enemy
             bool IsInDeathState() =>
                 _health.CurrentHealth <= 0;
 
-            bool IsAttackReady() =>
+            bool IsAttackReady() => 
                 attackState.IsAttackReady;
 
             bool IsAttackEnd() =>
@@ -118,7 +141,7 @@ namespace Enemy
             _health.OnHealthChanged -= HandleHealthChanged;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             _stateMachine.Tick();
         }
@@ -131,7 +154,7 @@ namespace Enemy
 
         private void HandleHealthChanged(int currentHealth)
         {
-            healthBar.SetHealthPercentage((float)currentHealth / _health.MaxHealth);
+            _healthBar.SetHealthPercentage((float)currentHealth / _health.MaxHealth);
 
             if (currentHealth <= 0)
             {
