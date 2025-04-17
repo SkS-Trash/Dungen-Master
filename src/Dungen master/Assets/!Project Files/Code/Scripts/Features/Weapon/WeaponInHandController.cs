@@ -17,15 +17,15 @@ namespace Weapon
         private WeaponConfig startingWeapon;
 
         [SerializeField, HideIf(nameof(NotInHand))]
-        private WeaponMarker weaponMarker;
-
+        private Transform weaponTransform;
+        
         private WeaponMarker _currentWeapon;
 
         private void Start()
         {
             if (isInHand)
             {
-                _currentWeapon = weaponMarker;
+                EquipWeapon(weaponTransform);
             }
             else if (startingWeapon)
             {
@@ -35,6 +35,29 @@ namespace Weapon
 
         public bool HasWeapon() =>
             _currentWeapon != null;
+        
+        public void EquipWeapon(Transform weapon)
+        {
+            UnequipCurrentWeapon();
+
+            if (weapon == null)
+            {
+                Debug.LogError("Не удалось загрузить оружие!");
+                return;
+            }
+
+            weapon.SetParent(weaponParent);
+            weapon.localPosition = Vector3.zero;
+            weapon.localRotation = Quaternion.identity;
+
+            _currentWeapon = weapon.GetComponentInChildren<WeaponMarker>();
+            if (_currentWeapon == null)
+            {
+                Debug.LogError("Загруженное оружие не содержит компонент WeaponMarker!");
+                Destroy(weapon.gameObject);
+                return;
+            }
+        }
 
         public async void EquipWeapon(WeaponConfig config)
         {
