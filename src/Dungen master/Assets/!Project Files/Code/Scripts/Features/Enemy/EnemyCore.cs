@@ -73,8 +73,7 @@ namespace Enemy
             var idleState = new IdleState(this);
             var patrolState = new PatrolState(this, _movement, _animator, patrolSpeed);
             var followState = new FollowState(this, _movement, _animator, chaseSpeed, _playerTransform);
-            var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon,
-                _playerTransform);
+            var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon, _playerTransform);
             var damageState = new DamageState(this, _animator, _animationEvents, _health);
             var deathState = new DeathState(this, _animator, _animationEvents);
 

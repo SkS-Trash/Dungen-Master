@@ -56,17 +56,17 @@ namespace Enemy
             if (_playerTransform == null) return;
 
             var direction = _playerTransform.position - Core.transform.position;
-            direction.y = 0;
-            Core.transform.rotation = Quaternion.Slerp(
-                Core.transform.rotation,
-                Quaternion.LookRotation(direction),
-                Time.deltaTime * 5f
-            );
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude > 0.01f)
+            {
+                var targetRotation = Quaternion.LookRotation(direction);
+                Core.transform.rotation = Quaternion.Slerp(Core.transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }
         }
 
         private void OnAnimationEvent(EnemyAnimationEvents.AnimationEventType eventType)
         {
-            Debug.Log($"[Animation event] {eventType}");
             switch (eventType)
             {
                 case EnemyAnimationEvents.AnimationEventType.AttackEnd:
