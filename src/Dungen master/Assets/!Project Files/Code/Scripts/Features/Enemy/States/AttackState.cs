@@ -66,7 +66,7 @@ namespace Enemy
 
         private void OnAnimationEvent(EnemyAnimationEvents.AnimationEventType eventType)
         {
-            Debug.Log($"Animation event: {eventType}");
+            Debug.Log($"[Animation event] {eventType}");
             switch (eventType)
             {
                 case EnemyAnimationEvents.AnimationEventType.AttackEnd:
