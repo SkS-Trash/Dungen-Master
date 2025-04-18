@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Factories.GameObject;
 using Factories.UI;
 using Observers.GameEvent;
@@ -29,12 +30,14 @@ namespace Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
+            ForceResolveNonLazyBindings(builder);
+
             builder.Register<IGameObjectFactory, GameObjectFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
 
             builder.RegisterInstance(inputActionReader).AsImplementedInterfaces().AsSelf();
             builder.Register<IUnityGameLoopObserver, UnityGameLoopObserver>(Lifetime.Singleton);
-            builder.Register<IGameEventObserver, GameEventObserver>(Lifetime.Singleton);
+            builder.Register<IGameEventObserver, INonLazy, GameEventObserver>(Lifetime.Singleton);
 
             builder.Register<IGameContainerProvider, GameContainerProvider>(Lifetime.Singleton);
             builder.Register<ISceneContainerProvider, SceneContainerProvider>(Lifetime.Singleton);
@@ -56,6 +59,15 @@ namespace Installers
                 StateMachine>(Lifetime.Transient);
 
             BindProjectStates(builder);
+        }
+
+        private static void ForceResolveNonLazyBindings(IContainerBuilder builder)
+        {
+            builder.RegisterBuildCallback(container =>
+            {
+                // Принудительно разрешить не ленивые зависимости
+                container.Resolve<IEnumerable<INonLazy>>();
+            });
         }
 
         private static void BindProjectStates(IContainerBuilder builder)

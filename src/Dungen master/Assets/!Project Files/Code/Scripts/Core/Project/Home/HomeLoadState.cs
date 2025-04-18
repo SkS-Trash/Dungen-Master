@@ -20,7 +20,7 @@ namespace Core.Project.Home
             await _projectEngine.RunOneShot<LoadHomeSceneState>();
             await _projectEngine.RunOneShot<InstantiatePlayerState>();
             
-            _projectEngine.ChangeState<HomeState>();
+            await _projectEngine.ChangeState<HomeState>();
         }
 
         public UniTask OnExitAsync()

@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer;
 
-namespace Core.Project.Base
+namespace Core.Project
 {
     public class BootstrapState : IState, IEnterable
     {

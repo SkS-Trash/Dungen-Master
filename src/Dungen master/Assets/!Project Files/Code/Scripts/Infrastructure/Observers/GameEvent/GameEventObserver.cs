@@ -1,12 +1,12 @@
 ﻿using System;
 using Core.Project.MainMenu;
 using Services.ProjectManager;
-using Subscribers;
 using Subscribers.EventBusSystem;
+using UnityEngine;
 
 namespace Observers.GameEvent
 {
-    public class GameEventObserver : IGameEventObserver, IDisposable
+    public class GameEventObserver : IGameEventObserver, IDisposable, INonLazy
     {
         private readonly IProjectEngine _projectEngine;
 
@@ -28,10 +28,5 @@ namespace Observers.GameEvent
         {
             _projectEngine.ChangeState<MainMenuState>();
         }
-    }
-
-    public interface IGameEventObserver :
-        IPlayerDeathSubscriber
-    {
     }
 }

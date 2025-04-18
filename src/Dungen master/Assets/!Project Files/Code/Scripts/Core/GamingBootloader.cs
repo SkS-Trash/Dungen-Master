@@ -1,4 +1,4 @@
-﻿using Core.Project.Base;
+﻿using Core.Project;
 using Services.ProjectManager;
 using VContainer.Unity;
 
