@@ -11,7 +11,7 @@ namespace Player
         [Space] [SerializeField] private CharacterController characterController;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float runSpeed = 10f;
-        [Space] [SerializeField] private PlayerAnimationController animationController;
+        [Space] [SerializeField] private PlayerAnimator animator;
         [Space] [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference sprintAction;
 
@@ -36,7 +36,7 @@ namespace Player
             }
             else
             {
-                animationController.SetSpeed(0);
+                animator.SetSpeed(0);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Player
             _moveVelocity = characterController.transform.TransformDirection(_moveVelocity);
             characterController.Move(_moveVelocity);
 
-            animationController.SetSpeed(_moveInput.magnitude);
+            animator.SetSpeed(_moveInput.magnitude);
         }
 
         private void Sprint()
@@ -64,11 +64,11 @@ namespace Player
 
             if (sprintAction.action.inProgress)
             {
-                animationController.StartSprint();
+                animator.StartSprint();
             }
             else
             {
-                animationController.EndSprint();
+                animator.EndSprint();
             }
         }
     }

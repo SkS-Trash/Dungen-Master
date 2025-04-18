@@ -10,7 +10,7 @@ namespace Player
         [SerializeField] private InputActionReference physicalAttackAction;
         [SerializeField] private InputActionReference magicAttackAction;
         [Space]
-        [SerializeField] private PlayerAnimationController animationController;
+        [SerializeField] private PlayerAnimator animator;
         [SerializeField] private WeaponInHandController weaponController;
         [SerializeField] private MagicCastController magicCastController;
 
@@ -33,7 +33,7 @@ namespace Player
             if (!_isAttackInProgress && weaponController.HasWeapon())
             {
                 _isAttackInProgress = true;
-                animationController.MeleeAttack();
+                animator.MeleeAttack();
             }
         }
         
@@ -42,7 +42,7 @@ namespace Player
             if (!_isAttackInProgress && magicCastController.CanCast())
             {
                 _isAttackInProgress = true;
-                animationController.MagicAttack();
+                animator.MagicAttack();
             }
         }
 

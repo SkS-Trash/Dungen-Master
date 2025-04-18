@@ -30,7 +30,9 @@ namespace Magic
 
         public void CastSpell()
         {
-            spell.Cast(magicCastPoint);
+            var spawnPosition = magicCastPoint.position;
+            var targetPosition = magicCastPoint.position + magicCastPoint.forward * 10;
+            spell.Cast(spawnPosition, targetPosition);
 
             StartCoroutine(CooldownCoroutine());
         }
@@ -56,7 +58,7 @@ namespace Magic
             }
         }
 
-        private float CurrentSpellCooldown(float currentSpellCooldown) => 
+        private float CurrentSpellCooldown(float currentSpellCooldown) =>
             1 - currentSpellCooldown / _spellCooldown;
     }
 }

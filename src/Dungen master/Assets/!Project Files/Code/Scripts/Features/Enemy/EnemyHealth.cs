@@ -1,9 +1,10 @@
 ﻿using System;
+using Health;
 using Sirenix.OdinInspector;
 
 namespace Enemy
 {
-    public class EnemyHealth : Health
+    public class EnemyHealth : HealthContainer
     {
         public event Action<int> OnHealthChanged;
 

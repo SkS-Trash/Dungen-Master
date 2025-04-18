@@ -17,7 +17,7 @@ namespace Enemy
             animator ??= GetComponent<Animator>();
             if (!animator)
             {
-                Debug.LogError("Компонент аниматора не найден на GameObject.");
+                Debug.LogError("Компонент аниматора не найден на GameObject.", this);
                 enabled = false;
             }
         }

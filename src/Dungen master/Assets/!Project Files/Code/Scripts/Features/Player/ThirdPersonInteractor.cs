@@ -1,86 +1,88 @@
 using UnityEngine;
 
-public class ThirdPersonInteractor : MonoBehaviour
+namespace Player
 {
-    [Header("��������� ��������������")]
-    public float interactionRange = 2f; 
-    public KeyCode interactionKey = KeyCode.E; 
-    public LayerMask interactableLayer; 
-    public Transform interactionPoint; 
-
-    [Header("������������")]
-    public GameObject interactionUI; 
-
-    private Interactable currentInteractable; 
-
-    void Update()
+    public class ThirdPersonInteractor : MonoBehaviour
     {
-        CheckForInteractables();
-        HandleInteractionInput();
-    }
+        public float interactionRange = 2f;
+        public KeyCode interactionKey = KeyCode.E;
+        public LayerMask interactableLayer;
+        public Transform interactionPoint;
 
-    void CheckForInteractables()
-    {
-        Ray ray = new Ray(interactionPoint.position, interactionPoint.forward);
-        RaycastHit hit;
+        public GameObject interactionUI;
 
-        if (Physics.Raycast(ray, out hit, interactionRange, interactableLayer))
+        private Interactable currentInteractable;
+
+        void Update()
         {
-            Interactable interactable = hit.collider.GetComponent<Interactable>();
+            CheckForInteractables();
+            HandleInteractionInput();
+        }
 
-            if (interactable != null)
+        void CheckForInteractables()
+        {
+            Ray ray = new Ray(interactionPoint.position, interactionPoint.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, interactionRange, interactableLayer))
             {
-                if (interactable != currentInteractable)
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+
+                if (interactable != null)
                 {
-                    if (currentInteractable != null)
-                        currentInteractable.OnLoseFocus();
+                    if (interactable != currentInteractable)
+                    {
+                        if (currentInteractable != null)
+                            currentInteractable.OnLoseFocus();
 
-                    currentInteractable = interactable;
-                    interactable.OnGainFocus();
+                        currentInteractable = interactable;
+                        interactable.OnGainFocus();
+                    }
+
+
+                    if (interactionUI != null)
+                        interactionUI.SetActive(true);
                 }
-
-                
-                if (interactionUI != null)
-                    interactionUI.SetActive(true);
+                else
+                {
+                    ClearCurrentInteractable();
+                }
             }
             else
             {
                 ClearCurrentInteractable();
             }
         }
-        else
-        {
-            ClearCurrentInteractable();
-        }
-    }
 
-    void HandleInteractionInput()
-    {
-        if (Input.GetKeyDown(interactionKey) && currentInteractable != null)
+        void HandleInteractionInput()
         {
-            currentInteractable.OnInteract();
-        }
-    }
-
-    void ClearCurrentInteractable()
-    {
-        if (currentInteractable != null)
-        {
-            currentInteractable.OnLoseFocus();
-            currentInteractable = null;
+            if (Input.GetKeyDown(interactionKey) && currentInteractable != null)
+            {
+                currentInteractable.OnInteract();
+            }
         }
 
-        
-        if (interactionUI != null)
-            interactionUI.SetActive(false);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        if (interactionPoint != null)
+        void ClearCurrentInteractable()
         {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(interactionPoint.position, interactionPoint.position + interactionPoint.forward * interactionRange);
+            if (currentInteractable != null)
+            {
+                currentInteractable.OnLoseFocus();
+                currentInteractable = null;
+            }
+
+
+            if (interactionUI != null)
+                interactionUI.SetActive(false);
+        }
+
+        void OnDrawGizmosSelected()
+        {
+            if (interactionPoint != null)
+            {
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(interactionPoint.position,
+                    interactionPoint.position + interactionPoint.forward * interactionRange);
+            }
         }
     }
 }

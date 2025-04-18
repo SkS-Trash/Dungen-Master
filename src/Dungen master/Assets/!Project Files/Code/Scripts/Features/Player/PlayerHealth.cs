@@ -1,9 +1,10 @@
-﻿using Subscribers;
+﻿using Health;
+using Subscribers;
 using Subscribers.EventBusSystem;
 
 namespace Player
 {
-    public class PlayerHealth : Health
+    public class PlayerHealth : HealthContainer
     {
         public override void TakeDamage(int damage)
         {

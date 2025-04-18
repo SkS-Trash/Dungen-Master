@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour
+namespace Player
 {
-    public virtual void OnInteract()
+    public abstract class Interactable : MonoBehaviour
     {
-        Debug.Log("Взаимодействие с " + gameObject.name);
-    }
+        public virtual void OnInteract()
+        {
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ " + gameObject.name);
+        }
 
-    public virtual void OnGainFocus()
-    {
-        Debug.Log("Объект в фокусе: " + gameObject.name);
-    }
+        public virtual void OnGainFocus()
+        {
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: " + gameObject.name);
+        }
 
-    public virtual void OnLoseFocus()
-    {
-        Debug.Log("Объект потерял фокус: " + gameObject.name);
+        public virtual void OnLoseFocus()
+        {
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " + gameObject.name);
+        }
     }
 }
