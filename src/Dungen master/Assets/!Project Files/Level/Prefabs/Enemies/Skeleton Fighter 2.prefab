@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4363432797054753295}
   - component: {fileID: 4247124707847566108}
-  - component: {fileID: 6997657312461367059}
+  - component: {fileID: 7587495078674549721}
   m_Layer: 0
   m_Name: Hit point
   m_TagString: Untagged
@@ -56,7 +56,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.6, z: 0}
---- !u!114 &6997657312461367059
+--- !u!114 &7587495078674549721
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,10 +65,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3019385690827939722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a9392b3514b413d9101ec321da18449, type: 3}
+  m_Script: {fileID: 11500000, guid: ebf8808a1f5c4d2a92a508da852d1a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: {fileID: 867336889402775830}
+  health: {fileID: 867336889402775830}
+  targetUnits: 01000000
 --- !u!1 &4330937687723606714
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,6 +323,10 @@ PrefabInstance:
     - target: {fileID: 1750638106375628024, guid: 2c59362f1b2f4334d839f2acd8ffa4d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6582675495330461500, guid: 2c59362f1b2f4334d839f2acd8ffa4d7, type: 3}
+      propertyPath: <UnitType>k__BackingField
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8537456927668618046, guid: 2c59362f1b2f4334d839f2acd8ffa4d7, type: 3}
       propertyPath: m_Name

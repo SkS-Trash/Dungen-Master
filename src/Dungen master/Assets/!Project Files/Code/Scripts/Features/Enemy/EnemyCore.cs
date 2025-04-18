@@ -62,7 +62,7 @@ namespace Enemy
             IState currentState = null;
             _stateMachine.OnStateChanged += state =>
             {
-                Debug.Log($"{currentState} -> {state}");
+                // Debug.Log($"{currentState} -> {state}");
                 if (_stateDraw)
                     _stateDraw.SetCurrentState(state.ToString());
                 currentState = state;

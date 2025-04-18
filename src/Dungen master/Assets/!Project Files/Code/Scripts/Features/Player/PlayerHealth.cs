@@ -1,49 +1,31 @@
-﻿using Sirenix.OdinInspector;
-using Subscribers;
+﻿using Subscribers;
 using Subscribers.EventBusSystem;
-using UnityEngine;
 
 namespace Player
 {
-    public class PlayerHealth : MonoBehaviour
+    public class PlayerHealth : Health
     {
-        [SerializeField, ReadOnly, HideInEditorMode]
-        private int maxHealth = 100;
-
-        [SerializeField, ReadOnly, HideInEditorMode]
-        private int currentHealth;
-
-        private void Start()
+        public override void TakeDamage(int damage)
         {
-            currentHealth = maxHealth;
-        }
+            base.TakeDamage(damage);
 
-        public void TakeDamage(int damage)
-        {
-            currentHealth -= damage;
+            EventBus.RaiseEvent<IPlayerHealthPercentageSubscriber>(subscriber =>
+                subscriber.OnPlayerHealthPercentageChanged(GetPercentage()));
 
-            if (currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
-                currentHealth = 0;
                 EventBus.RaiseEvent<IPlayerDeathSubscriber>(subscriber => subscriber.OnPlayerDeath());
             }
-
-            EventBus.RaiseEvent<IPlayerHealthPercentageSubscriber>(subscriber =>
-                subscriber.OnPlayerHealthPercentageChanged(GetPercentage()));
         }
 
-        public void Heal(int healAmount)
+        public override void Heal(int healAmount)
         {
-            currentHealth += healAmount;
-            if (currentHealth > maxHealth)
-            {
-                currentHealth = maxHealth;
-            }
+            base.Heal(healAmount);
 
             EventBus.RaiseEvent<IPlayerHealthPercentageSubscriber>(subscriber =>
                 subscriber.OnPlayerHealthPercentageChanged(GetPercentage()));
         }
 
-        private float GetPercentage() => (float)currentHealth / maxHealth;
+        private float GetPercentage() => (float)CurrentHealth / MaxHealth;
     }
 }

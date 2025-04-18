@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5253dd6cdb884bb69b897df7b7ca6ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UnitType>k__BackingField: 1
   hitDetector: {fileID: 6525214792376642815}
 --- !u!1 &8537456927668618046
 GameObject:

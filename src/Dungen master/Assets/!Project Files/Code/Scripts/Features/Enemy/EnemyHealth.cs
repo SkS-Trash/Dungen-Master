@@ -1,47 +1,27 @@
 ﻿using System;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyHealth : MonoBehaviour
+    public class EnemyHealth : Health
     {
         public event Action<int> OnHealthChanged;
 
         [field: ShowInInspector, HideInEditorMode]
         public bool WasDamaged { get; set; }
 
-        [field: ShowInInspector, ReadOnly, HideInEditorMode]
-        public int CurrentHealth { get; private set; }
-
-        [field: SerializeField] public int MaxHealth { get; private set; } = 100;
-
-        private void Start()
+        public override void TakeDamage(int amount)
         {
-            CurrentHealth = MaxHealth;
-        }
-
-        public void TakeDamage(int damage)
-        {
-            WasDamaged = true;
-
-            CurrentHealth -= damage;
-
-            if (CurrentHealth <= 0)
-            {
-                CurrentHealth = 0;
-            }
+            base.TakeDamage(amount);
 
             OnHealthChanged?.Invoke(CurrentHealth);
+
+            WasDamaged = true;
         }
 
-        public void Heal(int healAmount)
+        public override void Heal(int amount)
         {
-            CurrentHealth += healAmount;
-            if (CurrentHealth > MaxHealth)
-            {
-                CurrentHealth = MaxHealth;
-            }
+            base.Heal(amount);
 
             OnHealthChanged?.Invoke(CurrentHealth);
         }

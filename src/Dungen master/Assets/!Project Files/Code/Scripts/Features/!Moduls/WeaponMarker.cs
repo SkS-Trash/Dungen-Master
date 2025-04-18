@@ -4,7 +4,8 @@ namespace Weapon
 {
     public class WeaponMarker : MonoBehaviour
     {
-        public float Damage { get; private set; }
+        [field: SerializeField] public float Damage { get; private set; }
+        [field: SerializeField] public UnitType UnitType { get; private set; }
 
         [SerializeField] private Collider hitDetector;
 
