@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &910248125627126297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6848656645281626664}
+  m_Layer: 0
+  m_Name: magicCastPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6848656645281626664
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910248125627126297}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.881, z: 0.219}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3789949255556219475}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &726876686042453012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100,7 +131,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4507813755819497031, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
       insertIndex: 0
       addedObject: {fileID: 4951327889271559490}
+    - targetCorrespondingSourceObject: {fileID: 4507813755819497031, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6848656645281626664}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7537753012608484210, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8371493759070384707}
     - targetCorrespondingSourceObject: {fileID: 2647094261010835795, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2676736473566841798}
@@ -110,7 +147,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -8445184255985146414, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
   m_PrefabInstance: {fileID: 726876686042453012}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aeb9590d1e204fa58f6f36bf9754724b, type: 3}
@@ -133,13 +170,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf8808a1f5c4d2a92a508da852d1a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Owner>k__BackingField: 2
   health: {fileID: 61590068528837062}
-  targetUnits: 01000000
 --- !u!4 &3789949255556219475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4507813755819497031, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
   m_PrefabInstance: {fileID: 726876686042453012}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7101358657488164710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7537753012608484210, guid: c658eb53f4b402c41985b34d6c2da6ea, type: 3}
+  m_PrefabInstance: {fileID: 726876686042453012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8371493759070384707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e40f1d65cb84ad1805a50d21e589ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetUnits: 01000000
+  magicCastPoint: {fileID: 6848656645281626664}
+  spell: {fileID: 11400000, guid: ddb011c755b705549a50001e79259fb1, type: 2}
 --- !u!1001 &7877534717203382475
 PrefabInstance:
   m_ObjectHideFlags: 0

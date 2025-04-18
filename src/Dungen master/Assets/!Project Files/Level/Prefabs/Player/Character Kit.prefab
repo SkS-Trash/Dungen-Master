@@ -627,8 +627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf8808a1f5c4d2a92a508da852d1a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Owner>k__BackingField: 1
   health: {fileID: 2360312111431378127}
-  targetUnits: 02000000
 --- !u!1001 &883811600355850824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -871,6 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ead24932cb4444a8c26d7460a6876a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetUnits: 02000000
   isInHand: 0
   weaponParent: {fileID: 8602952224908015238}
   startingWeapon: {fileID: 11400000, guid: c5324831982ffe1438ab5a2bf946ccee, type: 2}
@@ -887,6 +888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e40f1d65cb84ad1805a50d21e589ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetUnits: 02000000
   magicCastPoint: {fileID: 7912301376500496024}
   spell: {fileID: 11400000, guid: ddb011c755b705549a50001e79259fb1, type: 2}
 --- !u!114 &2360312111431378127

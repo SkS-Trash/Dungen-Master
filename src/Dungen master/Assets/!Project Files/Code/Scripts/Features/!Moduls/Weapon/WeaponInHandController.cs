@@ -10,7 +10,8 @@ namespace Weapon
         private bool WeaponInHand => isInHand;
         private bool NotInHand => isInHand == false;
 
-        [SerializeField] private bool isInHand;
+        [SerializeField] private UnitType[] targetUnits = { UnitType.Player };
+        [Space] [SerializeField] private bool isInHand;
         [SerializeField] private Transform weaponParent;
 
         [Space] [SerializeField, HideIf(nameof(WeaponInHand))]
@@ -18,7 +19,7 @@ namespace Weapon
 
         [SerializeField, HideIf(nameof(NotInHand))]
         private Transform weaponTransform;
-        
+
         private WeaponMarker _currentWeapon;
 
         private void Start()
@@ -35,7 +36,7 @@ namespace Weapon
 
         public bool HasWeapon() =>
             _currentWeapon != null;
-        
+
         public void EquipWeapon(Transform weapon)
         {
             UnequipCurrentWeapon();
@@ -57,6 +58,8 @@ namespace Weapon
                 Destroy(weapon.gameObject);
                 return;
             }
+
+            _currentWeapon.SetTargetUnits(targetUnits);
         }
 
         public async void EquipWeapon(WeaponConfig config)
@@ -82,6 +85,7 @@ namespace Weapon
             }
 
             _currentWeapon.SetDamage(config.Damage);
+            _currentWeapon.SetTargetUnits(targetUnits);
         }
 
         private void UnequipCurrentWeapon()

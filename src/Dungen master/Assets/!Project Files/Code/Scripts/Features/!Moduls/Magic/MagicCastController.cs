@@ -7,6 +7,7 @@ namespace Magic
 {
     public class MagicCastController : MonoBehaviour
     {
+        [SerializeField] private UnitType[] targetUnits = { UnitType.Player };
         [SerializeField] private Transform magicCastPoint;
         [SerializeField] private Spell spell;
 
@@ -32,7 +33,7 @@ namespace Magic
         {
             var spawnPosition = magicCastPoint.position;
             var targetPosition = magicCastPoint.position + magicCastPoint.forward * 10;
-            spell.Cast(spawnPosition, targetPosition);
+            spell.Cast(targetUnits, spawnPosition, targetPosition);
 
             StartCoroutine(CooldownCoroutine());
         }

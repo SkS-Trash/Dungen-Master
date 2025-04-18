@@ -262,8 +262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf8808a1f5c4d2a92a508da852d1a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Owner>k__BackingField: 2
   health: {fileID: 8686112336913678897}
-  targetUnits: 01000000
 --- !u!1001 &4892609368170077663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -437,6 +437,14 @@ PrefabInstance:
     - target: {fileID: 6582675495330461500, guid: 2c59362f1b2f4334d839f2acd8ffa4d7, type: 3}
       propertyPath: <UnitType>k__BackingField
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6582675495330461500, guid: 2c59362f1b2f4334d839f2acd8ffa4d7, type: 3}
+      propertyPath: <TargetUnits>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6582675495330461500, guid: 2c59362f1b2f4334d839f2acd8ffa4d7, type: 3}
+      propertyPath: '<TargetUnits>k__BackingField.Array.data[0]'
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8537456927668618046, guid: 2c59362f1b2f4334d839f2acd8ffa4d7, type: 3}
       propertyPath: m_Name

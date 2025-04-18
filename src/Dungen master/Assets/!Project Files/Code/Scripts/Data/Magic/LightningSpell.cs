@@ -8,7 +8,7 @@ namespace Magic
         public float radius = 5f;
         public GameObject lightningEffectPrefab;
 
-        public override void Cast(Vector3 spawnPosition, Vector3 targetPosition)
+        public override void Cast(UnitType[] targetUnits, Vector3 spawnPosition, Vector3 targetPosition)
         {
             // Для молнии можно, например, создать эффект в заданном радиусе
             var effectInstance = Instantiate(lightningEffectPrefab, spawnPosition, Quaternion.identity);

@@ -11,6 +11,6 @@ namespace Magic
 
         [field: SerializeField] public float Speed { get; protected set; } = 1f;
 
-        public abstract void Cast(Vector3 spawnPosition, Vector3 targetPosition);
+        public abstract void Cast(UnitType[] targetUnits, Vector3 spawnPosition, Vector3 targetPosition);
     }
 }

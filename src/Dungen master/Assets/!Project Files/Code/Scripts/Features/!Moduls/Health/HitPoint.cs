@@ -4,22 +4,15 @@ using Weapon;
 namespace Health
 {
     [RequireComponent(typeof(Collider))]
-    public class HitPoint : MonoBehaviour
+    public class HitPoint : MonoBehaviour, ITakeDamage
     {
+        [field: SerializeField] public UnitType Owner { get; private set; } = UnitType.Enemy;
+
         [SerializeField] private HealthContainer health;
-        [SerializeField] private UnitType[] targetUnits;
 
-        private void OnTriggerEnter(Collider other)
+        public void TakeHit(float amount)
         {
-            if (!other.TryGetComponent<WeaponMarker>(out var weaponMarker)) return;
-
-            foreach (var target in targetUnits)
-            {
-                if (weaponMarker.UnitType != target) continue;
-
-                var damage = weaponMarker.Damage;
-                health.TakeDamage((int)damage);
-            }
+            health.TakeDamage((int)amount);
         }
     }
 }
