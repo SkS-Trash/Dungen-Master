@@ -1,4 +1,4 @@
-﻿using Core.Project.Base;
+﻿using Core.Project.Dungeon;
 using Core.Project.Home;
 using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
@@ -26,6 +26,8 @@ namespace Core.Project.MainMenu
 
         public async UniTask OnEnterAsync(Unit _)
         {
+            await _projectEngine.RunOneShot<LoadEmptySceneState>();
+            
             await InstantiateMainMenu();
 
             SetupMainMenuCallbacks();
@@ -49,7 +51,8 @@ namespace Core.Project.MainMenu
 
         private void OnStartGame()
         {
-            _projectEngine.ChangeState<HomeLoadState>();
+            // _projectEngine.ChangeState<HomeLoadState>();
+            _projectEngine.ChangeState<TestState>();
         }
 
         private void OnExit()

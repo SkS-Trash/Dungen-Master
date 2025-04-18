@@ -3,7 +3,7 @@ using Services.ProjectManager;
 using Services.SceneLoader;
 using StateMachines.DirectControlMultiLayer;
 
-namespace Core.Project.Initialization
+namespace Core.Project
 {
     public class LoadEmptySceneState : IStateOneShot
     {
