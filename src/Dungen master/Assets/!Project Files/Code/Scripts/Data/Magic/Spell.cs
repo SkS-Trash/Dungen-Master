@@ -9,6 +9,8 @@ namespace Magic
         [field: SerializeField] public virtual AssetReference SpellPrefab { get; protected set; }
         [field: SerializeField] public virtual float Cooldown { get; protected set; }
 
-        public abstract void Cast(Transform castPoint);
+        [field: SerializeField] public float Speed { get; protected set; } = 1f;
+
+        public abstract void Cast(UnitType[] targetUnits, Vector3 spawnPosition, Vector3 targetPosition);
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Providers.Containers.Scene
 {
-    public interface ISceneContainer
+    public interface ISceneContainer :
+        IPlayerSpawnData
     {
     }
 }

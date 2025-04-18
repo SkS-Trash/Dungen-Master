@@ -4,7 +4,7 @@ using ProceduralDungeon.Decor;
 using ProceduralDungeon.Enemy;
 using ProceduralDungeon.Map;
 using Providers.Containers.Game;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Dungeon
 {

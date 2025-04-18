@@ -1,9 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using Factories.GameObject;
+using Player;
 using ProceduralDungeon;
 using Providers.Containers.Game;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
+using static GameObjectsPaths;
 
 namespace Core.Project.Dungeon
 {
@@ -26,29 +28,48 @@ namespace Core.Project.Dungeon
         {
             var container = _containerProvider.Container;
 
-            var spawnPoint = GetSpawnPoint(container.MapLayer);
+            FindAndSetupSpawnPoint(container);
 
-            await InstantiatePlayerUI(spawnPoint);
+            await InstantiatePlayer(container);
         }
 
-        private Vector2Int GetSpawnPoint(TileType[,] mapLayer)
+        private void FindAndSetupSpawnPoint(IGameContainer container)
         {
+            var mapLayer = container.MapLayer;
+
             for (var x = 0; x < mapLayer.GetLength(0); x++)
             for (var y = 0; y < mapLayer.GetLength(1); y++)
             {
-                if (mapLayer[x, y] == TileType.Start)
+                if (mapLayer[x, y] != TileType.Start)
+                    continue;
+
+                var playerSpawnPoint = new GameObject("PlayerSpawnPoint")
                 {
-                    return new Vector2Int(x, y);
-                }
+                    transform =
+                    {
+                        position = new Vector3(x, 0, y)
+                    }
+                };
+
+                container.PlayerSpawnPoint = playerSpawnPoint.transform;
+
+                return;
             }
 
-            return Vector2Int.zero;
+            container.PlayerSpawnPoint = null;
         }
 
-        private async UniTask InstantiatePlayerUI(Vector2Int spawnPoint)
+        private async UniTask InstantiatePlayer(IGameContainer container)
         {
-            await _gameObjectFactory.InstantiateAsync(GameObjectsPaths.PLAYER,
-                new Vector3(spawnPoint.x, 0, spawnPoint.y), Quaternion.identity);
+            var spawnPoint = container.PlayerSpawnPoint.position;
+
+            var player = await _gameObjectFactory.InstantiateAsync(
+                PLAYER,
+                spawnPoint,
+                Quaternion.identity
+            );
+
+            container.PlayerTransform = player.GetComponentInChildren<ThirdPersonController>().transform;
         }
     }
 }

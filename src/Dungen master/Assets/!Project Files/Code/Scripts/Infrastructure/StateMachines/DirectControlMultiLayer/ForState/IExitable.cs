@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace StateMachines.DirectControlMultiLayer.ForState
+namespace StateMachines.DirectControlMultiLayer
 {
     /// <summary>
     /// Интерфейс для состояний, поддерживающих асинхронный выход.

@@ -1,8 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using Factories.GameObject;
+using Providers.Containers;
 using Providers.Containers.Scene;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
+using static GameObjectsPaths;
 
 namespace Core.Project.Home
 {
@@ -33,8 +35,9 @@ namespace Core.Project.Home
                 return;
             }
 
-            var point = playerSpawnData.SpawnPoint;
-            await _gameObjectFactory.InstantiateAsync(GameObjectsPaths.PLAYER, point.position, point.rotation);
+            var point = playerSpawnData.PlayerSpawnPoint;
+            var player = await _gameObjectFactory.InstantiateAsync(PLAYER, point.position, point.rotation);
+            playerSpawnData.PlayerTransform = player.transform;
         }
     }
 }

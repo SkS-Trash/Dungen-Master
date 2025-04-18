@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Services.Window;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UI.Game;
 
 namespace Core.Project.Dungeon
@@ -30,7 +30,7 @@ namespace Core.Project.Dungeon
         private void SetupHudUI()
         {
             var hudUI = _windowService.Get<HudUI>(WindowID.HUD);
-            hudUI.HealthBar.SetHealthPercentage(1f);
+            hudUI.PlayerHealthBar.SetHealthPercentage(1f);
             hudUI.MagicCooldown.SetMagicCooldownPercentage(0f);
         }
     }

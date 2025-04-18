@@ -6,26 +6,21 @@ namespace Magic
     [CreateAssetMenu(menuName = "Data/Spells/MagicBallSpell")]
     public class MagicBallSpell : Spell
     {
-        [SerializeField] private float speed = 1f;
+        [SerializeField] private int damage = 10;
 
-        public override async void Cast(Transform castPoint)
+        public override async void Cast(UnitType[] targetUnits, Vector3 spawnPosition, Vector3 targetPosition)
         {
-            var position = castPoint.position;
-            var rotation = castPoint.rotation;
-            var forward = castPoint.forward;
-            
             var spellInstance = await Addressables.InstantiateAsync(SpellPrefab).Task;
-            
-            spellInstance.transform.position = position;
-            spellInstance.transform.rotation = rotation;
-            
-            var rb = spellInstance.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.linearVelocity = forward * speed;
-            }
 
-            Destroy(spellInstance, 5f);
+            spellInstance.transform.position = spawnPosition;
+            spellInstance.transform.rotation = Quaternion.LookRotation(targetPosition - spawnPosition);
+
+            var spell = spellInstance.AddComponent<SpellBehaviour>();
+            spell.SetSpell(this);
+
+            var damageMarker = spellInstance.AddComponent<SpellDamageMarker>();
+            damageMarker.SetDamage(damage);
+            damageMarker.SetUnitType(targetUnits);
         }
     }
 }

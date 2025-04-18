@@ -1,9 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
-using ProceduralDungeon;
 using Providers.Containers.Game;
 using Providers.Data;
 using Services.ProjectManager;
-using StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
 namespace Core.Project.Dungeon

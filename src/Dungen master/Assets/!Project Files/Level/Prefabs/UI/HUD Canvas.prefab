@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6f5b9d0ced4b7a8dc543145cf42cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HealthBar>k__BackingField: {fileID: 5744465253949560705}
+  <PlayerHealthBar>k__BackingField: {fileID: 5744465253949560705}
   <MagicCooldown>k__BackingField: {fileID: 1825447492004347336}
 --- !u!1 &6784747985495416866
 GameObject:
