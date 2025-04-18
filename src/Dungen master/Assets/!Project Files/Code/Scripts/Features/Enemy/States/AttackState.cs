@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Magic;
+using UnityEngine;
 using Weapon;
 
 namespace Enemy
@@ -8,27 +9,29 @@ namespace Enemy
         private readonly EnemyAnimator _animator;
         private readonly EnemyAnimationEvents _animationEvents;
         private readonly WeaponInHandController _weapon;
+        private readonly MagicCastController _magicCast;
         private readonly Transform _playerTransform;
         private readonly float _attackCooldown;
 
         public bool IsAttackEnd { get; private set; }
         public bool IsAttackReady => Time.time >= _attackReadyTime;
+        public bool IsMagicReady => _magicCast != null && _magicCast.CanCast();
 
         private float _attackReadyTime;
 
-        public AttackState(
-            EnemyCore core,
+        public AttackState(EnemyCore core,
             EnemyAnimator animator,
             EnemyAnimationEvents animationEvents,
             float attackCooldown,
             WeaponInHandController weapon,
-            Transform playerTransform
-        ) : base(core)
+            MagicCastController magicCast,
+            Transform playerTransform) : base(core)
         {
             _animator = animator;
             _animationEvents = animationEvents;
             _attackCooldown = attackCooldown;
             _weapon = weapon;
+            _magicCast = magicCast;
             _playerTransform = playerTransform;
         }
 
@@ -79,6 +82,7 @@ namespace Enemy
                     _weapon?.DisableWeaponCollider();
                     break;
                 case EnemyAnimationEvents.AnimationEventType.LaunchMagicAttack:
+                    _magicCast.CastSpell();
                     break;
             }
         }

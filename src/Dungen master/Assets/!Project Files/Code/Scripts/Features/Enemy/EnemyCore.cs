@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Magic;
+using Sirenix.OdinInspector;
 using StateMachines.Transition;
 using UI.Game;
 using UnityEngine;
@@ -13,7 +14,8 @@ namespace Enemy
         [SerializeField] private float aggroRange = 10f;
         [SerializeField] private float attackRange = 2f;
         [SerializeField] private float attackCooldown = 1f;
-        [Space] [SerializeField] private float patrolSpeed = 2f;
+        [Space] 
+        [SerializeField] private float patrolSpeed = 2f;
         [SerializeField] private float chaseSpeed = 4f;
 
         [Space] [ShowInInspector, ReadOnly, HideInEditorMode]
@@ -32,6 +34,9 @@ namespace Enemy
         private WeaponInHandController _weapon;
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
+        private MagicCastController _magicCast;
+        
+        [ShowInInspector, ReadOnly, HideInEditorMode]
         private Transform _playerTransform;
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
@@ -45,11 +50,15 @@ namespace Enemy
 
         private void Awake()
         {
-            _movement = GetComponent<EnemyMovement>();
             _health = GetComponent<EnemyHealth>();
+            _movement = GetComponent<EnemyMovement>();
+            
             _animator = GetComponent<EnemyAnimator>();
             _animationEvents = GetComponentInChildren<EnemyAnimationEvents>();
+            
+            _magicCast = GetComponent<MagicCastController>();
             _weapon = GetComponentInChildren<WeaponInHandController>();
+            
             _stateDraw = GetComponentInChildren<EnemyCurrentStateDraw>();
             _healthBar = GetComponentInChildren<HealthBar>();
         }
@@ -73,7 +82,7 @@ namespace Enemy
             var idleState = new IdleState(this);
             var patrolState = new PatrolState(this, _movement, _animator, patrolSpeed);
             var followState = new FollowState(this, _movement, _animator, chaseSpeed, _playerTransform);
-            var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon, _playerTransform);
+            var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon, _magicCast, _playerTransform);
             var damageState = new DamageState(this, _animator, _animationEvents, _health);
             var deathState = new DeathState(this, _animator, _animationEvents);
 
@@ -81,6 +90,7 @@ namespace Enemy
 
             // Set up transitions
             _stateMachine.AddTransition(idleState, attackState, IsPlayerInAttackRange, IsAttackReady);
+            _stateMachine.AddTransition(idleState, attackState, IsPlayerInAttackRange, IsMagicReady);
             _stateMachine.AddTransition(idleState, followState, IsPlayerInRange, IsPlayerOutOfAttackRange);
             _stateMachine.AddTransition(idleState, patrolState, IsPlayerOutOfRange);
 
@@ -128,6 +138,9 @@ namespace Enemy
 
             bool IsAttackEnd() =>
                 attackState.IsAttackEnd;
+            
+            bool IsMagicReady() =>
+                attackState.IsMagicReady;
         }
 
         private void OnEnable()
