@@ -1,88 +1,89 @@
+using Interactable;
+using Observers.Input;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
+    public interface IInteractableFocusSubscriber
+    {
+        void OnInteractableFocus(InteractableBase interactable);
+        void OnInteractableLoseFocus();
+    }
+
     public class ThirdPersonInteractor : MonoBehaviour
     {
-        public float interactionRange = 2f;
-        public KeyCode interactionKey = KeyCode.E;
-        public LayerMask interactableLayer;
-        public Transform interactionPoint;
+        [SerializeField] private float interactionRange = 2f;
+        [SerializeField] private LayerMask interactableLayer;
+        [SerializeField] private Transform interactionPoint;
+        [Space] [SerializeField] private InputActionReader inputActionReader;
 
-        public GameObject interactionUI;
+        private InteractableBase _currentInteractableBase;
 
-        private Interactable currentInteractable;
+        private void OnEnable()
+        {
+            inputActionReader.OnInteractChanged += OnInteractionInput;
+        }
 
-        void Update()
+        private void OnDisable()
+        {
+            inputActionReader.OnInteractChanged -= OnInteractionInput;
+        }
+
+        private void Update()
         {
             CheckForInteractables();
-            HandleInteractionInput();
         }
 
-        void CheckForInteractables()
+        private void CheckForInteractables()
         {
-            Ray ray = new Ray(interactionPoint.position, interactionPoint.forward);
-            RaycastHit hit;
+            var ray = new Ray(interactionPoint.position, interactionPoint.forward);
 
-            if (Physics.Raycast(ray, out hit, interactionRange, interactableLayer))
+            if (Physics.Raycast(ray, out var hit, interactionRange, interactableLayer) &&
+                hit.collider.TryGetComponent<InteractableBase>(out var interactableBase))
             {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                if (interactableBase == _currentInteractableBase)
+                    return;
 
-                if (interactable != null)
-                {
-                    if (interactable != currentInteractable)
-                    {
-                        if (currentInteractable != null)
-                            currentInteractable.OnLoseFocus();
+                if (_currentInteractableBase)
+                    _currentInteractableBase.OnLoseFocus();
 
-                        currentInteractable = interactable;
-                        interactable.OnGainFocus();
-                    }
+                _currentInteractableBase = interactableBase;
 
+                interactableBase.OnGainFocus();
 
-                    if (interactionUI != null)
-                        interactionUI.SetActive(true);
-                }
-                else
-                {
-                    ClearCurrentInteractable();
-                }
+                return;
             }
-            else
-            {
-                ClearCurrentInteractable();
-            }
+
+            ClearCurrentInteractable();
         }
 
-        void HandleInteractionInput()
+        private void OnInteractionInput(bool isActive)
         {
-            if (Input.GetKeyDown(interactionKey) && currentInteractable != null)
+            if (!isActive)
+                return;
+
+            if (_currentInteractableBase)
+                _currentInteractableBase.OnInteract();
+        }
+
+        private void ClearCurrentInteractable()
+        {
+            if (_currentInteractableBase)
             {
-                currentInteractable.OnInteract();
+                _currentInteractableBase.OnLoseFocus();
+                _currentInteractableBase = null;
             }
         }
 
-        void ClearCurrentInteractable()
+        private void OnDrawGizmosSelected()
         {
-            if (currentInteractable != null)
-            {
-                currentInteractable.OnLoseFocus();
-                currentInteractable = null;
-            }
+            if (!interactionPoint)
+                return;
 
-
-            if (interactionUI != null)
-                interactionUI.SetActive(false);
-        }
-
-        void OnDrawGizmosSelected()
-        {
-            if (interactionPoint != null)
-            {
-                Gizmos.color = Color.blue;
-                Gizmos.DrawLine(interactionPoint.position,
-                    interactionPoint.position + interactionPoint.forward * interactionRange);
-            }
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(interactionPoint.position,
+                interactionPoint.position + interactionPoint.forward * interactionRange);
         }
     }
 }
