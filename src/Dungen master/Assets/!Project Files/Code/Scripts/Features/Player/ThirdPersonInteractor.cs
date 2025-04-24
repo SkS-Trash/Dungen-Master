@@ -1,11 +1,11 @@
 using Interactable;
 using Observers.Input;
+using Subscribers.EventBusSystem;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
-    public interface IInteractableFocusSubscriber
+    public interface IInteractableFocusSubscriber : IGlobalSubscriber
     {
         void OnInteractableFocus(InteractableBase interactable);
         void OnInteractableLoseFocus();
@@ -42,15 +42,16 @@ namespace Player
             if (Physics.Raycast(ray, out var hit, interactionRange, interactableLayer) &&
                 hit.collider.TryGetComponent<InteractableBase>(out var interactableBase))
             {
-                if (interactableBase == _currentInteractableBase)
-                    return;
+                if (interactableBase == _currentInteractableBase) return;
 
-                if (_currentInteractableBase)
-                    _currentInteractableBase.OnLoseFocus();
+                ClearCurrentInteractable();
 
                 _currentInteractableBase = interactableBase;
 
                 interactableBase.OnGainFocus();
+
+                EventBus.RaiseEvent<IInteractableFocusSubscriber>(x =>
+                    x.OnInteractableFocus(_currentInteractableBase));
 
                 return;
             }
@@ -69,11 +70,12 @@ namespace Player
 
         private void ClearCurrentInteractable()
         {
-            if (_currentInteractableBase)
-            {
-                _currentInteractableBase.OnLoseFocus();
-                _currentInteractableBase = null;
-            }
+            if (!_currentInteractableBase) return;
+
+            _currentInteractableBase.OnLoseFocus();
+            _currentInteractableBase = null;
+
+            EventBus.RaiseEvent<IInteractableFocusSubscriber>(x => x.OnInteractableLoseFocus());
         }
 
         private void OnDrawGizmosSelected()

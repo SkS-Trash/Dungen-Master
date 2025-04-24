@@ -77,7 +77,6 @@ namespace Enemy
                 currentState = state;
             };
 
-
             // Create states
             var idleState = new IdleState(this);
             var patrolState = new PatrolState(this, _movement, _animator, patrolSpeed);
@@ -85,9 +84,7 @@ namespace Enemy
             var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon, _magicCast, _playerTransform);
             var damageState = new DamageState(this, _animator, _animationEvents, _health);
             var deathState = new DeathState(this, _animator, _animationEvents);
-
-            // Есть баг с переходами между Attack - Idle - Follow
-
+            
             // Set up transitions
             _stateMachine.AddTransition(idleState, attackState, IsPlayerInAttackRange, IsAttackReady);
             _stateMachine.AddTransition(idleState, attackState, IsPlayerInAttackRange, IsMagicReady);

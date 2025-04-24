@@ -7,10 +7,10 @@ namespace Progress
         menuName = "Data/Progress/" + nameof(ProgressGameDataHolder))]
     public class ProgressGameDataHolder : ScriptableObject
     {
-        [field: BoxGroup("Progress"), HideLabel, ShowInInspector]
-        [field: SerializeField]
-        public ProgressGameData ProgressGameData { get; private set; }
+        [field: BoxGroup("Progress"), HideLabel, SerializeField]
+        public ProgressGameData ProgressGameData { get; private set; } = new();
 
+        [Button("Reset progress")]
         public void ResetProgress()
         {
             ProgressGameData = new ProgressGameData();
