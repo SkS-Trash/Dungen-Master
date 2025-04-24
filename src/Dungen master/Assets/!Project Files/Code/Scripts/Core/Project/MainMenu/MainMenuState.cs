@@ -51,8 +51,8 @@ namespace Core.Project.MainMenu
 
         private void OnStartGame()
         {
-            // _projectEngine.ChangeState<HomeLoadState>();
-            _projectEngine.ChangeState<TestState>();
+            _projectEngine.ChangeState<HomeLoadState>();
+            // _projectEngine.ChangeState<TestState>();
         }
 
         private void OnExit()
