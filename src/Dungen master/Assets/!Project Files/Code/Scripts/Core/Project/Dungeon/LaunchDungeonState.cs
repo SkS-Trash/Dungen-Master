@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace Core.Project.Dungeon
 {
-    public class TestState : IState, IEnterable
+    public class LaunchDungeonState : IState, IEnterable
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IStaticDataProvider _staticDataProvider;
         private readonly IGameContainerProvider _containerProvider;
 
-        public TestState(
+        public LaunchDungeonState(
             IProjectEngine projectEngine,
             IStaticDataProvider staticDataProvider,
             IGameContainerProvider containerProvider
@@ -26,6 +26,8 @@ namespace Core.Project.Dungeon
 
         public async UniTask OnEnterAsync(Unit _)
         {
+            await _projectEngine.RunOneShot<LoadEmptySceneState>();
+            
             var container = _containerProvider.Container;
 
             container.Width = 50;

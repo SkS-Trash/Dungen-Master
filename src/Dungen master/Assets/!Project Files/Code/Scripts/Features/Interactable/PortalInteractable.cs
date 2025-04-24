@@ -1,12 +1,23 @@
-﻿using UnityEngine;
+﻿using Core.Project.Dungeon;
+using Services.ProjectManager;
+using UnityEngine;
+using VContainer;
 
 namespace Interactable
 {
     public class PortalInteractable : InteractableBase
     {
+        private IProjectEngine _projectEngine;
+        
+        [Inject]
+        public void Construct(IProjectEngine projectEngine)
+        {
+            _projectEngine = projectEngine;
+        }
+        
         public override void OnInteract()
         {
-            Debug.Log($"[PortalInteractable] Interacted with {gameObject.name}");
+            _projectEngine.ChangeState<LaunchDungeonState>();
         }
     }
 }
