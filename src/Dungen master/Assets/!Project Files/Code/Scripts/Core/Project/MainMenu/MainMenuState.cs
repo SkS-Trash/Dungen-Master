@@ -26,7 +26,7 @@ namespace Core.Project.MainMenu
 
         public async UniTask OnEnterAsync(Unit _)
         {
-            await _projectEngine.RunOneShot<LoadEmptySceneState>();
+            await _projectEngine.RunOneShot<LoadHomeSceneState>();
             
             await InstantiateMainMenu();
 
