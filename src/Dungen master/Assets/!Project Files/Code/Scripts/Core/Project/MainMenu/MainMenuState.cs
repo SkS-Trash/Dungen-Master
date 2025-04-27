@@ -34,45 +34,23 @@ namespace Core.Project.MainMenu
         {
             await _projectEngine.RunOneShot<LoadHomeSceneState>();
 
-            await InstantiateMainMenu();
+            await _windows.Open(WindowID.MainMenu);
 
-            HideLoadingScreen();
+            EventBus.RaiseEvent<IGlobalProgressLoadSubscriber>(s => s.OnProgressLoaded(_progress.GlobalProgress));
 
-            SubscribeToEvents();
-        }
+            // HideLoadingScreen();
 
-        private async UniTask InstantiateMainMenu()
-        {
-            var mainMenuUI = await _windows.OpenAndGet<MainMenuUI>(WindowID.MainMenu);
-            mainMenuUI.ContinueGameButtonInteractable(!_progress.GlobalProgress.isFirstLaunch);
-        }
-
-        public void LaunchNewGame()
-        {
-            _projectEngine.ChangeState<HomeLoadState>();
-            // _projectEngine.ChangeState<TestState>();
-        }
-
-        public void LaunchContinueGame()
-        {
-            _projectEngine.ChangeState<HomeLoadState>();
-            // _projectEngine.ChangeState<TestState>();
-        }
-
-        public void QuitApplication()
-        {
-            _projectEngine.ChangeState<ExitFromApplicationState>();
-        }
-
-        private void HideLoadingScreen()
-        {
-            // TODO: Скрыть экран загрузки
-        }
-
-        private void SubscribeToEvents()
-        {
             EventBus.Subscribe(this);
         }
+
+        public void LaunchNewGame() =>
+            _projectEngine.ChangeState<LaunchNewGameState>();
+
+        public void LaunchContinueGame() =>
+            _projectEngine.ChangeState<LaunchContinueGameState>();
+
+        public void QuitApplication() =>
+            _projectEngine.ChangeState<ExitFromApplicationState>();
 
         #endregion
 
@@ -80,21 +58,11 @@ namespace Core.Project.MainMenu
 
         public UniTask OnExitAsync()
         {
-            UnsubscribeFromEvents();
+            EventBus.Unsubscribe(this);
 
-            HideMainMenu();
+            _windows.Close(WindowID.MainMenu);
 
             return UniTask.CompletedTask;
-        }
-
-        private void HideMainMenu()
-        {
-            _windows.Close(WindowID.MainMenu);
-        }
-
-        public void UnsubscribeFromEvents()
-        {
-            EventBus.Unsubscribe(this);
         }
 
         #endregion
