@@ -44,7 +44,7 @@ namespace Core.Project.MainMenu
         private async UniTask InstantiateMainMenu()
         {
             var mainMenuUI = await _windows.OpenAndGet<MainMenuUI>(WindowID.MainMenu);
-            mainMenuUI.ContinueGameButtonInteractable(!_progress.CurrentProgress.gameProgress.isFirstLaunch);
+            mainMenuUI.ContinueGameButtonInteractable(!_progress.GlobalProgress.isFirstLaunch);
         }
 
         public void LaunchNewGame()

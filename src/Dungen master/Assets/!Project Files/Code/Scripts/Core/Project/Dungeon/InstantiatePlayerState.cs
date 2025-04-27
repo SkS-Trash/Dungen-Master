@@ -2,6 +2,7 @@
 using Factories.GameObject;
 using Player;
 using ProceduralDungeon;
+using Progress;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
@@ -12,21 +13,21 @@ namespace Core.Project.Dungeon
     public class InstantiatePlayerState : IStateOneShot
     {
         private readonly IGameObjectFactory _gameObjectFactory;
-        private readonly IGameContainerProvider _containerProvider;
+        private readonly IGameContainerProvider _gameContainer;
 
         public InstantiatePlayerState(
             IGameObjectFactory gameObjectFactory,
-            IGameContainerProvider containerProvider
+            IGameContainerProvider gameContainer
         )
         {
             _gameObjectFactory = gameObjectFactory;
-            _containerProvider = containerProvider;
+            _gameContainer = gameContainer;
         }
 
 
         public async UniTask OnEnterAsync(Unit _)
         {
-            var container = _containerProvider.Container;
+            var container = _gameContainer.Container;
 
             FindAndSetupSpawnPoint(container);
 
