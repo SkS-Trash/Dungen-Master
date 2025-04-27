@@ -5,11 +5,11 @@ using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project
 {
-    public class BootstrapState : IState, IEnterable
+    public class LaunchNewGameState : IState, IEnterable
     {
         private readonly IProjectEngine _stateMachine;
 
-        public BootstrapState(
+        public LaunchNewGameState(
             IProjectEngine stateMachine
         )
         {
