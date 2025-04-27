@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using Progress;
 using Providers.Containers.Game;
 using Providers.Data;
 using Services.Progress;
@@ -33,16 +32,7 @@ namespace Core.Project.Dungeon
         {
             await _projectEngine.RunOneShot<LoadEmptySceneState>();
 
-            var container = _gameContainer.Container;
-
-            container.Width = 50;
-            container.Height = 50;
-            container.RoomCount = 10;
-            container.RoomMinSize = 5;
-            container.RoomMaxSize = 10;
-
-            var levelStyleConfigs = _staticData.GetLevelStyleConfigs();
-            container.LevelStyleConfig = levelStyleConfigs[Random.Range(0, levelStyleConfigs.Length)];
+            ConfigureDungeon();
 
             await _projectEngine.RunOneShot<GenerateMapState>();
             await _projectEngine.RunOneShot<ConstructionMapState>();
@@ -52,9 +42,38 @@ namespace Core.Project.Dungeon
             await _projectEngine.RunOneShot<InstantiateUIState>();
             await _projectEngine.RunOneShot<ConstructionEnemyState>();
             await _projectEngine.RunOneShot<ConfiguredGameState>();
-            
+        }
+
+        private void ConfigureDungeon()
+        {
+            var levelStyleConfigs = _staticData.GetLevelStyleConfigs();
             var gameProgress = _progress.GlobalProgress;
-            gameProgress.isInDungeon = true;
+            var levelProgress = _progress.LevelProgress;
+
+            if (levelProgress.currentLevelIndex != gameProgress.currentLevelIndex)
+            {
+                levelProgress.currentLevelIndex = gameProgress.currentLevelIndex;
+                
+                levelProgress.dungeon.width = 50;
+                levelProgress.dungeon.height = 50;
+                levelProgress.dungeon.roomCount = 10;
+                levelProgress.dungeon.roomMinSize = 5;
+                levelProgress.dungeon.roomMaxSize = 10;
+
+                levelProgress.dungeon.seed = Random.Range(0, 10000);
+
+                var styleIndex = Random.Range(0, levelStyleConfigs.Length);
+                levelProgress.dungeon.styleIndex = styleIndex;
+            }
+
+            var container = _gameContainer.Container;
+            container.Width = levelProgress.dungeon.width;
+            container.Height = levelProgress.dungeon.height;
+            container.RoomCount = levelProgress.dungeon.roomCount;
+            container.RoomMinSize = levelProgress.dungeon.roomMinSize;
+            container.RoomMaxSize = levelProgress.dungeon.roomMaxSize;
+            container.Seed = levelProgress.dungeon.seed;
+            container.LevelStyleConfig = levelStyleConfigs[levelProgress.dungeon.styleIndex];
         }
     }
 }

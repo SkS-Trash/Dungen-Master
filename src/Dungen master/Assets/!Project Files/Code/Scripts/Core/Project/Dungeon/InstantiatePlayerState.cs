@@ -2,7 +2,6 @@
 using Factories.GameObject;
 using Player;
 using ProceduralDungeon;
-using Progress;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
@@ -23,7 +22,6 @@ namespace Core.Project.Dungeon
             _gameObjectFactory = gameObjectFactory;
             _gameContainer = gameContainer;
         }
-
 
         public async UniTask OnEnterAsync(Unit _)
         {
