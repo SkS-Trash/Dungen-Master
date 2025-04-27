@@ -1,23 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using ProceduralDungeon;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Progress
 {
-    [Serializable]
-    public class ProgressGameData
-    {
-        [BoxGroup("Game"), HideLabel] public GameProgressData GameProgress = new();
-        [Space] [BoxGroup("Level"), HideLabel] public LevelProgressData LevelProgress = new();
-    }
-
     #region Game progress
 
     [Serializable]
-    public class GameProgressData
+    public class GlobalSaveData
     {
-        public GameState GameState;
+        public const int VERSION = 1;
+        
+        public uint version = VERSION;
+        public bool isFirstLaunch = true;
+        public bool isInDungeon;
     }
 
     #endregion
@@ -25,44 +22,60 @@ namespace Progress
     #region Level progress
 
     [Serializable]
-    public class LevelProgressData
+    public class LevelSaveData
     {
-        public int LevelIndex;
-        [Space] public PlayerLevelData PlayerLevelData = new();
-        [Space] public EnemyLevelData[] EnemiesLevelData;
+        public int levelIndex;
+        public DungeonLevelData dungeon = new();
+        public PlayerLevelData player = new();
+        public List<EnemyData> enemies = new();
+        public List<DynamicEntityData> dynamicEntities = new();
+    }
+
+    [Serializable]
+    public class DungeonLevelData
+    {
+        public int seed;
+        [Space] public int width;
+        public int height;
+        public int roomCount;
+        public int roomMinSize;
+        public int roomMaxSize;
     }
 
     [Serializable]
     public class PlayerLevelData
     {
-        public int Health;
-        [Space] public Vector3Serializable Position;
-        public Vector3Serializable Rotation;
+        public Vector3Serializable position;
+        public Vector3Serializable rotation;
+        [Space] public int health;
     }
 
     [Serializable]
-    public class EnemyLevelData
+    public class EnemyData
     {
-        public int EnemyId;
-        public EnemyType EnemyType;
-        [Space] public int Health;
-        [Space] public Vector3Serializable Position;
-        public Vector3Serializable Rotation;
+        public string guid;
+        public EnemyType type;
+        [Space] public int health;
+        [Space] public Vector3Serializable position;
+        public Vector3Serializable rotation;
+    }
+
+    [Serializable]
+    public class DynamicEntityData
+    {
+        public string guid;
+        public string typeId;
+        public DynamicSaveData data;
+    }
+
+    [Serializable]
+    public abstract class DynamicSaveData
+    {
     }
 
     #endregion
 
     #region Other data
-
-    [Serializable]
-    public enum GameState
-    {
-        None,
-        MainMenu,
-        Game,
-        Pause,
-        GameOver
-    }
 
     [Serializable]
     public class Vector3Serializable
