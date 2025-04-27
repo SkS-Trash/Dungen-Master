@@ -1,6 +1,5 @@
 ﻿using Core.Project.Dungeon;
 using Services.ProjectManager;
-using UnityEngine;
 using VContainer;
 
 namespace Interactable
