@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Provides guidance specifically related to refactoring the existing Frontline WW2 project.
+globs: Assets/**/*.cs
+---
+- Проект большой, с дублирующейся логикой юнитов, AI, UI и т.п. Нужно сделать код модульным, применить SOLID, вынести константы и поведения в ScriptableObject’ы.
+- Использовать ECS/Jobs или пулинг (ObjectPool) там, где массовые вычисления (отряды, выстрелы, эффекты) тормозят.
+- При любых сомнениях в архитектуре спрашивай про intended behaviour или edge-case из дизайн-документа.
+
