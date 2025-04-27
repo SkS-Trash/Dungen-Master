@@ -31,7 +31,15 @@ namespace Services.SaveLoadData
             {
                 var json = JsonConvert.SerializeObject(data, _jsonSettings);
                 File.WriteAllText(tmp, json);
-                File.Replace(tmp, path, null);
+
+                if (File.Exists(path))
+                {
+                    File.Replace(tmp, path, null);
+                }
+                else
+                {
+                    File.Move(tmp, path);
+                }
             }
             catch (Exception ex)
             {
