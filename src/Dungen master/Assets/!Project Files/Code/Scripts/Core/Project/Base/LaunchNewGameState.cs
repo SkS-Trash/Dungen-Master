@@ -1,4 +1,5 @@
-﻿using Core.Project.Initialization;
+﻿using Core.Project.Home;
+using Core.Project.Initialization;
 using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer;
@@ -18,7 +19,7 @@ namespace Core.Project
 
         public UniTask OnEnterAsync(Unit _)
         {
-            _stateMachine.ChangeState<InitializationState>();
+            _stateMachine.ChangeState<HomeLoadState>();
 
             return UniTask.CompletedTask;
         }

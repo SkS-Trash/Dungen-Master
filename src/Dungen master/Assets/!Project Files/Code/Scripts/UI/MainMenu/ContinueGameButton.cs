@@ -1,4 +1,5 @@
-﻿using Progress;
+﻿using System;
+using Progress;
 using Services.Progress;
 using Subscribers;
 using Subscribers.EventBusSystem;
@@ -21,10 +22,12 @@ namespace UI.MainMenu
         private void OnEnable()
         {
             _button.onClick.AddListener(OnContinueGameButtonClicked);
+            EventBus.Subscribe(this);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
+            EventBus.Unsubscribe(this);
             _button.onClick.RemoveListener(OnContinueGameButtonClicked);
         }
 

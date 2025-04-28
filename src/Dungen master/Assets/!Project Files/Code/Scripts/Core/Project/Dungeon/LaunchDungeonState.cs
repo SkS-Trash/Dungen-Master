@@ -4,6 +4,7 @@ using Providers.Data;
 using Services.Progress;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer;
+using Subscribers.EventBusSystem;
 using UnityEngine;
 
 namespace Core.Project.Dungeon
@@ -42,6 +43,8 @@ namespace Core.Project.Dungeon
             await _projectEngine.RunOneShot<InstantiateUIState>();
             await _projectEngine.RunOneShot<ConstructionEnemyState>();
             await _projectEngine.RunOneShot<ConfiguredGameState>();
+
+            TrySaveOrLoadConfig();
         }
 
         private void ConfigureDungeon()
@@ -52,8 +55,6 @@ namespace Core.Project.Dungeon
 
             if (levelProgress.currentLevelIndex != gameProgress.currentLevelIndex)
             {
-                levelProgress.currentLevelIndex = gameProgress.currentLevelIndex;
-                
                 levelProgress.dungeon.width = 50;
                 levelProgress.dungeon.height = 50;
                 levelProgress.dungeon.roomCount = 10;
@@ -74,6 +75,24 @@ namespace Core.Project.Dungeon
             container.RoomMaxSize = levelProgress.dungeon.roomMaxSize;
             container.Seed = levelProgress.dungeon.seed;
             container.LevelStyleConfig = levelStyleConfigs[levelProgress.dungeon.styleIndex];
+        }
+
+        private void TrySaveOrLoadConfig()
+        {
+            var levelProgress = _progress.LevelProgress;
+            var gameProgress = _progress.GlobalProgress;
+
+            var isSave = levelProgress.currentLevelIndex != gameProgress.currentLevelIndex;
+            if (isSave)
+            {
+                levelProgress.currentLevelIndex = gameProgress.currentLevelIndex;
+                _progress.SaveLevel();
+            }
+            else
+            {
+                EventBus.RaiseEvent<ILevelProgressLoadSubscriber>(x => x.OnProgressLoaded(levelProgress));
+                EventBus.RaiseEvent<IGlobalProgressLoadSubscriber>(x => x.OnProgressLoaded(gameProgress));
+            }
         }
     }
 }
