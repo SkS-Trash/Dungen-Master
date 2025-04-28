@@ -1,4 +1,5 @@
 ﻿using Core.Project.Home;
+using Core.Project.Settings;
 using Cysharp.Threading.Tasks;
 using Services.Progress;
 using Services.ProjectManager;
@@ -10,7 +11,7 @@ using Subscribers.EventBusSystem;
 namespace Core.Project.MainMenu
 {
     public class MainMenuState : IState, IEnterable, IExitable,
-        ILaunchNewGame, ILaunchContinueGame, IQuitApplication
+        ILaunchNewGame, ILaunchContinueGame, IQuitApplication, ISettingsButton
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _windows;
@@ -51,6 +52,9 @@ namespace Core.Project.MainMenu
         public void QuitApplication() =>
             _projectEngine.ChangeState<ExitFromApplicationState>();
 
+        public void OnSettingsButtonClicked() =>
+            _projectEngine.ChangeState<SettingsState>();
+        
         #endregion
 
         #region Exit
