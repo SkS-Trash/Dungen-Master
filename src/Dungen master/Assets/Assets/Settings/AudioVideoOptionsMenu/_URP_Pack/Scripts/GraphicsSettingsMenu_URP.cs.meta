@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1b1cefb01fa52fb46a9f0dd02be762dc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33781
+  packageName: Audio Video Options/Settings Menu
+  packageVersion: 4.2
+  assetPath: Assets/@PaulosCreations/AudioVideoOptionsMenu/_URP_Pack/Scripts/GraphicsSettingsMenu_URP.cs
+  uploadId: 701258

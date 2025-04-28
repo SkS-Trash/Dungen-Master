@@ -1,0 +1,47 @@
+﻿using Core.Project.MainMenu;
+using Cysharp.Threading.Tasks;
+using Services.ProjectManager;
+using Services.Window;
+using StateMachines.DirectControlMultiLayer;
+using Subscribers.EventBusSystem;
+using UI.Settings;
+
+namespace Core.Project.Settings
+{
+    public class SettingsState : IState, IEnterable, IExitable,
+        ICloseSettingsSubscriber
+    {
+        private readonly IProjectEngine _projectEngine;
+        private readonly IWindowService _window;
+
+        public SettingsState(
+            IProjectEngine projectEngine,
+            IWindowService window
+        )
+        {
+            _projectEngine = projectEngine;
+            _window = window;
+        }
+
+        public async UniTask OnEnterAsync(Unit _)
+        {
+            await _window.Open(WindowID.Settings);
+
+            EventBus.Subscribe(this);
+        }
+
+        public UniTask OnExitAsync()
+        {
+            EventBus.Unsubscribe(this);
+
+            _window.Close(WindowID.Settings);
+
+            return UniTask.CompletedTask;
+        }
+
+        public void CloseSettings()
+        {
+            _projectEngine.ChangeState<MainMenuState>();
+        }
+    }
+}

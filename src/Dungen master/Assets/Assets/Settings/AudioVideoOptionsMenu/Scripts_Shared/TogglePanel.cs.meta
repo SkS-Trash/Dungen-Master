@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 672bc5c1e95b5564293a3827ada230dc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33781
+  packageName: Audio Video Options/Settings Menu
+  packageVersion: 4.2
+  assetPath: Assets/@PaulosCreations/AudioVideoOptionsMenu/Scripts_Shared/TogglePanel.cs
+  uploadId: 701258

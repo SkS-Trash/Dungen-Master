@@ -101,8 +101,7 @@ public class SaveLoadWindow : EditorWindow
         DrawBox(() =>
         {
             DrawColoredButton("Загрузить прогресс", btnLoadColor, LoadProgress, "d_UnityEditor.AnimationWindow");
-            DrawColoredButton("Оповестить об изменении", btnLoadColor, NotifyProgressChanged,
-                "d_UnityEditor.SceneView");
+            DrawColoredButton("Оповестить об изменении", btnLoadColor, NotifyProgressChanged, "d_UnityEditor.SceneView");
         });
     }
 
