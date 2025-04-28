@@ -54,6 +54,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16ebc61dba1670244909b0e65445a999
+    m_Address: UI/Settings
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c894a722c9f361489310eca98720568
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/EnemyIsCloseCombat.prefab
     m_ReadOnly: 0

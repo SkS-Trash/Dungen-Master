@@ -11,7 +11,7 @@ using Subscribers.EventBusSystem;
 namespace Core.Project.MainMenu
 {
     public class MainMenuState : IState, IEnterable, IExitable,
-        ILaunchNewGame, ILaunchContinueGame, IQuitApplication, ISettingsButton
+        ILaunchNewGame, ILaunchContinueGame, IQuitApplication, IOpenSettingsSubscriber
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _windows;
@@ -52,7 +52,7 @@ namespace Core.Project.MainMenu
         public void QuitApplication() =>
             _projectEngine.ChangeState<ExitFromApplicationState>();
 
-        public void OnSettingsButtonClicked() =>
+        public void OpenSettings() =>
             _projectEngine.ChangeState<SettingsState>();
         
         #endregion

@@ -27,7 +27,7 @@ namespace UI.MainMenu
 
         private void OnSettingsClicked()
         {
-            EventBus.RaiseEvent<ISettingsButton>(x => x.OnSettingsButtonClicked());
+            EventBus.RaiseEvent<IOpenSettingsSubscriber>(x => x.OpenSettings());
         }
     }
 }
