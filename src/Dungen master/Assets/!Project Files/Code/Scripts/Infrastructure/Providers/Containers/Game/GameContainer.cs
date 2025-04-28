@@ -8,6 +8,8 @@ namespace Providers.Containers.Game
         #region DungeonGenerationData
 
         public LevelStyleConfig LevelStyleConfig { get; set; }
+        
+        public int Seed { get; set; }
 
         public int Width { get; set; }
         public int Height { get; set; }

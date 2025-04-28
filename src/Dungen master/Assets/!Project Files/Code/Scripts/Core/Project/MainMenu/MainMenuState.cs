@@ -6,7 +6,6 @@ using Services.Window;
 using StateMachines.DirectControlMultiLayer;
 using Subscribers;
 using Subscribers.EventBusSystem;
-using UI.MainMenu;
 
 namespace Core.Project.MainMenu
 {

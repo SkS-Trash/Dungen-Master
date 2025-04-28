@@ -7,9 +7,9 @@ namespace ProceduralDungeon.Enemy
     {
         public EnemyType[,] EnemyLayer { get; }
 
-        private readonly Random _random = new();
+        private readonly Random _random;
 
-        public EnemySpawner(int width, int height)
+        public EnemySpawner(int width, int height, int seed)
         {
             EnemyLayer = new EnemyType[width, height];
             for (var x = 0; x < width; x++)
@@ -17,6 +17,8 @@ namespace ProceduralDungeon.Enemy
             {
                 EnemyLayer[x, y] = EnemyType.None;
             }
+
+            _random = new Random(seed);
         }
 
         public void SpawnEnemies(TileType[,] map, List<Room> rooms)

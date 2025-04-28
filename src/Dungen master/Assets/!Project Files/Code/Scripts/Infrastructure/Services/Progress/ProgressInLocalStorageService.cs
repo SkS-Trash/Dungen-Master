@@ -23,8 +23,6 @@ namespace Services.Progress
         public ProgressInLocalStorageService(ISaveLoadDataService saveLoad)
         {
             _saveLoad = saveLoad;
-
-            LoadProgress();
         }
 
         /// <inheritdoc/>
@@ -32,6 +30,7 @@ namespace Services.Progress
         {
             GlobalProgress.isFirstLaunch = false;
             GlobalProgress.version = GlobalSaveData.VERSION;
+
             _saveLoad.Save(GlobalProgress, GLOBAL_SAVE_DATA_KEY);
         }
 
@@ -39,6 +38,7 @@ namespace Services.Progress
         public void SaveLevel()
         {
             LevelProgressSaveCollectors.Collect(LevelProgress);
+
             _saveLoad.Save(LevelProgress, LEVEL_SAVE_DATA_KEY);
         }
 
@@ -49,13 +49,7 @@ namespace Services.Progress
 
             if (GlobalProgress == null)
             {
-                GlobalProgress = new GlobalSaveData
-                {
-                    isFirstLaunch = true,
-                    version = GlobalSaveData.VERSION
-                };
-
-                LevelProgress = new LevelSaveData();
+                ResetProgress();
 
                 return;
             }
@@ -77,12 +71,7 @@ namespace Services.Progress
         /// <inheritdoc/>
         public void ResetProgress()
         {
-            GlobalProgress = new GlobalSaveData
-            {
-                isFirstLaunch = true,
-                version = GlobalSaveData.VERSION
-            };
-
+            GlobalProgress = new GlobalSaveData();
             LevelProgress = new LevelSaveData();
 
             _saveLoad.Save(GlobalProgress, GLOBAL_SAVE_DATA_KEY);

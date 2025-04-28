@@ -6,25 +6,28 @@ namespace ProceduralDungeon.Map
 {
     public class MapGenerator : IMapGenerator
     {
-        public readonly int MapWidth;
-        public readonly int MapHeight;
         public TileType[,] Map { get; }
         public List<Room> Rooms { get; } = new();
 
-        private readonly Random _random = new();
+        private readonly Random _random;
+        private readonly int _mapWidth;
+        private readonly int _mapHeight;
 
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(int width, int height)
+        public MapGenerator(int width, int height, int seed)
         {
-            MapWidth = width;
-            MapHeight = height;
-            Map = new TileType[MapWidth, MapHeight];
+            _mapWidth = width;
+            _mapHeight = height;
 
-            for (var x = 0; x < MapWidth; x++)
-            for (var y = 0; y < MapHeight; y++)
+            Map = new TileType[_mapWidth, _mapHeight];
+
+            for (var x = 0; x < _mapWidth; x++)
+            for (var y = 0; y < _mapHeight; y++)
                 Map[x, y] = TileType.Wall;
+
+            _random = new Random(seed);
         }
 
         public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)
@@ -33,8 +36,8 @@ namespace ProceduralDungeon.Map
             {
                 var roomWidth = _random.Next(roomMinSize, roomMaxSize + 1);
                 var roomHeight = _random.Next(roomMinSize, roomMaxSize + 1);
-                var roomX = _random.Next(1, MapWidth - roomWidth - 1);
-                var roomY = _random.Next(1, MapHeight - roomHeight - 1);
+                var roomX = _random.Next(1, _mapWidth - roomWidth - 1);
+                var roomY = _random.Next(1, _mapHeight - roomHeight - 1);
 
                 var roll = _random.NextDouble();
                 var roomType = roll switch
@@ -72,8 +75,8 @@ namespace ProceduralDungeon.Map
 
         private void CleanDungeon()
         {
-            for (var x = 0; x < MapWidth; x++)
-            for (var y = 0; y < MapHeight; y++)
+            for (var x = 0; x < _mapWidth; x++)
+            for (var y = 0; y < _mapHeight; y++)
             {
                 if (Map[x, y] != TileType.Wall) continue;
 
@@ -85,7 +88,7 @@ namespace ProceduralDungeon.Map
 
                     int nx = x + dx, ny = y + dy;
 
-                    if (nx < 0 || ny < 0 || nx >= MapWidth || ny >= MapHeight) continue;
+                    if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
 
                     var neighbor = Map[nx, ny];
 
@@ -178,7 +181,7 @@ namespace ProceduralDungeon.Map
             for (var dy = -1; dy <= 1; dy++)
             {
                 var ny = y + dy;
-                if (ny >= 0 && ny < MapHeight)
+                if (ny >= 0 && ny < _mapHeight)
                     Map[x, ny] = TileType.Floor;
             }
         }
@@ -192,7 +195,7 @@ namespace ProceduralDungeon.Map
             for (var dx = -1; dx <= 1; dx++)
             {
                 var nx = x + dx;
-                if (nx >= 0 && nx < MapWidth)
+                if (nx >= 0 && nx < _mapWidth)
                     Map[nx, y] = TileType.Floor;
             }
         }

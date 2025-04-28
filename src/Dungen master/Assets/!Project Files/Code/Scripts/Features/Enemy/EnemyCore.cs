@@ -1,6 +1,10 @@
-﻿using Magic;
+﻿using System.Linq;
+using Magic;
+using Progress;
+using Services.Progress;
 using Sirenix.OdinInspector;
 using StateMachines.Transition;
+using Subscribers.EventBusSystem;
 using UI.Game;
 using UnityEngine;
 using Weapon;
@@ -14,8 +18,7 @@ namespace Enemy
         [SerializeField] private float aggroRange = 10f;
         [SerializeField] private float attackRange = 2f;
         [SerializeField] private float attackCooldown = 1f;
-        [Space] 
-        [SerializeField] private float patrolSpeed = 2f;
+        [Space] [SerializeField] private float patrolSpeed = 2f;
         [SerializeField] private float chaseSpeed = 4f;
 
         [Space] [ShowInInspector, ReadOnly, HideInEditorMode]
@@ -35,7 +38,7 @@ namespace Enemy
 
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private MagicCastController _magicCast;
-        
+
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private Transform _playerTransform;
 
@@ -52,13 +55,13 @@ namespace Enemy
         {
             _health = GetComponent<EnemyHealth>();
             _movement = GetComponent<EnemyMovement>();
-            
+
             _animator = GetComponent<EnemyAnimator>();
             _animationEvents = GetComponentInChildren<EnemyAnimationEvents>();
-            
+
             _magicCast = GetComponent<MagicCastController>();
             _weapon = GetComponentInChildren<WeaponInHandController>();
-            
+
             _stateDraw = GetComponentInChildren<EnemyCurrentStateDraw>();
             _healthBar = GetComponentInChildren<HealthBar>();
         }
@@ -81,10 +84,11 @@ namespace Enemy
             var idleState = new IdleState(this);
             var patrolState = new PatrolState(this, _movement, _animator, patrolSpeed);
             var followState = new FollowState(this, _movement, _animator, chaseSpeed, _playerTransform);
-            var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon, _magicCast, _playerTransform);
+            var attackState = new AttackState(this, _animator, _animationEvents, attackCooldown, _weapon, _magicCast,
+                _playerTransform);
             var damageState = new DamageState(this, _animator, _animationEvents, _health);
             var deathState = new DeathState(this, _animator, _animationEvents);
-            
+
             // Set up transitions
             _stateMachine.AddTransition(idleState, attackState, IsPlayerInAttackRange, IsAttackReady);
             _stateMachine.AddTransition(idleState, attackState, IsPlayerInAttackRange, IsMagicReady);
@@ -109,16 +113,16 @@ namespace Enemy
 
             return;
 
-            bool IsPlayerInRange() => 
+            bool IsPlayerInRange() =>
                 DistanceToPlayer() < aggroRange;
 
-            bool IsPlayerOutOfRange() => 
+            bool IsPlayerOutOfRange() =>
                 DistanceToPlayer() > aggroRange * multiplierOutOfRanges;
 
-            bool IsPlayerInAttackRange() => 
+            bool IsPlayerInAttackRange() =>
                 DistanceToPlayer() < attackRange;
 
-            bool IsPlayerOutOfAttackRange() => 
+            bool IsPlayerOutOfAttackRange() =>
                 DistanceToPlayer() > attackRange * multiplierOutOfRanges;
 
             bool IsDamage() =>
@@ -130,12 +134,12 @@ namespace Enemy
             bool IsInDeathState() =>
                 _health.CurrentHealth <= 0;
 
-            bool IsAttackReady() => 
+            bool IsAttackReady() =>
                 attackState.IsAttackReady;
 
             bool IsAttackEnd() =>
                 attackState.IsAttackEnd;
-            
+
             bool IsMagicReady() =>
                 attackState.IsMagicReady;
         }
