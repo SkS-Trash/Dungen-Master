@@ -8,14 +8,24 @@ namespace Services.Progress
     public interface IProgressService
     {
         /// <summary>
-        /// Текущий прогресс.
+        /// Текущий прогресс игры.
         /// </summary>
-        ProgressGameData CurrentProgress { get; }
+        GlobalSaveData GlobalProgress { get; }
 
         /// <summary>
-        /// Сохранить прогресс.
+        /// Текущий прогресс уровня.
         /// </summary>
-        void SaveProgress();
+        LevelSaveData LevelProgress { get; }
+
+        /// <summary>
+        /// Сохранить глобальный прогресс.
+        /// </summary>
+        void SaveGlobal();
+
+        /// <summary>
+        /// Сохранить прогресс уровня.
+        /// </summary>
+        void SaveLevel();
 
         /// <summary>
         /// Загрузить прогресс. 

@@ -19,7 +19,7 @@ namespace Core.Project
         public UniTask OnEnterAsync(Unit _)
         {
             _stateMachine.ChangeState<InitializationState>();
-            
+
             return UniTask.CompletedTask;
         }
     }

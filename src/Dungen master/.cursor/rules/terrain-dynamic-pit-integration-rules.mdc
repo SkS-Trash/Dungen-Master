@@ -1,0 +1,14 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Sets rules for integration of the Terrain Dynamic Pit plugin for crater creation.
+globs: Assets/Scripts/TerrainDynamicPit/**/*.cs
+---
+- При попадании артиллерии, миномётов или спецспособностей вызывать TerrainDynamicPitAPI.CreatePit(position, radius, depth) с параметрами из Config SO.
+- Полученные кратеры должны автоматически становиться NavMeshObstacle’ами, а NavMeshSurface пересчитываться только для зоны влияния.
+- Не трогать слои NavMesh для зданий/платформ, чтобы сохранить OffMeshLinks для многоэтажек.
+- Пулы эффекта (ParticleSystem, Decal) для каждого кратера, чтобы не вызывать Instantiate/Destroy каждый раз.
+

@@ -1,24 +1,29 @@
-﻿using Core.Project.Dungeon;
-using Core.Project.Home;
+﻿using Core.Project.Home;
 using Cysharp.Threading.Tasks;
+using Services.Progress;
 using Services.ProjectManager;
 using Services.Window;
 using StateMachines.DirectControlMultiLayer;
-using UI.MainMenu;
+using Subscribers;
+using Subscribers.EventBusSystem;
 
 namespace Core.Project.MainMenu
 {
-    public class MainMenuState : IState, IEnterable, IExitable
+    public class MainMenuState : IState, IEnterable, IExitable,
+        ILaunchNewGame, ILaunchContinueGame, IQuitApplication
     {
-        private readonly IWindowService _windowService;
         private readonly IProjectEngine _projectEngine;
+        private readonly IWindowService _windows;
+        private readonly IProgressService _progress;
 
         public MainMenuState(
             IProjectEngine projectEngine,
-            IWindowService windowService
+            IWindowService windows,
+            IProgressService progress
         )
         {
-            _windowService = windowService;
+            _windows = windows;
+            _progress = progress;
             _projectEngine = projectEngine;
         }
 
@@ -27,49 +32,24 @@ namespace Core.Project.MainMenu
         public async UniTask OnEnterAsync(Unit _)
         {
             await _projectEngine.RunOneShot<LoadHomeSceneState>();
-            
-            await InstantiateMainMenu();
 
-            SetupMainMenuCallbacks();
+            await _windows.Open(WindowID.MainMenu);
 
-            ShowMainMenu();
-            HideLoadingScreen();
+            EventBus.RaiseEvent<IGlobalProgressLoadSubscriber>(s => s.OnProgressLoaded(_progress.GlobalProgress));
+
+            // HideLoadingScreen();
+
+            EventBus.Subscribe(this);
         }
 
-        private async UniTask InstantiateMainMenu()
-        {
-            var mainMenuUI = await _windowService.OpenAndGet<MainMenuUI>(WindowID.MainMenu);
-            mainMenuUI.Hide();
-        }
+        public void LaunchNewGame() =>
+            _projectEngine.ChangeState<LaunchNewGameState>();
 
-        private void SetupMainMenuCallbacks()
-        {
-            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
-            mainMenuWindow.OnStartGame += OnStartGame;
-            mainMenuWindow.OnExit += OnExit;
-        }
+        public void LaunchContinueGame() =>
+            _projectEngine.ChangeState<LaunchContinueGameState>();
 
-        private void OnStartGame()
-        {
-            _projectEngine.ChangeState<HomeLoadState>();
-            // _projectEngine.ChangeState<TestState>();
-        }
-
-        private void OnExit()
-        {
+        public void QuitApplication() =>
             _projectEngine.ChangeState<ExitFromApplicationState>();
-        }
-
-        private void ShowMainMenu()
-        {
-            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
-            mainMenuWindow.Show();
-        }
-
-        private void HideLoadingScreen()
-        {
-            // TODO: Скрыть экран загрузки
-        }
 
         #endregion
 
@@ -77,15 +57,11 @@ namespace Core.Project.MainMenu
 
         public UniTask OnExitAsync()
         {
-            HideMainMenu();
+            EventBus.Unsubscribe(this);
+
+            _windows.Close(WindowID.MainMenu);
 
             return UniTask.CompletedTask;
-        }
-
-        private void HideMainMenu()
-        {
-            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
-            mainMenuWindow.Hide();
         }
 
         #endregion

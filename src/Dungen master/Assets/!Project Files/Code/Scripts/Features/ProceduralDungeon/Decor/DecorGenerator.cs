@@ -6,12 +6,16 @@ namespace ProceduralDungeon.Decor
     public class DecorGenerator : IDecorGenerator
     {
         public DecorType[,] DecorLayer { get; }
-        private readonly Random _random = new();
-        private const int MinDistanceBetweenObjects = 2;
 
-        public DecorGenerator(int width, int height)
+        private const int MIN_DISTANCE_BETWEEN_OBJECTS = 2;
+
+        private readonly Random _random;
+
+        public DecorGenerator(int width, int height, int seed)
         {
             DecorLayer = new DecorType[width, height];
+
+            _random = new Random(seed);
         }
 
         public void GenerateDecor(TileType[,] map, List<Room> rooms)
@@ -136,7 +140,7 @@ namespace ProceduralDungeon.Decor
                 var y = _random.Next(room.Y + border, room.Y + room.Height - border);
 
                 if (IsPositionValid(x, y, map) &&
-                    !HasNearbyDecor(x, y, MinDistanceBetweenObjects))
+                    !HasNearbyDecor(x, y, MIN_DISTANCE_BETWEEN_OBJECTS))
                 {
                     return (x, y);
                 }

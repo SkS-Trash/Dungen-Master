@@ -25,7 +25,6 @@ namespace Core.Project.Dungeon
             _containerProvider = containerProvider;
         }
 
-
         public async UniTask OnEnterAsync(Unit _)
         {
             var container = _containerProvider.Container;
@@ -72,6 +71,8 @@ namespace Core.Project.Dungeon
                 Quaternion.identity,
                 parent
             );
+            
+            enemyInstance.name = $"Enemy - {enemyType} ({x}, {y})";
 
             enemyInstance.GetComponent<EnemyCore>()
                 .SetPlayerTransform(_playerTransform)

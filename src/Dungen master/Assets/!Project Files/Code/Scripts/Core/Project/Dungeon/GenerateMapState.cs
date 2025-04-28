@@ -24,9 +24,9 @@ namespace Core.Project.Dungeon
             var data = _containerProvider.Container;
 
             var generator = new DungeonGenerator(
-                new MapGenerator(data.Width, data.Height),
-                new DecorGenerator(data.Width, data.Height),
-                new EnemySpawner(data.Width, data.Height)
+                new MapGenerator(data.Width, data.Height, data.Seed),
+                new DecorGenerator(data.Width, data.Height, data.Seed),
+                new EnemySpawner(data.Width, data.Height, data.Seed)
             );
 
             generator.GenerateDungeon(data.RoomCount, data.RoomMinSize, data.RoomMaxSize);

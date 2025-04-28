@@ -6,6 +6,8 @@ namespace Providers.Containers
     {
         LevelStyleConfig LevelStyleConfig { get; set; }
 
+        int Seed { get; set; }
+        
         int Width { get; set; }
         int Height { get; set; }
 

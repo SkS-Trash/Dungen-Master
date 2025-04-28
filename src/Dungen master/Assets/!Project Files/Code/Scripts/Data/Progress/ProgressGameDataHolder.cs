@@ -7,13 +7,22 @@ namespace Progress
         menuName = "Data/Progress/" + nameof(ProgressGameDataHolder))]
     public class ProgressGameDataHolder : ScriptableObject
     {
-        [field: BoxGroup("Progress"), HideLabel, ShowInInspector]
-        [field: SerializeField]
-        public ProgressGameData ProgressGameData { get; private set; }
+        [field: BoxGroup(nameof(GlobalSaveData)), HideLabel, SerializeField]
+        public GlobalSaveData GlobalSaveData { get; private set; } = new();
 
+        [field: BoxGroup(nameof(LevelSaveData)), HideLabel, SerializeField]
+        public LevelSaveData LevelSaveData { get; private set; } = new();
+
+        [Button("Reset progress")]
         public void ResetProgress()
         {
-            ProgressGameData = new ProgressGameData();
+            GlobalSaveData = new GlobalSaveData
+            {
+                isFirstLaunch = true,
+                version = GlobalSaveData.VERSION
+            };
+
+            LevelSaveData = new LevelSaveData();
         }
     }
 }

@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using Progress;
+using Services.Progress;
+using Subscribers.EventBusSystem;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyMovement : MonoBehaviour
+    public class EnemyMovement : MonoBehaviour,
+        ILevelProgressLoadSubscriber, ILevelProgressCollector
     {
         public Vector3 CurrentDestination => _agent.destination;
 
@@ -13,6 +17,18 @@ namespace Enemy
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+        }
+
+        private void OnEnable()
+        {
+            LevelProgressSaveCollectorsProvider.Instance.Subscribe(this);
+            EventBus.Subscribe(this);
+        }
+
+        private void OnDisable()
+        {
+            LevelProgressSaveCollectorsProvider.Instance.Unsubscribe(this);
+            EventBus.Unsubscribe(this);
         }
 
         public void MoveTo(Vector3 targetPosition)
@@ -42,6 +58,37 @@ namespace Enemy
         {
             _agent.stoppingDistance = stoppingDistance;
             _agent.autoBraking = autoBraking;
+        }
+
+        public void OnProgressLoaded(LevelSaveData progress)
+        {
+            var enemy = progress.enemies.Find(x => x.guid == gameObject.name);
+            if (enemy == null)
+            {
+                return;
+            }
+
+            var agentIsStopped = _agent.isStopped;
+            _agent.isStopped = true;
+            _agent.transform.position = enemy.position;
+            _agent.transform.rotation = enemy.rotation;
+            _agent.isStopped = agentIsStopped;
+        }
+
+        public void Collect(LevelSaveData target)
+        {
+            var enemy = target.enemies.Find(x => x.guid == gameObject.name);
+            if (enemy == null)
+            {
+                enemy = new EnemyData
+                {
+                    guid = gameObject.name
+                };
+                target.enemies.Add(enemy);
+            }
+
+            enemy.position = transform.position;
+            enemy.rotation = transform.rotation;
         }
     }
 }

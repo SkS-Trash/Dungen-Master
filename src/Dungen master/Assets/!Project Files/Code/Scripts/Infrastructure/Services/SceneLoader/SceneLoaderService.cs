@@ -36,8 +36,6 @@ namespace Services.SceneLoader
                     _loadedScenes.Add(sceneInstance);
                 }
 
-                Debug.Log($"Сцена '{sceneInstance.Scene.name}' успешно загружена.");
-
                 return sceneInstance;
             }
 

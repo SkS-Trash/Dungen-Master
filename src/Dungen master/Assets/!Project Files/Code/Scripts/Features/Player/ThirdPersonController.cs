@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using Progress;
+using Services.Progress;
+using Subscribers.EventBusSystem;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player
 {
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : MonoBehaviour,
+        ILevelProgressLoadSubscriber, ILevelProgressCollector
     {
         [SerializeField] private Transform camera;
         [SerializeField] private float turnSmoothVelocity = 2f;
@@ -22,6 +26,18 @@ namespace Player
         public void Start()
         {
             _currentSpeed = moveSpeed;
+        }
+        
+        private void OnEnable()
+        {
+            EventBus.Subscribe(this);
+            LevelProgressSaveCollectorsProvider.Instance.Subscribe(this);
+        }
+        
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe(this);
+            LevelProgressSaveCollectorsProvider.Instance.Unsubscribe(this);
         }
 
         public void Update()
@@ -70,6 +86,20 @@ namespace Player
             {
                 animator.EndSprint();
             }
+        }
+
+        public void OnProgressLoaded(LevelSaveData progress)
+        {
+            characterController.enabled = false;
+            transform.position = progress.player.position;
+            transform.rotation = progress.player.rotation;
+            characterController.enabled = true;
+        }
+
+        public void Collect(LevelSaveData target)
+        {
+            target.player.position = transform.position;
+            target.player.rotation = transform.rotation;
         }
     }
 }

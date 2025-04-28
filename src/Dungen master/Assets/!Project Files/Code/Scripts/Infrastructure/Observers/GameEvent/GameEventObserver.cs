@@ -2,7 +2,6 @@
 using Core.Project.MainMenu;
 using Services.ProjectManager;
 using Subscribers.EventBusSystem;
-using UnityEngine;
 
 namespace Observers.GameEvent
 {

@@ -6,10 +6,10 @@ namespace Health
     public class HealthContainer : MonoBehaviour
     {
         [field: ShowInInspector, ReadOnly, HideInEditorMode]
-        public int CurrentHealth { get; private set; }
+        public int CurrentHealth { get; protected set; }
 
         [field: SerializeField] 
-        public int MaxHealth { get; private set; } = 100;
+        public int MaxHealth { get; protected set; } = 100;
 
         private void Start()
         {
