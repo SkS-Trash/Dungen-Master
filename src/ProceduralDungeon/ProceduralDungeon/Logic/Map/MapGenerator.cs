@@ -28,7 +28,10 @@
 
         public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)
         {
-            for (var i = 0; i < roomCount; i++)
+            Rooms.Clear();
+            var candidateRooms = new List<Room>();
+            int attempts = 0;
+            while (candidateRooms.Count < roomCount && attempts < roomCount * 10)
             {
                 var roomWidth = _random.Next(roomMinSize, roomMaxSize + 1);
                 var roomHeight = _random.Next(roomMinSize, roomMaxSize + 1);
@@ -45,20 +48,50 @@
                 };
 
                 var newRoom = new Room(roomX, roomY, roomWidth, roomHeight, roomType);
-
-                if (Rooms.Any(otherRoom => newRoom.Intersects(otherRoom)))
-                    continue;
-
-                CreateRoom(newRoom);
-
-                if (Rooms.Count > 0)
+                if (candidateRooms.Any(otherRoom => newRoom.Intersects(otherRoom)))
                 {
-                    var prevRoom = Rooms[^1];
-                    CreateCorridor(prevRoom, newRoom);
+                    attempts++;
+                    continue;
                 }
-
-                Rooms.Add(newRoom);
+                candidateRooms.Add(newRoom);
+                attempts = 0;
             }
+
+            foreach (var room in candidateRooms)
+                CreateRoom(room);
+            Rooms.AddRange(candidateRooms);
+
+            var edges = new List<Edge>();
+            int k = 3;
+            for (int i = 0; i < Rooms.Count; i++)
+            {
+                var dists = new List<(int j, float dist)>();
+                for (int j = 0; j < Rooms.Count; j++)
+                {
+                    if (i == j) continue;
+                    dists.Add((j, CalculateDistance(Rooms[i], Rooms[j])));
+                }
+                foreach (var (j, dist) in dists.OrderBy(t => t.dist).Take(k))
+                {
+                    if (!edges.Any(e => (e.RoomA == i && e.RoomB == j) || (e.RoomA == j && e.RoomB == i)))
+                        edges.Add(new Edge(i, j, dist));
+                }
+            }
+
+            var mstEdges = KruskalMST(Rooms.Count, edges);
+
+            var extraEdges = new List<Edge>();
+            var nonMstEdges = edges.Except(mstEdges).ToList();
+            int extraCount = Math.Min(2, nonMstEdges.Count);
+            for (int i = 0; i < extraCount; i++)
+            {
+                var idx = _random.Next(nonMstEdges.Count);
+                extraEdges.Add(nonMstEdges[idx]);
+                nonMstEdges.RemoveAt(idx);
+            }
+
+            foreach (var edge in mstEdges.Concat(extraEdges))
+                CreateCorridor(Rooms[edge.RoomA], Rooms[edge.RoomB]);
 
             if (Rooms.Count > 0)
             {
@@ -194,6 +227,35 @@
                     if (nx >= 0 && nx < _mapWidth)
                         Map[nx, y] = TileType.Floor;
                 }
+        }
+
+        // --- Edge и Kruskal ---
+        private class Edge
+        {
+            public int RoomA { get; }
+            public int RoomB { get; }
+            public float Weight { get; }
+            public Edge(int a, int b, float w) { RoomA = a; RoomB = b; Weight = w; }
+        }
+
+        private List<Edge> KruskalMST(int roomCount, List<Edge> edges)
+        {
+            var parent = new int[roomCount];
+            for (int i = 0; i < roomCount; i++) parent[i] = i;
+            int Find(int x) => parent[x] == x ? x : (parent[x] = Find(parent[x]));
+            void Union(int x, int y) { parent[Find(x)] = Find(y); }
+
+            var mst = new List<Edge>();
+            foreach (var edge in edges.OrderBy(e => e.Weight))
+            {
+                int a = Find(edge.RoomA), b = Find(edge.RoomB);
+                if (a != b)
+                {
+                    mst.Add(edge);
+                    Union(a, b);
+                }
+            }
+            return mst;
         }
 
         private struct Point
