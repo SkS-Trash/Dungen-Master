@@ -99,7 +99,43 @@
             }
             else throw new InvalidOperationException("Комнаты не сгенерированы.");
 
+            CleanUnreachableFloor();
             CleanDungeon();
+        }
+
+        private void CleanUnreachableFloor()
+        {
+            var visited = new bool[_mapWidth, _mapHeight];
+            var queue = new Queue<Point>();
+            queue.Enqueue(_startPoint);
+            visited[_startPoint.X, _startPoint.Y] = true;
+
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { -1, 0, 1, 0 };
+
+            while (queue.Count > 0)
+            {
+                var p = queue.Dequeue();
+                for (int dir = 0; dir < 4; dir++)
+                {
+                    int nx = p.X + dx[dir];
+                    int ny = p.Y + dy[dir];
+                    if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
+                    if (visited[nx, ny]) continue;
+                    if (Map[nx, ny] is TileType.Floor or TileType.Start or TileType.Exit)
+                    {
+                        visited[nx, ny] = true;
+                        queue.Enqueue(new Point(nx, ny));
+                    }
+                }
+            }
+
+            for (int x = 0; x < _mapWidth; x++)
+                for (int y = 0; y < _mapHeight; y++)
+                {
+                    if (Map[x, y] == TileType.Floor && !visited[x, y])
+                        Map[x, y] = TileType.Empty;
+                }
         }
 
         private void CleanDungeon()
