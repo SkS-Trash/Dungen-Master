@@ -18,6 +18,7 @@ namespace GameEventObserver
         {
             AllEventsValidation();
             RemoveNoneValidation();
+            TypeAndObserverAreEqualValidation();
         }
 
         private void AllEventsValidation()
@@ -37,6 +38,18 @@ namespace GameEventObserver
         private void RemoveNoneValidation()
         {
             Observers = Observers.Where(x => x.EventType != GameEventType.None).ToList();
+        }
+
+        private void TypeAndObserverAreEqualValidation()
+        {
+            foreach (var observer in Observers
+                         .Where(observer => observer.EventType != GameEventType.None)
+                         .Where(observer => observer.Observer.EventType != observer.EventType)
+                    )
+            {
+                Debug.LogError(
+                    $"Тип события {observer.EventType} не совпадает с типом наблюдателя {observer.Observer.EventType}");
+            }
         }
 
         [Serializable]

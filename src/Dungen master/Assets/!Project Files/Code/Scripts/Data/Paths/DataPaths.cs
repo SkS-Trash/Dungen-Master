@@ -6,4 +6,6 @@
     public const string PROGRESS_GAME_DATA_HOLDER = SINGLETONS_PATH + "ProgressGameDataHolder";
     
     public const string LEVEL_STYLE_CONFIGS_PATH = DATA_PATH + "LevelStyle/";
+    
+    public const string GAME_EVENT_OBSERVER_COLLECTION = DATA_PATH + "GameEventObserver/GameEventObserverCollection";
 }

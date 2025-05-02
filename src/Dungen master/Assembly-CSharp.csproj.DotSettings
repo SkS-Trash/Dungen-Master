@@ -18,7 +18,9 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cextensions/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cfeatures/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cfeatures_005Cenemy_005Cstates/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cfeatures_005Cgameeventobserver_005Cobserverbehaviours/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cfeatures_005Cgameeventobserver_005Cobservers/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cfeatures_005Cgameeventobserver_005Cobserversbehaviour/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cfeatures_005C_0021moduls/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cfeatures_005C_0021moduls_005Cinterfaces/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_0021project_0020files_005Ccode_005Cscripts_005Cinfrastructure/@EntryIndexedValue">True</s:Boolean>

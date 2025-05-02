@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f606f9ce851a4cf08e7c78bc8fd00e89, type: 3}
+  m_Name: GameEventObserverCollection
+  m_EditorClassIdentifier: 
+  <Observers>k__BackingField:
+  - EventType: 1
+    Observer: {fileID: 5391293281670465362, guid: 0f7a10610a103ed419d580c3d06cf068, type: 3}
+  - EventType: 2
+    Observer: {fileID: 8365135481507845634, guid: 1f4d2bff2ffe6094cbb1b45a539cb964, type: 3}

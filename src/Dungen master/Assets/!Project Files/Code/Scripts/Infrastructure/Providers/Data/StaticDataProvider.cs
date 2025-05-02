@@ -1,4 +1,5 @@
-﻿using ProceduralDungeon;
+﻿using GameEventObserver;
+using ProceduralDungeon;
 using Progress;
 using UnityEngine;
 using static DataPaths;
@@ -18,6 +19,11 @@ namespace Providers.Data
         public LevelStyleConfig[] GetLevelStyleConfigs()
         {
             return Resources.LoadAll<LevelStyleConfig>(LEVEL_STYLE_CONFIGS_PATH);
+        }
+
+        public GameEventObserverCollection GetGameEventObserverCollection()
+        {
+            return Resources.Load<GameEventObserverCollection>(GAME_EVENT_OBSERVER_COLLECTION);
         }
     }
 }
