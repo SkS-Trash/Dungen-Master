@@ -1,9 +1,4 @@
-﻿using Subscribers.EventBusSystem;
-
-namespace Subscribers
+﻿public interface IPlayerMagicCooldownSubscriber : IGlobalSubscriber
 {
-    public interface IPlayerMagicCooldownSubscriber : IGlobalSubscriber
-    {
-        void OnPlayerMagicCooldownChanged(float percentage);
-    }
+    void OnPlayerMagicCooldownChanged(float percentage);
 }

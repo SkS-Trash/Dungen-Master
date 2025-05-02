@@ -1,9 +1,4 @@
-﻿using Subscribers.EventBusSystem;
-
-namespace Subscribers
+﻿public interface IQuitApplication : IGlobalSubscriber
 {
-    public interface IQuitApplication : IGlobalSubscriber
-    {
-        void QuitApplication();
-    }
+    void QuitApplication();
 }

@@ -1,9 +1,4 @@
-﻿using Subscribers.EventBusSystem;
-
-namespace Subscribers
+﻿public interface IPlayerHealthPercentageSubscriber : IGlobalSubscriber
 {
-    public interface IPlayerHealthPercentageSubscriber : IGlobalSubscriber
-    {
-        void OnPlayerHealthPercentageChanged(float percentage);
-    }
+    void OnPlayerHealthPercentageChanged(float percentage);
 }
