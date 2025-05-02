@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Factories.GameEvent;
 using Factories.GameObject;
 using Factories.UI;
 using Observers.Input;
@@ -14,12 +15,9 @@ using Services.ProjectManager;
 using Services.SaveLoadData;
 using Services.SceneLoader;
 using Services.Window;
-using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using IStateMachine = StateMachines.Transition.IStateMachine;
-using StateMachine = StateMachines.Transition.StateMachine;
 
 namespace Installers
 {
@@ -33,6 +31,7 @@ namespace Installers
 
             builder.Register<IGameObjectFactory, GameObjectFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
+            builder.Register<IGameEventFactory, GameEventFactory>(Lifetime.Singleton);
 
             builder.RegisterInstance(inputActionReader).AsImplementedInterfaces().AsSelf();
             builder.Register<IUnityGameLoopObserver, UnityGameLoopObserver>(Lifetime.Singleton);
@@ -49,12 +48,10 @@ namespace Installers
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IWindowService, WindowService>(Lifetime.Singleton);
 
-            builder.Register<IStatesFactory, StatesFactory>(Lifetime.Singleton);
-            builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine,
-                StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);
+            builder.Register<StateMachines.DirectControlMultiLayer.IStatesFactory, StateMachines.DirectControlMultiLayer.StatesFactory>(Lifetime.Singleton);
+            builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine, StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);
 
-            builder.Register<IStateMachine,
-                StateMachine>(Lifetime.Transient);
+            builder.Register<StateMachines.Transition.IStateMachine, StateMachines.Transition.StateMachine>(Lifetime.Transient);
 
             BindProjectStates(builder);
         }
@@ -70,10 +67,16 @@ namespace Installers
 
         private static void BindProjectStates(IContainerBuilder builder)
         {
-            var states = typeof(IState).Assembly.GetTypes().Where(x => x.IsClass && typeof(IState).IsAssignableFrom(x));
+            var states = typeof(StateMachines.DirectControlMultiLayer.IState)
+                .Assembly
+                .GetTypes()
+                .Where(x => x.IsClass && typeof(StateMachines.DirectControlMultiLayer.IState).IsAssignableFrom(x));
+
             foreach (var state in states)
             {
-                if (state.IsAbstract || state.IsInterface) continue;
+                if (state.IsAbstract || state.IsInterface) 
+                    continue;
+                
                 builder.Register(state, Lifetime.Transient).AsSelf();
             }
         }

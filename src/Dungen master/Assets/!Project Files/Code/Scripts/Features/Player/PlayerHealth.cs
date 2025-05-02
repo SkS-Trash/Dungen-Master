@@ -27,7 +27,7 @@ namespace Player
 
             if (CurrentHealth <= 0)
             {
-                EventBus.RaiseEvent<IPlayerDeathSubscriber>(subscriber => subscriber.OnPlayerDeath());
+                EventBus.RaiseEvent<IPlayerDiedSubscriber>(subscriber => subscriber.OnPlayerDeath());
             }
         }
 
