@@ -26,13 +26,13 @@ namespace Player
         {
             _currentSpeed = moveSpeed;
         }
-        
+
         private void OnEnable()
         {
             EventBus.Subscribe(this);
             LevelProgressSaveCollectorsProvider.Instance.Subscribe(this);
         }
-        
+
         private void OnDisable()
         {
             EventBus.Unsubscribe(this);
@@ -57,7 +57,7 @@ namespace Player
 
         private void Rotate()
         {
-            var target = Mathf.Atan2(_moveInput.x, _moveInput.y) * Mathf.Rad2Deg + camera.eulerAngles.y;
+            var target = Mathf.Atan2(_moveInput.y, _moveInput.x) * Mathf.Rad2Deg + camera.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, target, ref turnSmoothVelocity, turnSmoothTime);
             transform.eulerAngles = Vector3.up * angle;
         }
@@ -67,7 +67,7 @@ namespace Player
             _moveVelocity = new Vector3(_moveInput.x, 0, _moveInput.y);
             _moveVelocity = Vector3.ClampMagnitude(_moveVelocity, 1f);
             _moveVelocity *= _currentSpeed * Time.deltaTime;
-            _moveVelocity = characterController.transform.TransformDirection(_moveVelocity);
+            _moveVelocity = camera.transform.TransformDirection(_moveVelocity);
             characterController.Move(_moveVelocity);
 
             animator.SetSpeed(_moveInput.magnitude);
