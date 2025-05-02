@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProceduralDungeon.Enemy
+namespace ProceduralDungeon
 {
     public interface IEnemySpawner
     {

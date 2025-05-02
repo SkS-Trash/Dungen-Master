@@ -2,25 +2,28 @@
 {
     public class MapGenerator : IMapGenerator
     {
-        public readonly int MapWidth;
-        public readonly int MapHeight;
         public TileType[,] Map { get; }
         public List<Room> Rooms { get; } = [];
 
-        private readonly Random _random = new();
+        private readonly int _mapWidth;
+        private readonly int _mapHeight;
+        private readonly Random _random;
 
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(int width, int height)
+        public MapGenerator(int width, int height, int seed)
         {
-            MapWidth = width;
-            MapHeight = height;
-            Map = new TileType[MapWidth, MapHeight];
+            _mapWidth = width;
+            _mapHeight = height;
 
-            for (var x = 0; x < MapWidth; x++)
-            for (var y = 0; y < MapHeight; y++)
-                Map[x, y] = TileType.Wall;
+            Map = new TileType[_mapWidth, _mapHeight];
+
+            for (var x = 0; x < _mapWidth; x++)
+                for (var y = 0; y < _mapHeight; y++)
+                    Map[x, y] = TileType.Wall;
+
+            _random = new Random(seed);
         }
 
         public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)
@@ -29,8 +32,8 @@
             {
                 var roomWidth = _random.Next(roomMinSize, roomMaxSize + 1);
                 var roomHeight = _random.Next(roomMinSize, roomMaxSize + 1);
-                var roomX = _random.Next(1, MapWidth - roomWidth - 1);
-                var roomY = _random.Next(1, MapHeight - roomHeight - 1);
+                var roomX = _random.Next(1, _mapWidth - roomWidth - 1);
+                var roomY = _random.Next(1, _mapHeight - roomHeight - 1);
 
                 var roll = _random.NextDouble();
                 var roomType = roll switch
@@ -68,32 +71,32 @@
 
         private void CleanDungeon()
         {
-            for (var x = 0; x < MapWidth; x++)
-            for (var y = 0; y < MapHeight; y++)
-            {
-                if (Map[x, y] != TileType.Wall) continue;
-
-                var keepWall = false;
-                for (var dx = -1; dx <= 1 && !keepWall; dx++)
-                for (var dy = -1; dy <= 1; dy++)
+            for (var x = 0; x < _mapWidth; x++)
+                for (var y = 0; y < _mapHeight; y++)
                 {
-                    if (dx == 0 && dy == 0) continue;
+                    if (Map[x, y] != TileType.Wall) continue;
 
-                    int nx = x + dx, ny = y + dy;
+                    var keepWall = false;
+                    for (var dx = -1; dx <= 1 && !keepWall; dx++)
+                        for (var dy = -1; dy <= 1; dy++)
+                        {
+                            if (dx == 0 && dy == 0) continue;
 
-                    if (nx < 0 || ny < 0 || nx >= MapWidth || ny >= MapHeight) continue;
+                            int nx = x + dx, ny = y + dy;
 
-                    var neighbor = Map[nx, ny];
+                            if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
 
-                    if (neighbor is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+                            var neighbor = Map[nx, ny];
 
-                    keepWall = true;
-                    break;
+                            if (neighbor is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+
+                            keepWall = true;
+                            break;
+                        }
+
+                    if (!keepWall)
+                        Map[x, y] = TileType.Empty;
                 }
-
-                if (!keepWall)
-                    Map[x, y] = TileType.Empty;
-            }
         }
 
         private void PlaceStartAndExit()
@@ -103,19 +106,19 @@
             float maxDistance = 0;
 
             foreach (var roomA in Rooms)
-            foreach (var roomB in Rooms)
-            {
-                if (roomA == roomB) continue;
-
-                var distance = CalculateDistance(roomA, roomB);
-
-                if (distance > maxDistance)
+                foreach (var roomB in Rooms)
                 {
-                    maxDistance = distance;
-                    startRoom = roomA;
-                    exitRoom = roomB;
+                    if (roomA == roomB) continue;
+
+                    var distance = CalculateDistance(roomA, roomB);
+
+                    if (distance > maxDistance)
+                    {
+                        maxDistance = distance;
+                        startRoom = roomA;
+                        exitRoom = roomB;
+                    }
                 }
-            }
 
             if (startRoom != null && exitRoom != null)
             {
@@ -142,8 +145,8 @@
         private void CreateRoom(Room room)
         {
             for (var x = room.X; x < room.X + room.Width; x++)
-            for (var y = room.Y; y < room.Y + room.Height; y++)
-                Map[x, y] = TileType.Floor;
+                for (var y = room.Y; y < room.Y + room.Height; y++)
+                    Map[x, y] = TileType.Floor;
         }
 
         private void CreateCorridor(Room roomA, Room roomB)
@@ -171,12 +174,12 @@
             var end = Math.Max(x1, x2);
 
             for (var x = start; x <= end; x++)
-            for (var dy = -1; dy <= 1; dy++)
-            {
-                var ny = y + dy;
-                if (ny >= 0 && ny < MapHeight)
-                    Map[x, ny] = TileType.Floor;
-            }
+                for (var dy = -1; dy <= 1; dy++)
+                {
+                    var ny = y + dy;
+                    if (ny >= 0 && ny < _mapHeight)
+                        Map[x, ny] = TileType.Floor;
+                }
         }
 
         private void CreateVerticalCorridor(int y1, int y2, int x)
@@ -185,12 +188,12 @@
             var end = Math.Max(y1, y2);
 
             for (var y = start; y <= end; y++)
-            for (var dx = -1; dx <= 1; dx++)
-            {
-                var nx = x + dx;
-                if (nx >= 0 && nx < MapWidth)
-                    Map[nx, y] = TileType.Floor;
-            }
+                for (var dx = -1; dx <= 1; dx++)
+                {
+                    var nx = x + dx;
+                    if (nx >= 0 && nx < _mapWidth)
+                        Map[nx, y] = TileType.Floor;
+                }
         }
 
         private struct Point

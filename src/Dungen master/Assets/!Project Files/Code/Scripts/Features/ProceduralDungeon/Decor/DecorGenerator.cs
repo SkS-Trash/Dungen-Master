@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProceduralDungeon.Decor
+namespace ProceduralDungeon
 {
     public class DecorGenerator : IDecorGenerator
     {
@@ -85,7 +85,7 @@ namespace ProceduralDungeon.Decor
                 [DecorType.Campfire] = 10
             };
 
-            return WeightedRandomizer.GetRandom(weights);
+            return WeightedRandomizer.GetRandom(weights, _random);
         }
 
         private void PlaceDecorWithSize(int x, int y, DecorType decor, TileType[,] map)

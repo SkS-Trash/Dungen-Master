@@ -1,9 +1,4 @@
-﻿using System;
-using ProceduralDungeon.Decor;
-using ProceduralDungeon.Enemy;
-using ProceduralDungeon.Map;
-
-namespace ProceduralDungeon
+﻿namespace ProceduralDungeon
 {
     public class DungeonGenerator
     {
@@ -14,16 +9,13 @@ namespace ProceduralDungeon
         private readonly IMapGenerator _mapGenerator;
         private readonly IDecorGenerator _decorGenerator;
         private readonly IEnemySpawner _enemySpawner;
-        private readonly Random _random;
 
         public DungeonGenerator(
             IMapGenerator mapGenerator,
             IDecorGenerator decorGenerator,
-            IEnemySpawner enemySpawner,
-            int? seed = null
+            IEnemySpawner enemySpawner
         )
         {
-            _random = seed.HasValue ? new Random(seed.Value) : new Random();
             _mapGenerator = mapGenerator;
             _decorGenerator = decorGenerator;
             _enemySpawner = enemySpawner;

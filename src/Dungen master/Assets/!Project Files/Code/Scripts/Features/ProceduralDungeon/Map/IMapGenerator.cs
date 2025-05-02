@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProceduralDungeon.Map
+namespace ProceduralDungeon
 {
     public interface IMapGenerator
     {

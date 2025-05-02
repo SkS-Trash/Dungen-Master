@@ -3,12 +3,14 @@
     public class DecorGenerator : IDecorGenerator
     {
         public DecorType[,] DecorLayer { get; }
-        private readonly Random _random = new();
-        private const int MinDistanceBetweenObjects = 2;
+        private const int MIN_DISTANCE_BETWEEN_OBJECTS = 2;
+        private readonly Random _random;
 
-        public DecorGenerator(int width, int height)
+        public DecorGenerator(int width, int height, int seed)
         {
             DecorLayer = new DecorType[width, height];
+
+            _random = new Random(seed);
         }
 
         public void GenerateDecor(TileType[,] map, List<Room> rooms)
@@ -78,7 +80,7 @@
                 [DecorType.Campfire] = 10
             };
 
-            return WeightedRandomizer.GetRandom(weights);
+            return WeightedRandomizer.GetRandom(weights, _random);
         }
 
         private void PlaceDecorWithSize(int x, int y, DecorType decor, TileType[,] map)
@@ -86,10 +88,10 @@
             if (CanPlaceDecor(x, y, (1, 1), map))
             {
                 for (var dx = 0; dx < 1; dx++)
-                for (var dy = 0; dy < 1; dy++)
-                {
-                    DecorLayer[x + dx, y + dy] = decor;
-                }
+                    for (var dy = 0; dy < 1; dy++)
+                    {
+                        DecorLayer[x + dx, y + dy] = decor;
+                    }
             }
         }
 
@@ -133,7 +135,7 @@
                 var y = _random.Next(room.Y + border, room.Y + room.Height - border);
 
                 if (IsPositionValid(x, y, map) &&
-                    !HasNearbyDecor(x, y, MinDistanceBetweenObjects))
+                    !HasNearbyDecor(x, y, MIN_DISTANCE_BETWEEN_OBJECTS))
                 {
                     return (x, y);
                 }
@@ -165,23 +167,6 @@
         private bool IsPositionValid(int x, int y, TileType[,] map)
         {
             return map[x, y] == TileType.Floor;
-        }
-    }
-
-    public static class WeightedRandomizer
-    {
-        public static T GetRandom<T>(Dictionary<T, int> weights)
-        {
-            var total = weights.Values.Sum();
-            var random = new Random().Next(total);
-
-            foreach (var kvp in weights)
-            {
-                if (random < kvp.Value) return kvp.Key;
-                random -= kvp.Value;
-            }
-
-            return default;
         }
     }
 }
