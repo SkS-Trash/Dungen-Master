@@ -1,7 +1,4 @@
-﻿using Subscribers;
-using Subscribers.EventBusSystem;
-
-namespace UI.Game
+﻿namespace UI.Game
 {
     public class PlayerHealthBar : HealthBar, IPlayerHealthPercentageSubscriber
     {
