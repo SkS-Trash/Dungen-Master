@@ -3,7 +3,6 @@ using Health;
 using Progress;
 using Services.Progress;
 using Sirenix.OdinInspector;
-using Subscribers.EventBusSystem;
 
 namespace Enemy
 {

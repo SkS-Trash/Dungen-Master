@@ -3,13 +3,11 @@ using Cysharp.Threading.Tasks;
 using Services.ProjectManager;
 using Services.Window;
 using StateMachines.DirectControlMultiLayer;
-using Subscribers.EventBusSystem;
-using UI.Settings;
 
 namespace Core.Project.Settings
 {
     public class SettingsState : IState, IEnterable, IExitable,
-        ICloseSettingsSubscriber
+        ISettingsCloseSubscriber
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _window;

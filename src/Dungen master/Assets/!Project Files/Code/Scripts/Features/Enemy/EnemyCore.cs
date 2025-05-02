@@ -1,10 +1,6 @@
-﻿using System.Linq;
-using Magic;
-using Progress;
-using Services.Progress;
+﻿using Magic;
 using Sirenix.OdinInspector;
 using StateMachines.Transition;
-using Subscribers.EventBusSystem;
 using UI.Game;
 using UnityEngine;
 using Weapon;

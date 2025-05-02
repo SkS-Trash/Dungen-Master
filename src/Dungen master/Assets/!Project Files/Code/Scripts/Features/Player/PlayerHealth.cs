@@ -1,9 +1,6 @@
-﻿using System;
-using Health;
+﻿using Health;
 using Progress;
 using Services.Progress;
-using Subscribers;
-using Subscribers.EventBusSystem;
 
 namespace Player
 {
