@@ -6,11 +6,10 @@
         private const int MIN_DISTANCE_BETWEEN_OBJECTS = 2;
         private readonly Random _random;
 
-        public DecorGenerator(int width, int height, int seed)
+        public DecorGenerator(int width, int height, Random random)
         {
             DecorLayer = new DecorType[width, height];
-
-            _random = new Random(seed);
+            _random = random;
         }
 
         public void GenerateDecor(TileType[,] map, List<Room> rooms)

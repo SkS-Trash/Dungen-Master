@@ -12,10 +12,12 @@
             var cellSize = 20;
             var seed = 0;
 
+            var random = new Random(seed);
+
             var generator = new DungeonGenerator(
-                new MapGenerator(width, height, seed),
-                new DecorGenerator(width, height, seed),
-                new EnemySpawner(width, height, seed)
+                new MapGenerator(width, height, random),
+                new DecorGenerator(width, height, random),
+                new EnemySpawner(width, height, random)
             );
             generator.GenerateDungeon(roomCount, roomMinSize, roomMaxSize);
 

@@ -12,7 +12,7 @@
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(int width, int height, int seed)
+        public MapGenerator(int width, int height, Random random)
         {
             _mapWidth = width;
             _mapHeight = height;
@@ -23,7 +23,7 @@
                 for (var y = 0; y < _mapHeight; y++)
                     Map[x, y] = TileType.Wall;
 
-            _random = new Random(seed);
+            _random = random;
         }
 
         public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)

@@ -6,7 +6,7 @@
 
         private readonly Random _random;
 
-        public EnemySpawner(int width, int height, int seed)
+        public EnemySpawner(int width, int height, Random random)
         {
             EnemyLayer = new EnemyType[width, height];
             for (var x = 0; x < width; x++)
@@ -14,8 +14,7 @@
                 {
                     EnemyLayer[x, y] = EnemyType.None;
                 }
-
-            _random = new Random(seed);
+            _random = random;
         }
 
         public void SpawnEnemies(TileType[,] map, List<Room> rooms)
