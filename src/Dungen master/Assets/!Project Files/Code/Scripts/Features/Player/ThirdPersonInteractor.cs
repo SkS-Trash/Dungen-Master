@@ -1,6 +1,5 @@
 using Interactable;
 using Observers.Input;
-using Subscribers.EventBusSystem;
 using UnityEngine;
 
 namespace Player

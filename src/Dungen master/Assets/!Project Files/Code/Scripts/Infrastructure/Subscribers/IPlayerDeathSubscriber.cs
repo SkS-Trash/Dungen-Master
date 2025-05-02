@@ -1,9 +1,4 @@
-﻿using Subscribers.EventBusSystem;
-
-namespace Subscribers
+﻿public interface IPlayerDeathSubscriber : IGlobalSubscriber
 {
-    public interface IPlayerDeathSubscriber : IGlobalSubscriber
-    {
-        void OnPlayerDeath();
-    }
+    void OnPlayerDeath();
 }

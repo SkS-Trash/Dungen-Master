@@ -54,6 +54,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 164e5a6d301106540995f9b1ba72b545
+    m_Address: UI/GamePause
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16ebc61dba1670244909b0e65445a999
     m_Address: UI/Settings
     m_ReadOnly: 0
@@ -110,6 +115,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e70bcd0fc0318342b234d458980a507
     m_Address: Objects/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f5da7b7a65a01349b87fb8cc0e79cd3
+    m_Address: UI/HomePause
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f9b5969698af7042866d3b0e4b6888d
+    m_Address: UI/Enemy Stats
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -1,11 +1,9 @@
-﻿using Subscribers;
-using Subscribers.EventBusSystem;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Game
 {
-    public class MagicCooldown : BaseUI, IPlayerMagicCooldownSubscriber
+    public class MagicCooldown : ElementUI, IPlayerMagicCooldownSubscriber
     {
         [SerializeField] private Image magicCooldown;
 

@@ -2,7 +2,6 @@
 using System.Linq;
 using Factories.GameObject;
 using Factories.UI;
-using Observers.GameEvent;
 using Observers.Input;
 using Observers.UnityGameLoop;
 using Providers.Assets;
@@ -37,7 +36,6 @@ namespace Installers
 
             builder.RegisterInstance(inputActionReader).AsImplementedInterfaces().AsSelf();
             builder.Register<IUnityGameLoopObserver, UnityGameLoopObserver>(Lifetime.Singleton);
-            builder.Register<IGameEventObserver, INonLazy, GameEventObserver>(Lifetime.Singleton);
 
             builder.Register<IGameContainerProvider, GameContainerProvider>(Lifetime.Singleton);
             builder.Register<ISceneContainerProvider, SceneContainerProvider>(Lifetime.Singleton);

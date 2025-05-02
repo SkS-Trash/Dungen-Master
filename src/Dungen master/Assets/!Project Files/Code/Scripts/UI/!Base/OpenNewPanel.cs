@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Settings
+namespace UI
 {
     [RequireComponent(typeof(Button))]
     public class OpenNewPanel : MonoBehaviour

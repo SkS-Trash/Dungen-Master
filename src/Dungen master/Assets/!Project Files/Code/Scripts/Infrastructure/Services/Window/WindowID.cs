@@ -9,11 +9,13 @@
 
         MainMenu,
         Settings,
+
+        HomePauseMenu,
         
         Game,
         HUD,
+        GamePauseMenu,
 
-        PauseMenu,
         GameOver,
         Victory,
     }

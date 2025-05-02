@@ -4,7 +4,6 @@ using Providers.Data;
 using Services.Progress;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer;
-using Subscribers.EventBusSystem;
 using UnityEngine;
 
 namespace Core.Project.Dungeon

@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using Subscribers;
-using Subscribers.EventBusSystem;
 using UnityEngine;
 
 namespace Magic

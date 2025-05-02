@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI.Game
 {
-    public class EnemyCurrentStateDraw : BaseUI
+    public class EnemyCurrentStateDraw : ElementUI
     {
         [SerializeField] private TMP_Text text;
 

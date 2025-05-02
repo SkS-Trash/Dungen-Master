@@ -1,6 +1,3 @@
-﻿namespace Subscribers.EventBusSystem
+﻿public interface IGlobalSubscriber
 {
-    public interface IGlobalSubscriber
-    {
-    }
 }

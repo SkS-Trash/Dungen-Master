@@ -1,6 +1,5 @@
 ﻿using Progress;
 using Services.Progress;
-using Subscribers.EventBusSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

@@ -1,9 +1,4 @@
-﻿using Subscribers.EventBusSystem;
-
-namespace Subscribers
+﻿public interface ILaunchNewGame : IGlobalSubscriber
 {
-    public interface ILaunchNewGame : IGlobalSubscriber
-    {
-        void LaunchNewGame();
-    }
+    void LaunchNewGame();
 }

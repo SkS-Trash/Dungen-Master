@@ -3,7 +3,7 @@
 namespace UI
 {
     [RequireComponent(typeof(CanvasGroup))]
-    public abstract class BaseUI : MonoBehaviour
+    public abstract class ElementUI : MonoBehaviour
     {
         private CanvasGroup _canvasGroup;
 
