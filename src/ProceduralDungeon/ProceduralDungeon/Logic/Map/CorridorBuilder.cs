@@ -19,62 +19,8 @@ namespace ProceduralDungeon
             {
                 var a = rooms[edge.RoomA];
                 var b = rooms[edge.RoomB];
-                CreateCurvedCorridor(new Point(a.CenterX, a.CenterY), new Point(b.CenterX, b.CenterY));
+                CreateAStarCorridor(new Point(a.CenterX, a.CenterY), new Point(b.CenterX, b.CenterY));
             }
-        }
-
-        private void CreateCurvedCorridor(Point from, Point to, int radius = 1, double directionMemory = 0.7)
-        {
-            var path = BuildCurvedPath(from, to, directionMemory);
-            DrawCorridorPath(path, radius);
-        }
-
-        private List<Point> BuildCurvedPath(Point from, Point to, double directionMemory)
-        {
-            var path = new List<Point>();
-            int x = from.X, y = from.Y;
-            int dx = Math.Sign(to.X - x), dy = Math.Sign(to.Y - y);
-            int steps = 0, maxSteps = _mapWidth + _mapHeight;
-            double lastDirX = dx, lastDirY = dy;
-            var rand = new Random();
-            while ((x != to.X || y != to.Y) && steps < maxSteps)
-            {
-                double tx = to.X - x, ty = to.Y - y;
-                var len = Math.Sqrt(tx * tx + ty * ty);
-                if (len > 0.1)
-                {
-                    tx /= len;
-                    ty /= len;
-                }
-
-                var dirX = lastDirX * directionMemory + tx * (1 - directionMemory);
-                var dirY = lastDirY * directionMemory + ty * (1 - directionMemory);
-                dirX += (rand.NextDouble() - 0.5) * 0.5;
-                dirY += (rand.NextDouble() - 0.5) * 0.5;
-                var dlen = Math.Sqrt(dirX * dirX + dirY * dirY);
-                if (dlen > 0.1)
-                {
-                    dirX /= dlen;
-                    dirY /= dlen;
-                }
-
-                var stepX = Math.Abs(dirX) > Math.Abs(dirY) ? Math.Sign(dirX) : 0;
-                var stepY = Math.Abs(dirY) >= Math.Abs(dirX) ? Math.Sign(dirY) : 0;
-                if (rand.NextDouble() < 0.2)
-                {
-                    stepX = Math.Sign(dirX);
-                    stepY = Math.Sign(dirY);
-                }
-
-                x = Math.Clamp(x + stepX, 1, _mapWidth - 2);
-                y = Math.Clamp(y + stepY, 1, _mapHeight - 2);
-                path.Add(new Point(x, y));
-                lastDirX = dirX;
-                lastDirY = dirY;
-                steps++;
-            }
-
-            return path;
         }
 
         private void DrawCorridorPath(List<Point> path, int radius)
@@ -90,6 +36,103 @@ namespace ProceduralDungeon
                         _map[nx, ny] = TileType.Floor;
                 }
             }
+        }
+
+        public void CreateAStarCorridor(Point from, Point to, int radius = 1)
+        {
+            var path = BuildAStarPath(from, to);
+            DrawCorridorPath(path, radius);
+        }
+
+        private List<Point> BuildAStarPath(Point from, Point to)
+        {
+            var comparer = Comparer<(double f, int count, Point p)>.Create((a, b) =>
+            {
+                var cmp = a.f.CompareTo(b.f);
+                if (cmp != 0) return cmp;
+                cmp = a.count.CompareTo(b.count);
+                return cmp != 0
+                    ? cmp
+                    : a.p.X != b.p.X
+                        ? a.p.X.CompareTo(b.p.X)
+                        : a.p.Y.CompareTo(b.p.Y);
+            });
+
+            var openSet = new SortedSet<(double f, int count, Point p)>(comparer);
+            var cameFrom = new Dictionary<Point, Point>();
+            var gScore = new Dictionary<Point, double>();
+            var fScore = new Dictionary<Point, double>();
+            var closedSet = new HashSet<Point>();
+            var counter = 0;
+
+            gScore[from] = 0;
+            fScore[from] = Heuristic(from, to);
+            openSet.Add((fScore[from], counter++, from));
+
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { -1, 0, 1, 0 };
+
+            while (openSet.Count > 0)
+            {
+                var current = openSet.Min.p;
+                if (current.X == to.X && current.Y == to.Y)
+                    return ReconstructPath(cameFrom, current);
+                openSet.Remove(openSet.Min);
+                closedSet.Add(current);
+
+                for (var dir = 0; dir < 4; dir++)
+                {
+                    var nx = current.X + dx[dir];
+                    var ny = current.Y + dy[dir];
+                    if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight)
+                        continue;
+                    var neighbor = new Point(nx, ny);
+                    if (closedSet.Contains(neighbor))
+                        continue;
+                    var tentativeG = gScore[current] + GetTileCost(nx, ny);
+                    if (gScore.TryGetValue(neighbor, out var oldG) && tentativeG >= oldG)
+                        continue;
+                    cameFrom[neighbor] = current;
+                    gScore[neighbor] = tentativeG;
+                    fScore[neighbor] = tentativeG + Heuristic(neighbor, to);
+                    openSet.Add((fScore[neighbor], counter++, neighbor));
+                }
+            }
+
+            return new List<Point>();
+        }
+
+        private double Heuristic(Point a, Point b)
+        {
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
+        }
+
+        private double GetTileCost(int x, int y)
+        {
+            switch (_map[x, y])
+            {
+                case TileType.Floor:
+                case TileType.Start:
+                case TileType.Exit:
+                    return 1.0;
+                case TileType.Wall:
+                    return 100.0;
+                default:
+                    return 10.0;
+            }
+        }
+
+        private List<Point> ReconstructPath(Dictionary<Point, Point> cameFrom, Point current)
+        {
+            var path = new List<Point> { current };
+            while (cameFrom.TryGetValue(current, out var prev))
+            {
+                current = prev;
+                path.Add(current);
+            }
+
+            path.Reverse();
+            return path;
         }
     }
 
