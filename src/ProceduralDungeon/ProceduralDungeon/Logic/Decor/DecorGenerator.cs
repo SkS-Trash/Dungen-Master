@@ -1,4 +1,7 @@
-﻿namespace ProceduralDungeon
+﻿using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Configs;
+
+namespace ProceduralDungeon
 {
     public class DecorGenerator : IDecorGenerator
     {
@@ -10,14 +13,14 @@
         private readonly DecorRandomizer _randomizer;
         private readonly DecorDistanceChecker _distanceChecker;
 
-        public DecorGenerator(int width, int height, Random random)
+        public DecorGenerator(DecorConfig config, int width, int height, Random random)
         {
             DecorLayer = new DecorType[width, height];
             _random = random;
-            _profileProvider = new DecorProfileProvider();
+            _profileProvider = new DecorProfileProvider(config);
             _distanceChecker = new DecorDistanceChecker();
             _positionSelector = new DecorPositionSelector();
-            _randomizer = new DecorRandomizer(_random);
+            _randomizer = new DecorRandomizer(_random, config);
         }
 
         public void GenerateDecor(TileType[,] map, List<Room> rooms)

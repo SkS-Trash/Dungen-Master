@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using ProceduralDungeon.Data;
 
 namespace ProceduralDungeon
 {

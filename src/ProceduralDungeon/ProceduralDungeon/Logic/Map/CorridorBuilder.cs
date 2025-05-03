@@ -1,4 +1,5 @@
 using System.Buffers;
+using ProceduralDungeon.Data;
 
 namespace ProceduralDungeon
 {

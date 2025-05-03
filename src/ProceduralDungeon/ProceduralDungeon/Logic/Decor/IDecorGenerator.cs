@@ -1,4 +1,6 @@
-﻿namespace ProceduralDungeon
+﻿using ProceduralDungeon.Data;
+
+namespace ProceduralDungeon
 {
     public interface IDecorGenerator
     {

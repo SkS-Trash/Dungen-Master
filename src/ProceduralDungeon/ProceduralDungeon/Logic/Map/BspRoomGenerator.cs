@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ProceduralDungeon.Data;
 
 namespace ProceduralDungeon
 {
@@ -38,7 +39,7 @@ namespace ProceduralDungeon
                 var roomHeight = _random.Next(_minRoomSize, Math.Min(height, _maxRoomSize) + 1);
                 var roomX = x + _random.Next(0, Math.Max(1, width - roomWidth + 1));
                 var roomY = y + _random.Next(0, Math.Max(1, height - roomHeight + 1));
-                rooms.Add(new Room(roomX, roomY, roomWidth, roomHeight, RoomType.Normal));
+                rooms.Add(new Room(roomX, roomY, roomWidth, roomHeight, RoomType.Default));
                 return;
             }
 

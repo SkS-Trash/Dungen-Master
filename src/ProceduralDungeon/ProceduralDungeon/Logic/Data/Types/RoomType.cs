@@ -1,8 +1,8 @@
-﻿namespace ProceduralDungeon
+﻿namespace ProceduralDungeon.Data
 {
     public enum RoomType
     {
-        Normal,
+        Default,
         Treatment,
         Trap,
         Hard,

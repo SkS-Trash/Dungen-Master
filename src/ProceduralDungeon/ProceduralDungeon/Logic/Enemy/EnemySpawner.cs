@@ -1,13 +1,18 @@
-﻿namespace ProceduralDungeon
+﻿using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Configs;
+
+namespace ProceduralDungeon
 {
     public class EnemySpawner : IEnemySpawner
     {
         public EnemyType[,] EnemyLayer { get; }
 
         private readonly Random _random;
+        private readonly EnemyConfig _config;
 
-        public EnemySpawner(int width, int height, Random random)
+        public EnemySpawner(EnemyConfig config, int width, int height, Random random)
         {
+            _config = config;
             EnemyLayer = new EnemyType[width, height];
             for (var x = 0; x < width; x++)
             for (var y = 0; y < height; y++)

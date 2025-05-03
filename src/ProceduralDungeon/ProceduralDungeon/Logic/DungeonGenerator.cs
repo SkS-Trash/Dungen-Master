@@ -1,4 +1,6 @@
-﻿namespace ProceduralDungeon
+﻿using ProceduralDungeon.Data;
+
+namespace ProceduralDungeon
 {
     public class DungeonGenerator
     {
@@ -21,9 +23,9 @@
             _enemySpawner = enemySpawner;
         }
 
-        public void GenerateDungeon(int roomCount, int roomMinSize, int roomMaxSize)
+        public void GenerateDungeon()
         {
-            _mapGenerator.GenerateMap(roomCount, roomMinSize, roomMaxSize);
+            _mapGenerator.GenerateMap();
             MapLayer = _mapGenerator.Map;
 
             _decorGenerator.GenerateDecor(MapLayer, _mapGenerator.Rooms);

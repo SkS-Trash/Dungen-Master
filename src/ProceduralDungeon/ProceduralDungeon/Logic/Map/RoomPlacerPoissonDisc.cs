@@ -1,4 +1,5 @@
 using System.Buffers;
+using ProceduralDungeon.Data;
 
 namespace ProceduralDungeon
 {
@@ -60,7 +61,7 @@ namespace ProceduralDungeon
             var height = _random.Next(roomMinSize, roomMaxSize + 1);
             var x = Math.Clamp(cx - width / 2, 1, _mapWidth - width - 1);
             var y = Math.Clamp(cy - height / 2, 1, _mapHeight - height - 1);
-            return new Room(x, y, width, height, RoomType.Normal);
+            return new Room(x, y, width, height, RoomType.Default);
         }
 
         private bool HasIntersection(Room room, List<Room> rooms)

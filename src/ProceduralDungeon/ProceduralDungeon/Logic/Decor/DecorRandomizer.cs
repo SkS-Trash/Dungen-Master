@@ -1,12 +1,17 @@
+using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Configs;
+
 namespace ProceduralDungeon
 {
     public class DecorRandomizer
     {
         private readonly Random _random;
+        private readonly DecorConfig _config;
 
-        public DecorRandomizer(Random random)
+        public DecorRandomizer(Random random, DecorConfig config)
         {
             _random = random;
+            _config = config;
         }
 
         public DecorType SelectDecorType(RoomType roomType, List<DecorType> specialObjects)
@@ -21,15 +26,12 @@ namespace ProceduralDungeon
 
         public DecorType GetWeightedDecor(RoomType roomType)
         {
-            var weights = new Dictionary<DecorType, int>
-            {
-                [DecorType.None] = 0,
-                [DecorType.Chest] = roomType == RoomType.Trap ? 5 : 15,
-                [DecorType.Barrel] = 30,
-                [DecorType.Column] = 20,
-                [DecorType.Campfire] = 10
-            };
-            return WeightedRandomizer.GetRandom(weights, _random);
+            var weights = _config.RoomProfiles[roomType.ToString()].DecorWeights;
+            var decor = WeightedRandomizer.GetRandom(weights, _random);
+            if (decor == null) return DecorType.None;
+            if (!Enum.TryParse(decor, out DecorType decorType))
+                throw new ArgumentException($"Invalid decor type: {decor}");
+            return decorType;
         }
     }
 }

@@ -1,3 +1,5 @@
+using ProceduralDungeon.Data;
+
 namespace ProceduralDungeon
 {
     public class DecorDistanceChecker

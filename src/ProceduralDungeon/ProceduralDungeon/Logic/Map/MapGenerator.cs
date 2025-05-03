@@ -1,4 +1,7 @@
-﻿namespace ProceduralDungeon
+﻿using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Configs;
+
+namespace ProceduralDungeon
 {
     public enum MapGenerationMode
     {
@@ -16,22 +19,22 @@
         private readonly int _mapHeight;
         private readonly Random _random;
         private readonly MapGenerationMode _generationMode;
+        private readonly MapGeneratorConfig _config;
 
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(int width, int height, Random random,
-            MapGenerationMode generationMode = MapGenerationMode.Rectangular)
+        public MapGenerator(MapGeneratorConfig config, Random random)
         {
-            _mapWidth = width;
-            _mapHeight = height;
+            _config = config;
+            _mapWidth = config.Width;
+            _mapHeight = config.Height;
             _random = random;
-            _generationMode = generationMode;
-
+            _generationMode = Enum.TryParse<MapGenerationMode>(config.GenerationMode, out var mode) ? mode : MapGenerationMode.Rectangular;
             Map = new TileType[_mapWidth, _mapHeight];
         }
 
-        public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)
+        public void GenerateMap()
         {
             Rooms.Clear();
             switch (_generationMode)
@@ -40,10 +43,10 @@
                     MapGenerationModeCavern();
                     break;
                 case MapGenerationMode.BSP:
-                    MapGenerationModeBSP(roomMinSize, roomMaxSize);
+                    MapGenerationModeBSP(_config.RoomMinSize, _config.RoomMaxSize);
                     break;
                 case MapGenerationMode.Rectangular:
-                    MapGenerationModeRectangular(roomCount, roomMinSize, roomMaxSize);
+                    MapGenerationModeRectangular(_config.RoomCount, _config.RoomMinSize, _config.RoomMaxSize);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_generationMode),
