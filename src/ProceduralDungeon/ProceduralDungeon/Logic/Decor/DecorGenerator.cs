@@ -5,11 +5,19 @@
         public DecorType[,] DecorLayer { get; }
         private const int MIN_DISTANCE_BETWEEN_OBJECTS = 2;
         private readonly Random _random;
+        private readonly DecorProfileProvider _profileProvider;
+        private readonly DecorPositionSelector _positionSelector;
+        private readonly DecorRandomizer _randomizer;
+        private readonly DecorDistanceChecker _distanceChecker;
 
         public DecorGenerator(int width, int height, Random random)
         {
             DecorLayer = new DecorType[width, height];
             _random = random;
+            _profileProvider = new DecorProfileProvider();
+            _distanceChecker = new DecorDistanceChecker();
+            _positionSelector = new DecorPositionSelector();
+            _randomizer = new DecorRandomizer(random);
         }
 
         public void GenerateDecor(TileType[,] map, List<Room> rooms)
@@ -22,33 +30,12 @@
 
         private void GenerateRoomDecor(TileType[,] map, Room room)
         {
-            var (baseDensity, specialObjects) = GetRoomDecorProfile(room.Type);
+            var (baseDensity, specialObjects) = _profileProvider.GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
-            var validPositions = FindValidDecorPositions(room, map);
-            SortPositionsByDensity(validPositions);
+            var validPositions = _positionSelector.FindValidDecorPositions(room, map, DecorLayer, MIN_DISTANCE_BETWEEN_OBJECTS, _distanceChecker);
+            _positionSelector.SortPositionsByDensity(validPositions);
             PlaceDecorInRoom(validPositions, attempts, room.Type, specialObjects, map);
-        }
-
-        private List<(int x, int y, int density)> FindValidDecorPositions(Room room, TileType[,] map)
-        {
-            var validPositions = new List<(int x, int y, int density)>();
-            for (var x = room.X + 1; x < room.X + room.Width - 1; x++)
-            for (var y = room.Y + 1; y < room.Y + room.Height - 1; y++)
-            {
-                if (IsPositionValid(x, y, map) && !HasNearbyDecor(x, y, MIN_DISTANCE_BETWEEN_OBJECTS))
-                {
-                    var density = CalculatePositionDensity(x, y, map);
-                    validPositions.Add((x, y, density));
-                }
-            }
-
-            return validPositions;
-        }
-
-        private void SortPositionsByDensity(List<(int x, int y, int density)> positions)
-        {
-            positions.Sort((a, b) => b.density.CompareTo(a.density));
         }
 
         private void PlaceDecorInRoom(List<(int x, int y, int density)> positions, int attempts, RoomType roomType,
@@ -58,9 +45,9 @@
             foreach (var pos in positions)
             {
                 if (placed >= attempts) break;
-                var decor = SelectDecorType(roomType, specialObjects);
-                if (decor != DecorType.None && IsPositionValid(pos.x, pos.y, map) &&
-                    !HasNearbyDecor(pos.x, pos.y, MIN_DISTANCE_BETWEEN_OBJECTS))
+                var decor = _randomizer.SelectDecorType(roomType, specialObjects);
+                if (decor != DecorType.None && map[pos.x, pos.y] == TileType.Floor &&
+                    !_distanceChecker.HasNearbyDecor(pos.x, pos.y, MIN_DISTANCE_BETWEEN_OBJECTS, DecorLayer))
                 {
                     PlaceDecorWithSize(pos.x, pos.y, decor, map);
                     placed++;
@@ -72,41 +59,6 @@
         {
             var roomArea = room.Width * room.Height;
             return (int)(roomArea * baseDensity * 0.1);
-        }
-
-        private (int baseDensity, List<DecorType> specialObjects) GetRoomDecorProfile(RoomType type)
-        {
-            return type switch
-            {
-                RoomType.Treatment => (4, new List<DecorType> { DecorType.Altar }),
-                RoomType.Trap => (3, new List<DecorType> { DecorType.Spikes, DecorType.PressurePlate }),
-                RoomType.Hard => (2, new List<DecorType> { DecorType.Campfire }),
-                _ => (2, new List<DecorType> { DecorType.Barrel, DecorType.Column })
-            };
-        }
-
-        private DecorType SelectDecorType(RoomType roomType, List<DecorType> specialObjects)
-        {
-            if (_random.NextDouble() < 0.3 && specialObjects.Count > 0)
-            {
-                return specialObjects[_random.Next(specialObjects.Count)];
-            }
-
-            return GetWeightedDecor(roomType);
-        }
-
-        private DecorType GetWeightedDecor(RoomType roomType)
-        {
-            var weights = new Dictionary<DecorType, int>
-            {
-                [DecorType.None] = 0,
-                [DecorType.Chest] = roomType == RoomType.Trap ? 5 : 15,
-                [DecorType.Barrel] = 30,
-                [DecorType.Column] = 20,
-                [DecorType.Campfire] = 10
-            };
-
-            return WeightedRandomizer.GetRandom(weights, _random);
         }
 
         private void PlaceDecorWithSize(int x, int y, DecorType decor, TileType[,] map)
@@ -185,27 +137,6 @@
         private bool IsPositionValid(int x, int y, TileType[,] map)
         {
             return map[x, y] == TileType.Floor;
-        }
-
-        private int CalculatePositionDensity(int x, int y, TileType[,] map)
-        {
-            var density = 0;
-            int[] dx = { -1, 0, 1, 0 };
-            int[] dy = { 0, -1, 0, 1 };
-            for (var dir = 0; dir < 4; dir++)
-            {
-                var nx = x + dx[dir];
-                var ny = y + dy[dir];
-                if (nx >= 0 && nx < map.GetLength(0) &&
-                    ny >= 0 && ny < map.GetLength(1))
-                {
-                    if (map[nx, ny] == TileType.Floor &&
-                        DecorLayer[nx, ny] == DecorType.None)
-                        density++;
-                }
-            }
-
-            return density;
         }
     }
 }
