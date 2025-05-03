@@ -17,7 +17,7 @@
             _profileProvider = new DecorProfileProvider();
             _distanceChecker = new DecorDistanceChecker();
             _positionSelector = new DecorPositionSelector();
-            _randomizer = new DecorRandomizer(random);
+            _randomizer = new DecorRandomizer(_random);
         }
 
         public void GenerateDecor(TileType[,] map, List<Room> rooms)
@@ -33,7 +33,8 @@
             var (baseDensity, specialObjects) = _profileProvider.GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
-            var validPositions = _positionSelector.FindValidDecorPositions(room, map, DecorLayer, MIN_DISTANCE_BETWEEN_OBJECTS, _distanceChecker);
+            var validPositions = _positionSelector.FindValidDecorPositions(room, map, DecorLayer,
+                MIN_DISTANCE_BETWEEN_OBJECTS, _distanceChecker);
             _positionSelector.SortPositionsByDensity(validPositions);
             PlaceDecorInRoom(validPositions, attempts, room.Type, specialObjects, map);
         }

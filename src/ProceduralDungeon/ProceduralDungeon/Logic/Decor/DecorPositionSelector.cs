@@ -1,10 +1,15 @@
+using System.Buffers;
+
 namespace ProceduralDungeon
 {
     public class DecorPositionSelector
     {
-        public List<(int x, int y, int density)> FindValidDecorPositions(Room room, TileType[,] map, DecorType[,] decorLayer, int minDistance, DecorDistanceChecker distanceChecker)
+        public List<(int x, int y, int density)> FindValidDecorPositions(Room room, TileType[,] map,
+            DecorType[,] decorLayer, int minDistance, DecorDistanceChecker distanceChecker)
         {
-            var validPositions = new List<(int x, int y, int density)>();
+            var validPositions = ArrayPool<List<(int x, int y, int density)>>.Shared.Rent(1)[0] ??
+                                 new List<(int x, int y, int density)>();
+            validPositions.Clear();
             for (var x = room.X + 1; x < room.X + room.Width - 1; x++)
             for (var y = room.Y + 1; y < room.Y + room.Height - 1; y++)
             {
@@ -14,7 +19,12 @@ namespace ProceduralDungeon
                     validPositions.Add((x, y, density));
                 }
             }
-            return validPositions;
+
+            var result = new List<(int x, int y, int density)>(validPositions);
+            validPositions.Clear();
+            ArrayPool<List<(int x, int y, int density)>>.Shared.Return(new List<(int x, int y, int density)>[]
+                { validPositions });
+            return result;
         }
 
         public void SortPositionsByDensity(List<(int x, int y, int density)> positions)
@@ -42,7 +52,8 @@ namespace ProceduralDungeon
                         density++;
                 }
             }
+
             return density;
         }
     }
-} 
+}

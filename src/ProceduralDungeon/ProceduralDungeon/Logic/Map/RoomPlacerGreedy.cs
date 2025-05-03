@@ -1,3 +1,5 @@
+using System.Buffers;
+
 namespace ProceduralDungeon
 {
     public class RoomPlacerGreedy
@@ -15,7 +17,8 @@ namespace ProceduralDungeon
 
         public List<Room> GenerateRooms(int roomCount, int roomMinSize, int roomMaxSize)
         {
-            var rooms = new List<Room>();
+            var rooms = ArrayPool<List<Room>>.Shared.Rent(1)[0] ?? new List<Room>();
+            rooms.Clear();
             var attempts = 0;
             var maxAttempts = roomCount * 20;
             while (rooms.Count < roomCount && attempts < maxAttempts)
@@ -34,7 +37,10 @@ namespace ProceduralDungeon
                 attempts++;
             }
 
-            return rooms;
+            var result = new List<Room>(rooms);
+            rooms.Clear();
+            ArrayPool<List<Room>>.Shared.Return(new List<Room>[] { rooms });
+            return result;
         }
     }
 }

@@ -3,6 +3,7 @@ namespace ProceduralDungeon
     public class DecorRandomizer
     {
         private readonly Random _random;
+
         public DecorRandomizer(Random random)
         {
             _random = random;
@@ -14,6 +15,7 @@ namespace ProceduralDungeon
             {
                 return specialObjects[_random.Next(specialObjects.Count)];
             }
+
             return GetWeightedDecor(roomType);
         }
 
@@ -30,4 +32,4 @@ namespace ProceduralDungeon
             return WeightedRandomizer.GetRandom(weights, _random);
         }
     }
-} 
+}

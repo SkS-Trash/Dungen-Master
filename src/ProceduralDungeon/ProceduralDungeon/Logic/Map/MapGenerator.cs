@@ -54,7 +54,7 @@
 
         private void BuildingCorridors(List<Edge> mstEdges, List<Edge> extraEdges)
         {
-            var corridorBuilder = new CorridorBuilder(Map, _mapWidth, _mapHeight);
+            var corridorBuilder = new CorridorBuilder(Map, _mapWidth, _mapHeight, _random);
             corridorBuilder.CreateCorridors(Rooms, mstEdges.Concat(extraEdges));
         }
 

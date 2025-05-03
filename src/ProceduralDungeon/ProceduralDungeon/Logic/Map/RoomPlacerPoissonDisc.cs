@@ -1,3 +1,5 @@
+using System.Buffers;
+
 namespace ProceduralDungeon
 {
     public class RoomPlacerPoissonDisc
@@ -15,8 +17,10 @@ namespace ProceduralDungeon
 
         public List<Room> GenerateRooms(int roomCount, int roomMinSize, int roomMaxSize, int k = 30)
         {
-            var rooms = new List<Room>();
-            var candidates = new List<(int x, int y)>();
+            var rooms = ArrayPool<List<Room>>.Shared.Rent(1)[0] ?? new List<Room>();
+            rooms.Clear();
+            var candidates = ArrayPool<List<(int x, int y)>>.Shared.Rent(1)[0] ?? new List<(int x, int y)>();
+            candidates.Clear();
             var minDist = roomMinSize + 2;
 
             var (startX, startY) = GetRandomStartPoint(roomMinSize);
@@ -42,7 +46,12 @@ namespace ProceduralDungeon
                 AddNewCandidates(cx, cy, minDist, k, roomMinSize, candidates);
             }
 
-            return rooms;
+            var result = new List<Room>(rooms);
+            rooms.Clear();
+            ArrayPool<List<Room>>.Shared.Return(new List<Room>[] { rooms });
+            candidates.Clear();
+            ArrayPool<List<(int x, int y)>>.Shared.Return(new List<(int x, int y)>[] { candidates });
+            return result;
         }
 
         private (int x, int y) GetRandomStartPoint(int roomMinSize)

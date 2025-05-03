@@ -16,7 +16,8 @@ namespace ProceduralDungeon
                     return true;
                 }
             }
+
             return false;
         }
     }
-} 
+}

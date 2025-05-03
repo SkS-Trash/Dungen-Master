@@ -1,3 +1,5 @@
+using System.Buffers;
+
 namespace ProceduralDungeon
 {
     public class CorridorBuilder
@@ -5,12 +7,14 @@ namespace ProceduralDungeon
         private readonly TileType[,] _map;
         private readonly int _mapWidth;
         private readonly int _mapHeight;
+        private readonly Random _random;
 
-        public CorridorBuilder(TileType[,] map, int mapWidth, int mapHeight)
+        public CorridorBuilder(TileType[,] map, int mapWidth, int mapHeight, Random random)
         {
             _map = map;
             _mapWidth = mapWidth;
             _mapHeight = mapHeight;
+            _random = random;
         }
 
         public void CreateCorridors(List<Room> rooms, IEnumerable<Edge> edges)
@@ -76,7 +80,13 @@ namespace ProceduralDungeon
             {
                 var current = openSet.Min.p;
                 if (current.X == to.X && current.Y == to.Y)
-                    return ReconstructPath(cameFrom, current);
+                {
+                    var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? new List<Point>();
+                    path.Clear();
+                    path.AddRange(ReconstructPath(cameFrom, current));
+                    return path;
+                }
+
                 openSet.Remove(openSet.Min);
                 closedSet.Add(current);
 
@@ -99,7 +109,7 @@ namespace ProceduralDungeon
                 }
             }
 
-            return new List<Point>();
+            return ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? new List<Point>();
         }
 
         private double Heuristic(Point a, Point b)
@@ -124,7 +134,9 @@ namespace ProceduralDungeon
 
         private List<Point> ReconstructPath(Dictionary<Point, Point> cameFrom, Point current)
         {
-            var path = new List<Point> { current };
+            var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? new List<Point>();
+            path.Clear();
+            path.Add(current);
             while (cameFrom.TryGetValue(current, out var prev))
             {
                 current = prev;
