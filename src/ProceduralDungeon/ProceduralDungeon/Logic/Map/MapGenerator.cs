@@ -30,7 +30,9 @@ namespace ProceduralDungeon
             _mapWidth = config.Width;
             _mapHeight = config.Height;
             _random = random;
-            _generationMode = Enum.TryParse<MapGenerationMode>(config.GenerationMode, out var mode) ? mode : MapGenerationMode.Rectangular;
+            _generationMode = Enum.TryParse<MapGenerationMode>(config.GenerationMode, out var mode)
+                ? mode
+                : MapGenerationMode.Rectangular;
             Map = new TileType[_mapWidth, _mapHeight];
         }
 
@@ -74,6 +76,45 @@ namespace ProceduralDungeon
 
                 Map[_startPoint.X, _startPoint.Y] = TileType.Start;
                 Map[_exitPoint.X, _exitPoint.Y] = TileType.Exit;
+            }
+
+            Rooms.Clear();
+            var visited = new bool[_mapWidth, _mapHeight];
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { -1, 0, 1, 0 };
+            for (var x = 0; x < _mapWidth; x++)
+            for (var y = 0; y < _mapHeight; y++)
+            {
+                if (visited[x, y]) continue;
+                if (Map[x, y] is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+                var queue = new Queue<Point>();
+                var component = new List<Point>();
+                queue.Enqueue(new Point(x, y));
+                visited[x, y] = true;
+                while (queue.Count > 0)
+                {
+                    var p = queue.Dequeue();
+                    component.Add(p);
+                    for (int dir = 0; dir < 4; dir++)
+                    {
+                        int nx = p.X + dx[dir], ny = p.Y + dy[dir];
+                        if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
+                        if (visited[nx, ny]) continue;
+                        if (Map[nx, ny] is TileType.Floor or TileType.Start or TileType.Exit)
+                        {
+                            visited[nx, ny] = true;
+                            queue.Enqueue(new Point(nx, ny));
+                        }
+                    }
+                }
+
+                int minX = component.Min(p => p.X);
+                int minY = component.Min(p => p.Y);
+                int maxX = component.Max(p => p.X);
+                int maxY = component.Max(p => p.Y);
+                int width = maxX - minX + 1;
+                int height = maxY - minY + 1;
+                Rooms.Add(new Room(minX, minY, width, height, RoomType.Default));
             }
 
             Cleaning();
