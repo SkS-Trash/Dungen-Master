@@ -58,7 +58,7 @@ namespace Player
         private void Rotate()
         {
             var target = Mathf.Atan2(_moveInput.y, _moveInput.x) * Mathf.Rad2Deg + camera.eulerAngles.y;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, target, ref turnSmoothVelocity, turnSmoothTime);
+            var angle = Mathf.SmoothDampAngle(camera.transform.eulerAngles.y, target, ref turnSmoothVelocity, turnSmoothTime);
             transform.eulerAngles = Vector3.up * angle;
         }
 
@@ -68,6 +68,8 @@ namespace Player
             _moveVelocity = Vector3.ClampMagnitude(_moveVelocity, 1f);
             _moveVelocity *= _currentSpeed * Time.deltaTime;
             _moveVelocity = camera.transform.TransformDirection(_moveVelocity);
+            _moveVelocity.y = 0;
+            
             characterController.Move(_moveVelocity);
 
             animator.SetSpeed(_moveInput.magnitude);
