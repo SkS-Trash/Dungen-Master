@@ -3,7 +3,7 @@
     public class MapGenerator : IMapGenerator
     {
         public TileType[,] Map { get; }
-        public List<Room> Rooms { get; } = new();
+        public List<Room> Rooms { get; } = [];
 
         private readonly int _mapWidth;
         private readonly int _mapHeight;

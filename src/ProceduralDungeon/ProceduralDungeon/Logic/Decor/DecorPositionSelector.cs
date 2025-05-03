@@ -7,23 +7,27 @@ namespace ProceduralDungeon
         public List<(int x, int y, int density)> FindValidDecorPositions(Room room, TileType[,] map,
             DecorType[,] decorLayer, int minDistance, DecorDistanceChecker distanceChecker)
         {
-            var validPositions = ArrayPool<List<(int x, int y, int density)>>.Shared.Rent(1)[0] ??
-                                 new List<(int x, int y, int density)>();
-            validPositions.Clear();
+            var validPositions = ArrayPool<(int x, int y, int density)>.Shared.Rent(room.Width * room.Height);
+            var result = new List<(int x, int y, int density)>();
+
+            var count = 0;
             for (var x = room.X + 1; x < room.X + room.Width - 1; x++)
             for (var y = room.Y + 1; y < room.Y + room.Height - 1; y++)
             {
                 if (IsPositionValid(x, y, map) && !distanceChecker.HasNearbyDecor(x, y, minDistance, decorLayer))
                 {
                     var density = CalculatePositionDensity(x, y, map, decorLayer);
-                    validPositions.Add((x, y, density));
+                    validPositions[count++] = (x, y, density);
                 }
             }
 
-            var result = new List<(int x, int y, int density)>(validPositions);
-            validPositions.Clear();
-            ArrayPool<List<(int x, int y, int density)>>.Shared.Return(new List<(int x, int y, int density)>[]
-                { validPositions });
+            for (var i = 0; i < count; i++)
+            {
+                result.Add(validPositions[i]);
+            }
+
+            ArrayPool<(int x, int y, int density)>.Shared.Return(validPositions, clearArray: true);
+
             return result;
         }
 

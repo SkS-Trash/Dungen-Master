@@ -73,15 +73,15 @@ namespace ProceduralDungeon
             fScore[from] = Heuristic(from, to);
             openSet.Add((fScore[from], counter++, from));
 
-            int[] dx = { 0, 1, 0, -1 };
-            int[] dy = { -1, 0, 1, 0 };
+            int[] dx = [0, 1, 0, -1];
+            int[] dy = [-1, 0, 1, 0];
 
             while (openSet.Count > 0)
             {
                 var current = openSet.Min.p;
                 if (current.X == to.X && current.Y == to.Y)
                 {
-                    var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? new List<Point>();
+                    var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? [];
                     path.Clear();
                     path.AddRange(ReconstructPath(cameFrom, current));
                     return path;
@@ -109,7 +109,7 @@ namespace ProceduralDungeon
                 }
             }
 
-            return ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? new List<Point>();
+            return ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? [];
         }
 
         private double Heuristic(Point a, Point b)
@@ -134,7 +134,7 @@ namespace ProceduralDungeon
 
         private List<Point> ReconstructPath(Dictionary<Point, Point> cameFrom, Point current)
         {
-            var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? new List<Point>();
+            var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? [];
             path.Clear();
             path.Add(current);
             while (cameFrom.TryGetValue(current, out var prev))

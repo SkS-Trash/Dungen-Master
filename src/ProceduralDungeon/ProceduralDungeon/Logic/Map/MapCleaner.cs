@@ -26,8 +26,8 @@ namespace ProceduralDungeon
             queue.Enqueue(startPoint);
             visited[startPoint.X, startPoint.Y] = true;
 
-            int[] dx = { 0, 1, 0, -1 };
-            int[] dy = { -1, 0, 1, 0 };
+            int[] dx = [0, 1, 0, -1];
+            int[] dy = [-1, 0, 1, 0];
 
             while (queue.Count > 0)
             {

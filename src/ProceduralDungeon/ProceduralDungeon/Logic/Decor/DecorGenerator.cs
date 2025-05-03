@@ -43,17 +43,75 @@
             List<DecorType> specialObjects, TileType[,] map)
         {
             var placed = 0;
+            var used = new HashSet<(int, int)>();
             foreach (var pos in positions)
             {
                 if (placed >= attempts) break;
+                if (used.Contains((pos.x, pos.y))) continue;
                 var decor = _randomizer.SelectDecorType(roomType, specialObjects);
-                if (decor != DecorType.None && map[pos.x, pos.y] == TileType.Floor &&
+                if (decor is DecorType.Chest or DecorType.Altar && _random.NextDouble() < 0.7)
+                {
+                    var clusterSize = _random.Next(2, 5);
+                    var cluster = GenerateClusterPositions(pos.x, pos.y, map, DecorLayer, clusterSize);
+                    var actuallyPlaced = 0;
+                    foreach (var (cx, cy) in cluster)
+                    {
+                        if (map[cx, cy] != TileType.Floor ||
+                            _distanceChecker.HasNearbyDecor(cx, cy, MIN_DISTANCE_BETWEEN_OBJECTS, DecorLayer) ||
+                            used.Contains((cx, cy))) continue;
+
+                        PlaceDecorWithSize(cx, cy, decor, map);
+                        used.Add((cx, cy));
+                        actuallyPlaced++;
+                        placed++;
+
+                        if (placed >= attempts) break;
+                    }
+
+                    if (actuallyPlaced > 0) continue;
+                }
+
+                if (decor != DecorType.None &&
+                    map[pos.x, pos.y] == TileType.Floor &&
                     !_distanceChecker.HasNearbyDecor(pos.x, pos.y, MIN_DISTANCE_BETWEEN_OBJECTS, DecorLayer))
                 {
                     PlaceDecorWithSize(pos.x, pos.y, decor, map);
+                    used.Add((pos.x, pos.y));
                     placed++;
                 }
             }
+        }
+
+        private List<(int x, int y)> GenerateClusterPositions(int x, int y, TileType[,] map, DecorType[,] decorLayer,
+            int clusterSize)
+        {
+            var cluster = new List<(int, int)> { (x, y) };
+            var candidates = new List<(int, int)> { (x, y) };
+            var visited = new HashSet<(int, int)> { (x, y) };
+            int[] dx = [-1, 1, 0, 0];
+            int[] dy = [0, 0, -1, 1];
+            while (cluster.Count < clusterSize && candidates.Count > 0)
+            {
+                var idx = _random.Next(candidates.Count);
+                var (cx, cy) = candidates[idx];
+                candidates.RemoveAt(idx);
+                for (var dir = 0; dir < 4; dir++)
+                {
+                    var nx = cx + dx[dir];
+                    var ny = cy + dy[dir];
+                    if (nx >= 0 && nx < map.GetLength(0) && ny >= 0 && ny < map.GetLength(1) &&
+                        map[nx, ny] == TileType.Floor && decorLayer[nx, ny] == DecorType.None &&
+                        !visited.Contains((nx, ny)))
+                    {
+                        cluster.Add((nx, ny));
+                        candidates.Add((nx, ny));
+                        visited.Add((nx, ny));
+                        if (cluster.Count >= clusterSize) break;
+                    }
+                }
+            }
+
+            return cluster;
         }
 
         private int CalculateDecorAttempts(Room room, int baseDensity)
