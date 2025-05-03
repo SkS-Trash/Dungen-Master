@@ -170,10 +170,10 @@ namespace ProceduralDungeon
             var r = _tileSize / 3;
             var points = new[]
             {
-                new Point(cx, cy - r),
-                new Point(cx + r, cy),
-                new Point(cx, cy + r),
-                new Point(cx - r, cy)
+                new PointF(cx, cy - r),
+                new PointF(cx + r, cy),
+                new PointF(cx, cy + r),
+                new PointF(cx - r, cy)
             };
             using var brush = new SolidBrush(color);
             g.FillPolygon(brush, points);
@@ -194,12 +194,12 @@ namespace ProceduralDungeon
             var cx = x * _tileSize + _tileSize / 2;
             var cy = y * _tileSize + _tileSize / 2;
             var r = _tileSize / 3;
-            var points = new Point[10];
+            var points = new PointF[10];
             for (int i = 0; i < 10; i++)
             {
                 var angle = Math.PI / 5 * i;
                 var len = (i % 2 == 0) ? r : r / 2;
-                points[i] = new Point(
+                points[i] = new PointF(
                     (int)(cx + len * Math.Sin(angle)),
                     (int)(cy - len * Math.Cos(angle))
                 );
@@ -241,9 +241,9 @@ namespace ProceduralDungeon
             int bottom = inverted ? (y * _tileSize) : (y * _tileSize + _tileSize);
             var points = new[]
             {
-                new Point(x * _tileSize + _tileSize / 2, top),
-                new Point(x * _tileSize + _tileSize, bottom),
-                new Point(x * _tileSize, bottom)
+                new PointF(x * _tileSize + _tileSize / 2, top),
+                new PointF(x * _tileSize + _tileSize, bottom),
+                new PointF(x * _tileSize, bottom)
             };
             using var brush = new SolidBrush(color);
             g.FillPolygon(brush, points);
