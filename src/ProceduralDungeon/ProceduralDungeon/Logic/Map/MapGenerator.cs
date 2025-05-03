@@ -1,42 +1,103 @@
 ﻿namespace ProceduralDungeon
 {
+    public enum MapGenerationMode
+    {
+        Rectangular,
+        Cavern,
+        BSP,
+    }
+
     public class MapGenerator : IMapGenerator
     {
-        public TileType[,] Map { get; }
+        public TileType[,] Map { get; private set; }
         public List<Room> Rooms { get; } = [];
 
         private readonly int _mapWidth;
         private readonly int _mapHeight;
         private readonly Random _random;
+        private readonly MapGenerationMode _generationMode;
 
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(int width, int height, Random random)
+        public MapGenerator(int width, int height, Random random,
+            MapGenerationMode generationMode = MapGenerationMode.Rectangular)
         {
             _mapWidth = width;
             _mapHeight = height;
-            Map = new TileType[_mapWidth, _mapHeight];
-            for (var x = 0; x < _mapWidth; x++)
-            for (var y = 0; y < _mapHeight; y++)
-                Map[x, y] = TileType.Wall;
             _random = random;
+            _generationMode = generationMode;
+
+            Map = new TileType[_mapWidth, _mapHeight];
         }
 
         public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)
         {
             Rooms.Clear();
+            switch (_generationMode)
+            {
+                case MapGenerationMode.Cavern:
+                    MapGenerationModeCavern();
+                    break;
+                case MapGenerationMode.BSP:
+                    MapGenerationModeBSP(roomMinSize, roomMaxSize);
+                    break;
+                case MapGenerationMode.Rectangular:
+                    MapGenerationModeRectangular(roomCount, roomMinSize, roomMaxSize);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(_generationMode),
+                        $"Неизвестный режим генерации карты: {_generationMode}");
+            }
+        }
 
-            RoomPlacement(roomCount, roomMinSize, roomMaxSize);
+        private void MapGenerationModeCavern()
+        {
+            var cavernGen = new CavernGenerator(_mapWidth, _mapHeight, _random);
+            Map = cavernGen.GenerateCavern();
+            var floorPoints = new List<Point>();
+            for (var x = 0; x < _mapWidth; x++)
+            for (var y = 0; y < _mapHeight; y++)
+                if (Map[x, y] == TileType.Floor)
+                    floorPoints.Add(new Point(x, y));
 
-            BuildingGraphRoomsAndMST(out var extraEdges, out var mstEdges);
+            if (floorPoints.Count >= 2)
+            {
+                _startPoint = floorPoints[_random.Next(floorPoints.Count)];
+                do
+                {
+                    _exitPoint = floorPoints[_random.Next(floorPoints.Count)];
+                } while (_exitPoint.Equals(_startPoint));
 
-            BuildingCorridors(mstEdges, extraEdges);
-
-            PlaceStartAndExit();
+                Map[_startPoint.X, _startPoint.Y] = TileType.Start;
+                Map[_exitPoint.X, _exitPoint.Y] = TileType.Exit;
+            }
 
             Cleaning();
+            EditingWalls();
+        }
 
+        private void MapGenerationModeBSP(int roomMinSize, int roomMaxSize)
+        {
+            var bspGen = new BspRoomGenerator(_mapWidth, _mapHeight, _random, roomMinSize, roomMaxSize);
+            var bspRooms = bspGen.GenerateRooms();
+            foreach (var room in bspRooms)
+                CreateRoom(room);
+            Rooms.AddRange(bspRooms);
+            BuildingGraphRoomsAndMST(out var extraEdges, out var mstEdges);
+            BuildingCorridors(mstEdges, extraEdges);
+            PlaceStartAndExit();
+            Cleaning();
+            EditingWalls();
+        }
+
+        private void MapGenerationModeRectangular(int roomCount, int roomMinSize, int roomMaxSize)
+        {
+            RoomPlacement(roomCount, roomMinSize, roomMaxSize);
+            BuildingGraphRoomsAndMST(out var extraEdges, out var mstEdges);
+            BuildingCorridors(mstEdges, extraEdges);
+            PlaceStartAndExit();
+            Cleaning();
             EditingWalls();
         }
 
