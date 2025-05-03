@@ -45,9 +45,7 @@ namespace ProceduralDungeon
             for (var y = 0; y < _height; y++)
             {
                 var wallCount = GetAdjacentWallCount(oldMap, x, y);
-                if (x == 0 || y == 0 || x == _width - 1 || y == _height - 1)
-                    newMap[x, y] = TileType.Wall;
-                else if (wallCount > 4)
+                if (x == 0 || y == 0 || x == _width - 1 || y == _height - 1 || wallCount > 4)
                     newMap[x, y] = TileType.Wall;
                 else if (wallCount < 4)
                     newMap[x, y] = TileType.Floor;
@@ -66,9 +64,7 @@ namespace ProceduralDungeon
             {
                 if (dx == 0 && dy == 0) continue;
                 int nx = x + dx, ny = y + dy;
-                if (nx < 0 || ny < 0 || nx >= _width || ny >= _height)
-                    count++;
-                else if (map[nx, ny] == TileType.Wall)
+                if (nx < 0 || ny < 0 || nx >= _width || ny >= _height || map[nx, ny] == TileType.Wall)
                     count++;
             }
 

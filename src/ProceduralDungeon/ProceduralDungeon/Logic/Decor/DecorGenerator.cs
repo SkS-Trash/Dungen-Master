@@ -6,7 +6,9 @@ namespace ProceduralDungeon
     public class DecorGenerator : IDecorGenerator
     {
         public DecorType[,] DecorLayer { get; }
+
         private const int MIN_DISTANCE_BETWEEN_OBJECTS = 2;
+
         private readonly Random _random;
         private readonly DecorProfileProvider _profileProvider;
         private readonly DecorPositionSelector _positionSelector;
@@ -49,7 +51,7 @@ namespace ProceduralDungeon
         {
             var placed = 0;
             var used = new HashSet<(int, int)>();
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var pos = positions[i];
                 if (placed >= attempts) break;
@@ -64,7 +66,8 @@ namespace ProceduralDungeon
                     {
                         if (map[cx, cy] != TileType.Floor ||
                             _distanceChecker.HasNearbyDecor(cx, cy, MIN_DISTANCE_BETWEEN_OBJECTS, DecorLayer) ||
-                            used.Contains((cx, cy))) continue;
+                            used.Contains((cx, cy)))
+                            continue;
 
                         PlaceDecorWithSize(cx, cy, decor, map);
                         used.Add((cx, cy));
@@ -105,15 +108,18 @@ namespace ProceduralDungeon
                 {
                     var nx = cx + dx[dir];
                     var ny = cy + dy[dir];
-                    if (nx >= 0 && nx < map.GetLength(0) && ny >= 0 && ny < map.GetLength(1) &&
-                        map[nx, ny] == TileType.Floor && decorLayer[nx, ny] == DecorType.None &&
-                        !visited.Contains((nx, ny)))
-                    {
-                        cluster.Add((nx, ny));
-                        candidates.Add((nx, ny));
-                        visited.Add((nx, ny));
-                        if (cluster.Count >= clusterSize) break;
-                    }
+                    if (nx < 0 || nx >= map.GetLength(0) ||
+                        ny < 0 || ny >= map.GetLength(1) ||
+                        map[nx, ny] != TileType.Floor ||
+                        decorLayer[nx, ny] != DecorType.None ||
+                        visited.Contains((nx, ny)))
+                        continue;
+
+                    cluster.Add((nx, ny));
+                    candidates.Add((nx, ny));
+                    visited.Add((nx, ny));
+
+                    if (cluster.Count >= clusterSize) break;
                 }
             }
 
@@ -132,9 +138,7 @@ namespace ProceduralDungeon
 
             for (var dx = 0; dx < 1; dx++)
             for (var dy = 0; dy < 1; dy++)
-            {
                 DecorLayer[x + dx, y + dy] = decor;
-            }
         }
 
         private bool CanPlaceDecor(int x, int y, (int W, int H) size, TileType[,] map)
@@ -170,12 +174,9 @@ namespace ProceduralDungeon
             {
                 var x = _random.Next(room.X + border, room.X + room.Width - border);
                 var y = _random.Next(room.Y + border, room.Y + room.Height - border);
-
                 if (IsPositionValid(x, y, map) &&
                     !HasNearbyDecor(x, y, MIN_DISTANCE_BETWEEN_OBJECTS))
-                {
                     return (x, y);
-                }
             }
 
             return (-1, -1);

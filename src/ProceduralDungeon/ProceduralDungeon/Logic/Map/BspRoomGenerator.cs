@@ -43,7 +43,7 @@ namespace ProceduralDungeon
                 return;
             }
 
-            var splitHorizontally = width < height ? true : (width > height ? false : _random.Next(2) == 0);
+            var splitHorizontally = width < height || (width <= height && _random.Next(2) == 0);
             if (splitHorizontally)
             {
                 var split = _random.Next(_minRoomSize, height - _minRoomSize + 1);

@@ -40,11 +40,9 @@ namespace ProceduralDungeon
                     var ny = p.Y + dy[dir];
                     if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
                     if (visited[nx, ny]) continue;
-                    if (_map[nx, ny] is TileType.Floor or TileType.Start or TileType.Exit)
-                    {
-                        visited[nx, ny] = true;
-                        queue.Enqueue(new Point(nx, ny));
-                    }
+                    if (_map[nx, ny] is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+                    visited[nx, ny] = true;
+                    queue.Enqueue(new Point(nx, ny));
                 }
             }
 

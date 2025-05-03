@@ -14,11 +14,10 @@ namespace ProceduralDungeon
         {
             _config = config;
             EnemyLayer = new EnemyType[width, height];
+
             for (var x = 0; x < width; x++)
             for (var y = 0; y < height; y++)
-            {
                 EnemyLayer[x, y] = EnemyType.None;
-            }
 
             _random = random;
         }
@@ -70,6 +69,7 @@ namespace ProceduralDungeon
         {
             if (room.Type == RoomType.Hard)
                 return EnemyType.Boss;
+            
             return _random.NextDouble() < 0.5
                 ? EnemyType.EnemyIsCloseCombat
                 : EnemyType.EnemyRangedCombat;

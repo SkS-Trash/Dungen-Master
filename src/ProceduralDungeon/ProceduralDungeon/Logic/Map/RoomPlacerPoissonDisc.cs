@@ -66,7 +66,7 @@ namespace ProceduralDungeon
 
         private bool HasIntersection(Room room, List<Room> rooms)
         {
-            return rooms.Any(other => room.Intersects(other));
+            return rooms.Any(room.Intersects);
         }
 
         private void AddNewCandidates(int cx, int cy, int minDist, int k, int roomMinSize,

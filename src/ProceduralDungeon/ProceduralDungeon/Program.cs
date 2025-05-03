@@ -21,6 +21,11 @@ namespace ProceduralDungeon
             var cellSize = 20;
             var renderer = new CompositeImageDungeonRenderer();
             renderer.RenderDungeon(generator, cellSize);
+
+            // var renderer = new ConsoleDungeonRenderer();
+            // renderer.RenderDungeon(generator, cellSize);
+            // Console.WriteLine("\n\t---\tPress any key to exit...\t---\t");
+            // Console.ReadKey();
         }
     }
 }

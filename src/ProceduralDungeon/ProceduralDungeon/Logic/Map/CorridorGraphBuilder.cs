@@ -39,11 +39,9 @@ namespace ProceduralDungeon
             foreach (var edge in edges.OrderBy(e => e.Weight))
             {
                 int a = FindSet(edge.RoomA, parent), b = FindSet(edge.RoomB, parent);
-                if (a != b)
-                {
-                    mst.Add(edge);
-                    UnionSets(a, b, parent);
-                }
+                if (a == b) continue;
+                mst.Add(edge);
+                UnionSets(a, b, parent);
             }
 
             return mst;

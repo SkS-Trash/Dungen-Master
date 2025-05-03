@@ -10,15 +10,18 @@ namespace ProceduralDungeon
         {
             var maxPositions = (room.Width - 2) * (room.Height - 2);
             var validPositions = new (int x, int y, int density)[maxPositions];
+
             count = 0;
+
             for (var x = room.X + 1; x < room.X + room.Width - 1; x++)
             for (var y = room.Y + 1; y < room.Y + room.Height - 1; y++)
             {
-                if (IsPositionValid(x, y, map) && !distanceChecker.HasNearbyDecor(x, y, minDistance, decorLayer))
-                {
-                    var density = CalculatePositionDensity(x, y, map, decorLayer);
-                    validPositions[count++] = (x, y, density);
-                }
+                if (!IsPositionValid(x, y, map) ||
+                    distanceChecker.HasNearbyDecor(x, y, minDistance, decorLayer))
+                    continue;
+
+                var density = CalculatePositionDensity(x, y, map, decorLayer);
+                validPositions[count++] = (x, y, density);
             }
 
             return validPositions;
@@ -44,9 +47,11 @@ namespace ProceduralDungeon
             {
                 var nx = x + dx[dir];
                 var ny = y + dy[dir];
-                if (nx >= 0 && nx < map.GetLength(0) && ny >= 0 && ny < map.GetLength(1))
+                if (nx >= 0 && nx < map.GetLength(0) &&
+                    ny >= 0 && ny < map.GetLength(1))
                 {
-                    if (map[nx, ny] == TileType.Floor && decorLayer[nx, ny] == DecorType.None)
+                    if (map[nx, ny] == TileType.Floor &&
+                        decorLayer[nx, ny] == DecorType.None)
                         density++;
                 }
             }

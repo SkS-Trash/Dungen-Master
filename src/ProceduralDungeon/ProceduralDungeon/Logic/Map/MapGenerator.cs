@@ -80,8 +80,8 @@ namespace ProceduralDungeon
 
             Rooms.Clear();
             var visited = new bool[_mapWidth, _mapHeight];
-            int[] dx = { 0, 1, 0, -1 };
-            int[] dy = { -1, 0, 1, 0 };
+            int[] dx = [0, 1, 0, -1];
+            int[] dy = [-1, 0, 1, 0];
             for (var x = 0; x < _mapWidth; x++)
             for (var y = 0; y < _mapHeight; y++)
             {
@@ -95,25 +95,23 @@ namespace ProceduralDungeon
                 {
                     var p = queue.Dequeue();
                     component.Add(p);
-                    for (int dir = 0; dir < 4; dir++)
+                    for (var dir = 0; dir < 4; dir++)
                     {
                         int nx = p.X + dx[dir], ny = p.Y + dy[dir];
                         if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
                         if (visited[nx, ny]) continue;
-                        if (Map[nx, ny] is TileType.Floor or TileType.Start or TileType.Exit)
-                        {
-                            visited[nx, ny] = true;
-                            queue.Enqueue(new Point(nx, ny));
-                        }
+                        if (Map[nx, ny] is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+                        visited[nx, ny] = true;
+                        queue.Enqueue(new Point(nx, ny));
                     }
                 }
 
-                int minX = component.Min(p => p.X);
-                int minY = component.Min(p => p.Y);
-                int maxX = component.Max(p => p.X);
-                int maxY = component.Max(p => p.Y);
-                int width = maxX - minX + 1;
-                int height = maxY - minY + 1;
+                var minX = component.Min(p => p.X);
+                var minY = component.Min(p => p.Y);
+                var maxX = component.Max(p => p.X);
+                var maxY = component.Max(p => p.Y);
+                var width = maxX - minX + 1;
+                var height = maxY - minY + 1;
                 Rooms.Add(new Room(minX, minY, width, height, RoomType.Default));
             }
 
@@ -197,7 +195,8 @@ namespace ProceduralDungeon
 
             if (candidateRooms.Count < minRoomCount)
                 throw new InvalidOperationException(
-                    $"Не удалось разместить даже fallback-комнаты: {candidateRooms.Count} из {roomCount}. Попробуйте уменьшить roomCount или размеры комнат.");
+                    $"Не удалось разместить даже fallback-комнаты: {candidateRooms.Count} из {roomCount}. " +
+                    $"Попробуйте уменьшить roomCount или размеры комнат.");
 
             foreach (var room in candidateRooms)
                 CreateRoom(room);

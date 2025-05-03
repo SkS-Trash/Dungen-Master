@@ -16,10 +16,9 @@ namespace ProceduralDungeon
 
         public DecorType SelectDecorType(RoomType roomType, List<DecorType> specialObjects)
         {
-            if (_random.NextDouble() < 0.3 && specialObjects.Count > 0)
-            {
+            if (_random.NextDouble() < 0.3 &&
+                specialObjects.Count > 0)
                 return specialObjects[_random.Next(specialObjects.Count)];
-            }
 
             return GetWeightedDecor(roomType);
         }

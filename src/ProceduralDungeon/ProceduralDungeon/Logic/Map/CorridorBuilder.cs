@@ -26,7 +26,7 @@ namespace ProceduralDungeon
                 var b = rooms[edge.RoomB];
                 var from = new Point(a.CenterX, a.CenterY);
                 var to = new Point(b.CenterX, b.CenterY);
-                int method = _random.Next(4);
+                var method = _random.Next(4);
                 switch (method)
                 {
                     case 0:
@@ -125,7 +125,7 @@ namespace ProceduralDungeon
                 }
             }
 
-            return new List<Point>();
+            return [];
         }
 
         private double Heuristic(Point a, Point b)
@@ -133,25 +133,16 @@ namespace ProceduralDungeon
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
 
-        private double GetTileCost(int x, int y)
+        private double GetTileCost(int x, int y) => _map[x, y] switch
         {
-            switch (_map[x, y])
-            {
-                case TileType.Floor:
-                case TileType.Start:
-                case TileType.Exit:
-                    return 1.0;
-                case TileType.Wall:
-                    return 100.0;
-                default:
-                    return 10.0;
-            }
-        }
+            TileType.Floor or TileType.Start or TileType.Exit => 1.0,
+            TileType.Wall => 100.0,
+            _ => 10.0
+        };
 
         private List<Point> ReconstructPath(Dictionary<Point, Point> cameFrom, Point current)
         {
-            var path = new List<Point>();
-            path.Add(current);
+            var path = new List<Point> { current };
             while (cameFrom.TryGetValue(current, out var prev))
             {
                 current = prev;
@@ -167,16 +158,16 @@ namespace ProceduralDungeon
             var path = new List<Point>();
             if (_random.Next(2) == 0)
             {
-                for (int x = from.X; x != to.X; x += Math.Sign(to.X - from.X))
+                for (var x = from.X; x != to.X; x += Math.Sign(to.X - from.X))
                     path.Add(new Point(x, from.Y));
-                for (int y = from.Y; y != to.Y; y += Math.Sign(to.Y - from.Y))
+                for (var y = from.Y; y != to.Y; y += Math.Sign(to.Y - from.Y))
                     path.Add(new Point(to.X, y));
             }
             else
             {
-                for (int y = from.Y; y != to.Y; y += Math.Sign(to.Y - from.Y))
+                for (var y = from.Y; y != to.Y; y += Math.Sign(to.Y - from.Y))
                     path.Add(new Point(from.X, y));
-                for (int x = from.X; x != to.X; x += Math.Sign(to.X - from.X))
+                for (var x = from.X; x != to.X; x += Math.Sign(to.X - from.X))
                     path.Add(new Point(x, to.Y));
             }
 
@@ -189,10 +180,10 @@ namespace ProceduralDungeon
             var path = new List<Point>();
             int x = from.X, y = from.Y;
             path.Add(new Point(x, y));
-            int dx = Math.Sign(to.X - x);
-            int dy = Math.Sign(to.Y - y);
-            int steps = Math.Max(Math.Abs(to.X - x), Math.Abs(to.Y - y));
-            for (int i = 0; i < steps; i++)
+            var dx = Math.Sign(to.X - x);
+            var dy = Math.Sign(to.Y - y);
+            var steps = Math.Max(Math.Abs(to.X - x), Math.Abs(to.Y - y));
+            for (var i = 0; i < steps; i++)
             {
                 if (i % 2 == 0 && x != to.X) x += dx;
                 else if (y != to.Y) y += dy;
@@ -211,16 +202,22 @@ namespace ProceduralDungeon
             {
                 if (x != to.X && y != to.Y)
                 {
-                    if (_random.Next(2) == 0) x += Math.Sign(to.X - x);
-                    else y += Math.Sign(to.Y - y);
+                    if (_random.Next(2) == 0)
+                        x += Math.Sign(to.X - x);
+                    else
+                        y += Math.Sign(to.Y - y);
                 }
-                else if (x != to.X) x += Math.Sign(to.X - x);
-                else if (y != to.Y) y += Math.Sign(to.Y - y);
+                else if (x != to.X)
+                    x += Math.Sign(to.X - x);
+                else if (y != to.Y)
+                    y += Math.Sign(to.Y - y);
 
                 if (_random.Next(6) == 0)
                 {
-                    if (x != to.X && y > 1 && y < _mapHeight - 2) y += _random.Next(2) == 0 ? 1 : -1;
-                    else if (y != to.Y && x > 1 && x < _mapWidth - 2) x += _random.Next(2) == 0 ? 1 : -1;
+                    if (x != to.X && y > 1 && y < _mapHeight - 2)
+                        y += _random.Next(2) == 0 ? 1 : -1;
+                    else if (y != to.Y && x > 1 && x < _mapWidth - 2)
+                        x += _random.Next(2) == 0 ? 1 : -1;
                 }
 
                 path.Add(new Point(x, y));
