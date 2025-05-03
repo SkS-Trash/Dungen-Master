@@ -1,4 +1,4 @@
-﻿namespace ProceduralDungeon
+﻿namespace ProceduralDungeon.Data
 {
     public enum TileType
     {

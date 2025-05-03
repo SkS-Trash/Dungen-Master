@@ -1,4 +1,6 @@
-﻿using ProceduralDungeon.Data;
+﻿using System;
+using System.Collections.Generic;
+using ProceduralDungeon.Data;
 using ProceduralDungeon.Data.Configs;
 
 namespace ProceduralDungeon
@@ -69,7 +71,7 @@ namespace ProceduralDungeon
         {
             if (room.Type == RoomType.Hard)
                 return EnemyType.Boss;
-            
+
             return _random.NextDouble() < 0.5
                 ? EnemyType.EnemyIsCloseCombat
                 : EnemyType.EnemyRangedCombat;

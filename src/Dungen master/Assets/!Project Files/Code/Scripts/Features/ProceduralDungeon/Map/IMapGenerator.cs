@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ProceduralDungeon.Data;
 
 namespace ProceduralDungeon
 {
@@ -6,6 +7,6 @@ namespace ProceduralDungeon
     {
         TileType[,] Map { get; }
         List<Room> Rooms { get; }
-        void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize);
+        void GenerateMap();
     }
 }

@@ -1,5 +1,7 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using ProceduralDungeon;
+using ProceduralDungeon.Data.Repositories;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
 
@@ -20,13 +22,17 @@ namespace Core.Project.Dungeon
         {
             var data = _containerProvider.Container;
 
-            var generator = new DungeonGenerator(
-                new MapGenerator(data.Width, data.Height, data.Seed),
-                new DecorGenerator(data.Width, data.Height, data.Seed),
-                new EnemySpawner(data.Width, data.Height, data.Seed)
-            );
+            var random = new Random(0);
+            var mapConfig = MapConfigRepository.GetTestConfig();
+            var decorConfig = DecorConfigRepository.GetTestConfig();
+            var enemyConfig = EnemyConfigRepository.GetTestConfig();
 
-            generator.GenerateDungeon(data.RoomCount, data.RoomMinSize, data.RoomMaxSize);
+            var generator = new DungeonGenerator(
+                new MapGenerator(mapConfig, random),
+                new DecorGenerator(decorConfig, mapConfig.Width, mapConfig.Height, random),
+                new EnemySpawner(enemyConfig, mapConfig.Width, mapConfig.Height, random)
+            );
+            generator.GenerateDungeon();
 
             data.MapLayer = generator.MapLayer;
             data.DecorLayer = generator.DecorLayer;

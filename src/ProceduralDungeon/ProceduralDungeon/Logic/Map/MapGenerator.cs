@@ -1,4 +1,7 @@
-﻿using ProceduralDungeon.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ProceduralDungeon.Data;
 using ProceduralDungeon.Data.Configs;
 
 namespace ProceduralDungeon
@@ -13,7 +16,7 @@ namespace ProceduralDungeon
     public class MapGenerator : IMapGenerator
     {
         public TileType[,] Map { get; private set; }
-        public List<Room> Rooms { get; } = [];
+        public List<Room> Rooms { get; } = new();
 
         private readonly int _mapWidth;
         private readonly int _mapHeight;
@@ -80,8 +83,8 @@ namespace ProceduralDungeon
 
             Rooms.Clear();
             var visited = new bool[_mapWidth, _mapHeight];
-            int[] dx = [0, 1, 0, -1];
-            int[] dy = [-1, 0, 1, 0];
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { -1, 0, 1, 0 };
             for (var x = 0; x < _mapWidth; x++)
             for (var y = 0; y < _mapHeight; y++)
             {
@@ -196,7 +199,7 @@ namespace ProceduralDungeon
             if (candidateRooms.Count < minRoomCount)
                 throw new InvalidOperationException(
                     $"Не удалось разместить даже fallback-комнаты: {candidateRooms.Count} из {roomCount}. " +
-                    $"Попробуйте уменьшить roomCount или размеры комнат.");
+                    "Попробуйте уменьшить roomCount или размеры комнат.");
 
             foreach (var room in candidateRooms)
                 CreateRoom(room);

@@ -1,4 +1,5 @@
 ﻿using ProceduralDungeon;
+using ProceduralDungeon.Data;
 using UnityEngine;
 
 namespace Providers.Containers.Game

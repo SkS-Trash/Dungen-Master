@@ -1,4 +1,7 @@
-﻿using ProceduralDungeon.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ProceduralDungeon.Data;
 using ProceduralDungeon.Data.Configs;
 
 namespace ProceduralDungeon
@@ -97,8 +100,8 @@ namespace ProceduralDungeon
             var cluster = new List<(int, int)> { (x, y) };
             var candidates = new List<(int, int)> { (x, y) };
             var visited = new HashSet<(int, int)> { (x, y) };
-            int[] dx = [-1, 1, 0, 0];
-            int[] dy = [0, 0, -1, 1];
+            int[] dx = { -1, 1, 0, 0 };
+            int[] dy = { 0, 0, -1, 1 };
             while (cluster.Count < clusterSize && candidates.Count > 0)
             {
                 var idx = _random.Next(candidates.Count);

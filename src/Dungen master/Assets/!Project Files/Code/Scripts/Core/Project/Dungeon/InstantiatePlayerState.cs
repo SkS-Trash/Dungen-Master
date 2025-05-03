@@ -2,6 +2,7 @@
 using Factories.GameObject;
 using Player;
 using ProceduralDungeon;
+using ProceduralDungeon.Data;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;

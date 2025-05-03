@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using ProceduralDungeon.Data;
 
@@ -37,7 +39,7 @@ namespace ProceduralDungeon
             using var graphics = Graphics.FromImage(bitmap);
 
             graphics.Clear(Color.Black);
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             for (var y = 0; y < height; y++)
             {
@@ -147,7 +149,7 @@ namespace ProceduralDungeon
             switch (enemy)
             {
                 case EnemyType.EnemyIsCloseCombat:
-                    DrawTriangle(g, x, y, color, false);
+                    DrawTriangle(g, x, y, color);
                     break;
                 case EnemyType.EnemyRangedCombat:
                     DrawCircle(g, x, y, color);

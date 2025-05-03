@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Enemy;
 using Factories.GameObject;
 using ProceduralDungeon;
+using ProceduralDungeon.Data;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
