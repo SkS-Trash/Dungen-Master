@@ -18,7 +18,7 @@
             _random = random;
         }
 
-        public void SpawnEnemies(TileType[,] map, List<Room> rooms)
+        public void SpawnEnemies(TileType[,] map, DecorType[,] decorLayer, List<Room> rooms)
         {
             foreach (var room in rooms)
             {
@@ -37,6 +37,8 @@
                     if (EnemyLayer[x, y] != EnemyType.None) continue;
 
                     if (map[x, y] != TileType.Floor) continue;
+
+                    if (decorLayer[x, y] != DecorType.None) continue;
 
                     EnemyLayer[x, y] = room.Type == RoomType.Hard
                         ? EnemyType.Boss

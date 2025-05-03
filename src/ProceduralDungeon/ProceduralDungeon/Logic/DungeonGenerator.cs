@@ -29,7 +29,7 @@
             _decorGenerator.GenerateDecor(MapLayer, _mapGenerator.Rooms);
             DecorLayer = _decorGenerator.DecorLayer;
 
-            _enemySpawner.SpawnEnemies(MapLayer, _mapGenerator.Rooms);
+            _enemySpawner.SpawnEnemies(MapLayer, DecorLayer, _mapGenerator.Rooms);
             EnemyLayer = _enemySpawner.EnemyLayer;
         }
     }

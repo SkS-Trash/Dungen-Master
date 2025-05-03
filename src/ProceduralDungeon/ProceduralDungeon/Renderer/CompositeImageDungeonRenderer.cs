@@ -22,7 +22,7 @@ namespace ProceduralDungeon
 
             RenderCompositeImage(outputPath);
             OpenImage(outputPath);
-            
+
             GenerateLegend(legendPath);
             OpenImage(legendPath);
         }
@@ -204,6 +204,7 @@ namespace ProceduralDungeon
                     (int)(cy - len * Math.Cos(angle))
                 );
             }
+
             using var brush = new SolidBrush(color);
             g.FillPolygon(brush, points);
         }
@@ -247,7 +248,7 @@ namespace ProceduralDungeon
             using var brush = new SolidBrush(color);
             g.FillPolygon(brush, points);
         }
-        
+
         private void DrawCircle(Graphics g, int x, int y, Color color)
         {
             var cx = x * _tileSize + _tileSize / 2;
@@ -260,7 +261,7 @@ namespace ProceduralDungeon
 
         private void GenerateLegend(string outputPath)
         {
-            int w = 400, h = 600, y = 20, step = 20;
+            int w = 400, h = 400, y = 20, step = 20;
             using var bmp = new Bitmap(w, h);
             using var g = Graphics.FromImage(bmp);
             g.Clear(Color.White);
@@ -274,6 +275,7 @@ namespace ProceduralDungeon
                 g.DrawString(t.ToString(), new Font("Arial", 12), Brushes.Black, 50, y);
                 y += step;
             }
+
             // Декор
             foreach (DecorType d in Enum.GetValues(typeof(DecorType)))
             {
@@ -282,6 +284,7 @@ namespace ProceduralDungeon
                 g.DrawString(d.ToString(), new Font("Arial", 12), Brushes.Black, 50, y);
                 y += step;
             }
+
             // Враги
             foreach (EnemyType e in Enum.GetValues(typeof(EnemyType)))
             {
@@ -290,6 +293,7 @@ namespace ProceduralDungeon
                 g.DrawString(e.ToString(), new Font("Arial", 12), Brushes.Black, 50, y);
                 y += step;
             }
+
             bmp.Save(outputPath, ImageFormat.Png);
         }
     }
