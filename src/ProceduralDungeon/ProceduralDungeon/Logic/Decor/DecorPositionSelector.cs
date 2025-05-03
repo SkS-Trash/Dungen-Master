@@ -4,13 +4,12 @@ namespace ProceduralDungeon
 {
     public class DecorPositionSelector
     {
-        public List<(int x, int y, int density)> FindValidDecorPositions(Room room, TileType[,] map,
-            DecorType[,] decorLayer, int minDistance, DecorDistanceChecker distanceChecker)
+        public (int x, int y, int density)[] FindValidDecorPositions(Room room, TileType[,] map,
+            DecorType[,] decorLayer, int minDistance, DecorDistanceChecker distanceChecker, out int count)
         {
-            var validPositions = ArrayPool<(int x, int y, int density)>.Shared.Rent(room.Width * room.Height);
-            var result = new List<(int x, int y, int density)>();
-
-            var count = 0;
+            var maxPositions = (room.Width - 2) * (room.Height - 2);
+            var validPositions = new (int x, int y, int density)[maxPositions];
+            count = 0;
             for (var x = room.X + 1; x < room.X + room.Width - 1; x++)
             for (var y = room.Y + 1; y < room.Y + room.Height - 1; y++)
             {
@@ -21,19 +20,13 @@ namespace ProceduralDungeon
                 }
             }
 
-            for (var i = 0; i < count; i++)
-            {
-                result.Add(validPositions[i]);
-            }
-
-            ArrayPool<(int x, int y, int density)>.Shared.Return(validPositions, clearArray: true);
-
-            return result;
+            return validPositions;
         }
 
-        public void SortPositionsByDensity(List<(int x, int y, int density)> positions)
+        public void SortPositionsByDensity((int x, int y, int density)[] positions, int count)
         {
-            positions.Sort((a, b) => b.density.CompareTo(a.density));
+            Array.Sort(positions, 0, count,
+                Comparer<(int x, int y, int density)>.Create((a, b) => b.density.CompareTo(a.density)));
         }
 
         private bool IsPositionValid(int x, int y, TileType[,] map)

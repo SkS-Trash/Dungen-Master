@@ -12,7 +12,8 @@ namespace ProceduralDungeon
         private readonly int _maxRoomSize;
         private readonly int _maxDepth;
 
-        public BspRoomGenerator(int width, int height, Random random, int minRoomSize, int maxRoomSize, int maxDepth = 5)
+        public BspRoomGenerator(int width, int height, Random random, int minRoomSize, int maxRoomSize,
+            int maxDepth = 5)
         {
             _width = width;
             _height = height;
@@ -56,4 +57,4 @@ namespace ProceduralDungeon
             }
         }
     }
-} 
+}

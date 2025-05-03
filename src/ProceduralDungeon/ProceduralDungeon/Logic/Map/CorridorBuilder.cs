@@ -98,9 +98,7 @@ namespace ProceduralDungeon
                 var current = openSet.Min.p;
                 if (current.X == to.X && current.Y == to.Y)
                 {
-                    var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? [];
-                    path.Clear();
-                    path.AddRange(ReconstructPath(cameFrom, current));
+                    var path = ReconstructPath(cameFrom, current);
                     return path;
                 }
 
@@ -126,7 +124,7 @@ namespace ProceduralDungeon
                 }
             }
 
-            return ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? [];
+            return new List<Point>();
         }
 
         private double Heuristic(Point a, Point b)
@@ -151,8 +149,7 @@ namespace ProceduralDungeon
 
         private List<Point> ReconstructPath(Dictionary<Point, Point> cameFrom, Point current)
         {
-            var path = ArrayPool<List<Point>>.Shared.Rent(1)[0] ?? [];
-            path.Clear();
+            var path = new List<Point>();
             path.Add(current);
             while (cameFrom.TryGetValue(current, out var prev))
             {

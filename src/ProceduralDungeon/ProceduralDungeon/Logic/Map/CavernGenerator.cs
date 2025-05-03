@@ -53,6 +53,7 @@ namespace ProceduralDungeon
                 else
                     newMap[x, y] = oldMap[x, y];
             }
+
             return newMap;
         }
 
@@ -69,7 +70,8 @@ namespace ProceduralDungeon
                 else if (map[nx, ny] == TileType.Wall)
                     count++;
             }
+
             return count;
         }
     }
-} 
+}

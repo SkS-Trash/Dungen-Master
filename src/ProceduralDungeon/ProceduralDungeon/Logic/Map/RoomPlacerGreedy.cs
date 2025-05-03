@@ -17,8 +17,7 @@ namespace ProceduralDungeon
 
         public List<Room> GenerateRooms(int roomCount, int roomMinSize, int roomMaxSize)
         {
-            var rooms = ArrayPool<List<Room>>.Shared.Rent(1)[0] ?? [];
-            rooms.Clear();
+            var rooms = new List<Room>();
             var attempts = 0;
             var maxAttempts = roomCount * 20;
             while (rooms.Count < roomCount && attempts < maxAttempts)
@@ -38,8 +37,6 @@ namespace ProceduralDungeon
             }
 
             var result = new List<Room>(rooms);
-            rooms.Clear();
-            ArrayPool<List<Room>>.Shared.Return([rooms]);
             return result;
         }
     }

@@ -33,19 +33,22 @@
             var (baseDensity, specialObjects) = _profileProvider.GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
+            int count;
             var validPositions = _positionSelector.FindValidDecorPositions(room, map, DecorLayer,
-                MIN_DISTANCE_BETWEEN_OBJECTS, _distanceChecker);
-            _positionSelector.SortPositionsByDensity(validPositions);
-            PlaceDecorInRoom(validPositions, attempts, room.Type, specialObjects, map);
+                MIN_DISTANCE_BETWEEN_OBJECTS, _distanceChecker, out count);
+            _positionSelector.SortPositionsByDensity(validPositions, count);
+            PlaceDecorInRoom(validPositions, count, attempts, room.Type, specialObjects, map);
         }
 
-        private void PlaceDecorInRoom(List<(int x, int y, int density)> positions, int attempts, RoomType roomType,
+        private void PlaceDecorInRoom((int x, int y, int density)[] positions, int count, int attempts,
+            RoomType roomType,
             List<DecorType> specialObjects, TileType[,] map)
         {
             var placed = 0;
             var used = new HashSet<(int, int)>();
-            foreach (var pos in positions)
+            for (int i = 0; i < count; i++)
             {
+                var pos = positions[i];
                 if (placed >= attempts) break;
                 if (used.Contains((pos.x, pos.y))) continue;
                 var decor = _randomizer.SelectDecorType(roomType, specialObjects);
