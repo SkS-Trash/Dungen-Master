@@ -30,13 +30,40 @@
         {
             Rooms.Clear();
             var candidateRooms = GenerateRoomsPoissonDisc(roomCount, roomMinSize, roomMaxSize);
+            ValidateRoomCount(candidateRooms, roomCount);
+            CreateAllRooms(candidateRooms);
+            Rooms.AddRange(candidateRooms);
+
+            var edges = GenerateRoomEdges();
+            var mstEdges = KruskalMST(Rooms.Count, edges);
+            var extraEdges = SelectExtraEdges(edges, mstEdges);
+            CreateCorridors(mstEdges.Concat(extraEdges));
+
+            if (Rooms.Count > 0)
+            {
+                PlaceStartAndExit();
+            }
+            else throw new InvalidOperationException("Комнаты не сгенерированы.");
+
+            CleanUnreachableFloor();
+            CleanDungeon();
+        }
+
+        private void ValidateRoomCount(List<Room> candidateRooms, int roomCount)
+        {
             if (candidateRooms.Count < roomCount)
                 throw new InvalidOperationException(
                     $"Не удалось разместить все комнаты: {candidateRooms.Count} из {roomCount}. Попробуйте уменьшить roomCount или размеры комнат.");
+        }
+
+        private void CreateAllRooms(List<Room> candidateRooms)
+        {
             foreach (var room in candidateRooms)
                 CreateRoom(room);
-            Rooms.AddRange(candidateRooms);
+        }
 
+        private List<Edge> GenerateRoomEdges()
+        {
             var edges = new List<Edge>();
             var k = 3;
             for (var i = 0; i < Rooms.Count; i++)
@@ -55,7 +82,11 @@
                 }
             }
 
-            var mstEdges = KruskalMST(Rooms.Count, edges);
+            return edges;
+        }
+
+        private List<Edge> SelectExtraEdges(List<Edge> edges, List<Edge> mstEdges)
+        {
             var extraEdges = new List<Edge>();
             var nonMstEdges = edges.Except(mstEdges).ToList();
             var extraCount = Math.Min(2, nonMstEdges.Count);
@@ -66,24 +97,26 @@
                 nonMstEdges.RemoveAt(idx);
             }
 
-            foreach (var edge in mstEdges.Concat(extraEdges))
+            return extraEdges;
+        }
+
+        private void CreateCorridors(IEnumerable<Edge> edges)
+        {
+            foreach (var edge in edges)
             {
                 var a = Rooms[edge.RoomA];
                 var b = Rooms[edge.RoomB];
                 CreateCurvedCorridor(new Point(a.CenterX, a.CenterY), new Point(b.CenterX, b.CenterY));
             }
-
-            if (Rooms.Count > 0)
-            {
-                PlaceStartAndExit();
-            }
-            else throw new InvalidOperationException("Комнаты не сгенерированы.");
-
-            CleanUnreachableFloor();
-            CleanDungeon();
         }
 
         private void CleanUnreachableFloor()
+        {
+            var visited = RunBfsFromStart();
+            RemoveUnreachableFloor(visited);
+        }
+
+        private bool[,] RunBfsFromStart()
         {
             var visited = new bool[_mapWidth, _mapHeight];
             var queue = new Queue<Point>();
@@ -110,6 +143,11 @@
                 }
             }
 
+            return visited;
+        }
+
+        private void RemoveUnreachableFloor(bool[,] visited)
+        {
             for (var x = 0; x < _mapWidth; x++)
             for (var y = 0; y < _mapHeight; y++)
             {
@@ -125,27 +163,29 @@
             {
                 if (Map[x, y] != TileType.Wall) continue;
 
-                var keepWall = false;
-                for (var dx = -1; dx <= 1 && !keepWall; dx++)
-                for (var dy = -1; dy <= 1; dy++)
-                {
-                    if (dx == 0 && dy == 0) continue;
-
-                    int nx = x + dx, ny = y + dy;
-
-                    if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
-
-                    var neighbor = Map[nx, ny];
-
-                    if (neighbor is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
-
-                    keepWall = true;
-                    break;
-                }
-
-                if (!keepWall)
+                if (!ShouldKeepWall(x, y))
                     Map[x, y] = TileType.Empty;
             }
+        }
+
+        private bool ShouldKeepWall(int x, int y)
+        {
+            for (var dx = -1; dx <= 1; dx++)
+            for (var dy = -1; dy <= 1; dy++)
+            {
+                if (dx == 0 && dy == 0) continue;
+
+                int nx = x + dx, ny = y + dy;
+
+                if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
+
+                var neighbor = Map[nx, ny];
+
+                if (neighbor is TileType.Floor or TileType.Start or TileType.Exit)
+                    return true;
+            }
+
+            return false;
         }
 
         private void PlaceStartAndExit()
@@ -200,6 +240,12 @@
 
         private void CreateCurvedCorridor(Point from, Point to, int radius = 1, double directionMemory = 0.7)
         {
+            var path = BuildCurvedPath(from, to, directionMemory);
+            DrawCorridorPath(path, radius);
+        }
+
+        private List<Point> BuildCurvedPath(Point from, Point to, double directionMemory)
+        {
             var path = new List<Point>();
             int x = from.X, y = from.Y;
             int dx = Math.Sign(to.X - x), dy = Math.Sign(to.Y - y);
@@ -243,6 +289,11 @@
                 steps++;
             }
 
+            return path;
+        }
+
+        private void DrawCorridorPath(List<Point> path, int radius)
+        {
             for (var i = 0; i < path.Count; i += 2)
             {
                 var p = path[i];
@@ -278,18 +329,25 @@
             var mst = new List<Edge>();
             foreach (var edge in edges.OrderBy(e => e.Weight))
             {
-                int a = Find(edge.RoomA), b = Find(edge.RoomB);
+                int a = FindSet(edge.RoomA, parent), b = FindSet(edge.RoomB, parent);
                 if (a != b)
                 {
                     mst.Add(edge);
-                    Union(a, b);
+                    UnionSets(a, b, parent);
                 }
             }
 
             return mst;
+        }
 
-            int Find(int x) => parent[x] == x ? x : parent[x] = Find(parent[x]);
-            void Union(int x, int y) => parent[Find(x)] = Find(y);
+        private int FindSet(int x, int[] parent)
+        {
+            return parent[x] == x ? x : parent[x] = FindSet(parent[x], parent);
+        }
+
+        private void UnionSets(int x, int y, int[] parent)
+        {
+            parent[FindSet(x, parent)] = FindSet(y, parent);
         }
 
         private struct Point
@@ -310,8 +368,7 @@
             var candidates = new List<(int x, int y)>();
             var minDist = roomMinSize + 2;
 
-            var startX = _random.Next(roomMinSize, _mapWidth - roomMinSize);
-            var startY = _random.Next(roomMinSize, _mapHeight - roomMinSize);
+            var (startX, startY) = GetRandomStartPoint(roomMinSize);
             candidates.Add((startX, startY));
 
             var attempts = 0;
@@ -321,15 +378,8 @@
                 var (cx, cy) = candidates[idx];
                 candidates.RemoveAt(idx);
 
-                var width = _random.Next(roomMinSize, roomMaxSize + 1);
-                var height = _random.Next(roomMinSize, roomMaxSize + 1);
-                var x = Math.Clamp(cx - width / 2, 1, _mapWidth - width - 1);
-                var y = Math.Clamp(cy - height / 2, 1, _mapHeight - height - 1);
-                var room = new Room(x, y, width, height, RoomType.Normal);
-
-                var intersects = rooms.Any(other => room.Intersects(other));
-
-                if (intersects)
+                var room = TryCreateRoom(cx, cy, roomMinSize, roomMaxSize);
+                if (room == null || HasIntersection(room, rooms))
                 {
                     attempts++;
                     continue;
@@ -338,19 +388,46 @@
                 rooms.Add(room);
                 attempts = 0;
 
-                for (var i = 0; i < k; i++)
-                {
-                    var angle = 2 * Math.PI * _random.NextDouble();
-                    var dist = minDist + _random.NextDouble() * minDist;
-                    var nx = (int)(cx + Math.Cos(angle) * dist);
-                    var ny = (int)(cy + Math.Sin(angle) * dist);
-                    if (nx > roomMinSize && nx < _mapWidth - roomMinSize && ny > roomMinSize &&
-                        ny < _mapHeight - roomMinSize)
-                        candidates.Add((nx, ny));
-                }
+                AddNewCandidates(cx, cy, minDist, k, roomMinSize, candidates);
             }
 
             return rooms;
+        }
+
+        private (int x, int y) GetRandomStartPoint(int roomMinSize)
+        {
+            var x = _random.Next(roomMinSize, _mapWidth - roomMinSize);
+            var y = _random.Next(roomMinSize, _mapHeight - roomMinSize);
+            return (x, y);
+        }
+
+        private Room? TryCreateRoom(int cx, int cy, int roomMinSize, int roomMaxSize)
+        {
+            var width = _random.Next(roomMinSize, roomMaxSize + 1);
+            var height = _random.Next(roomMinSize, roomMaxSize + 1);
+            var x = Math.Clamp(cx - width / 2, 1, _mapWidth - width - 1);
+            var y = Math.Clamp(cy - height / 2, 1, _mapHeight - height - 1);
+            return new Room(x, y, width, height, RoomType.Normal);
+        }
+
+        private bool HasIntersection(Room room, List<Room> rooms)
+        {
+            return rooms.Any(other => room.Intersects(other));
+        }
+
+        private void AddNewCandidates(int cx, int cy, int minDist, int k, int roomMinSize,
+            List<(int x, int y)> candidates)
+        {
+            for (var i = 0; i < k; i++)
+            {
+                var angle = 2 * Math.PI * _random.NextDouble();
+                var dist = minDist + _random.NextDouble() * minDist;
+                var nx = (int)(cx + Math.Cos(angle) * dist);
+                var ny = (int)(cy + Math.Sin(angle) * dist);
+                if (nx > roomMinSize && nx < _mapWidth - roomMinSize && ny > roomMinSize &&
+                    ny < _mapHeight - roomMinSize)
+                    candidates.Add((nx, ny));
+            }
         }
     }
 }

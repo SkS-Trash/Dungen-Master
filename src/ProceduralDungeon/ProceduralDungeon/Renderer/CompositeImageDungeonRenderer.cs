@@ -72,11 +72,11 @@ namespace ProceduralDungeon
         {
             return tile switch
             {
-                TileType.Wall => Color.FromArgb(60, 60, 60), // насыщенный тёмно-серый
-                TileType.Floor => Color.FromArgb(220, 220, 220), // яркий светло-серый
+                TileType.Wall => Color.FromArgb(60, 60, 60),
+                TileType.Floor => Color.FromArgb(220, 220, 220),
                 TileType.Empty => Color.Black,
-                TileType.Start => Color.FromArgb(255, 0, 0), // ярко-красный
-                TileType.Exit => Color.FromArgb(0, 255, 0), // ярко-зелёный
+                TileType.Start => Color.FromArgb(255, 0, 0),
+                TileType.Exit => Color.FromArgb(0, 255, 0),
                 _ => Color.Magenta
             };
         }
@@ -86,13 +86,13 @@ namespace ProceduralDungeon
             return decor switch
             {
                 DecorType.None => Color.Transparent,
-                DecorType.Chest => Color.FromArgb(255, 215, 0), // ярко-жёлтый
-                DecorType.Barrel => Color.FromArgb(139, 69, 19), // насыщенный коричневый
-                DecorType.PressurePlate => Color.FromArgb(128, 128, 128), // серый
-                DecorType.Column => Color.FromArgb(0, 191, 255), // ярко-голубой
-                DecorType.Altar => Color.FromArgb(255, 0, 255), // ярко-фиолетовый
-                DecorType.Campfire => Color.FromArgb(255, 140, 0), // ярко-оранжевый
-                DecorType.Spikes => Color.FromArgb(255, 0, 0), // ярко-красный
+                DecorType.Chest => Color.FromArgb(255, 215, 0),
+                DecorType.Barrel => Color.FromArgb(139, 69, 19),
+                DecorType.PressurePlate => Color.FromArgb(128, 128, 128),
+                DecorType.Column => Color.FromArgb(0, 191, 255),
+                DecorType.Altar => Color.FromArgb(255, 0, 255),
+                DecorType.Campfire => Color.FromArgb(255, 140, 0),
+                DecorType.Spikes => Color.FromArgb(255, 0, 0),
                 _ => Color.Magenta
             };
         }
@@ -102,11 +102,11 @@ namespace ProceduralDungeon
             return enemy switch
             {
                 EnemyType.None => Color.Transparent,
-                EnemyType.EnemyIsCloseCombat => Color.FromArgb(255, 69, 0), // оранжево-красный
-                EnemyType.EnemyRangedCombat => Color.FromArgb(0, 0, 255), // ярко-синий
-                EnemyType.Boss => Color.FromArgb(128, 0, 128), // насыщенный фиолетовый
-                EnemyType.FlyingEnemy => Color.FromArgb(0, 255, 255), // ярко-голубой
-                EnemyType.Mimic => Color.FromArgb(255, 20, 147), // ярко-розовый
+                EnemyType.EnemyIsCloseCombat => Color.FromArgb(255, 69, 0),
+                EnemyType.EnemyRangedCombat => Color.FromArgb(0, 0, 255),
+                EnemyType.Boss => Color.FromArgb(128, 0, 128),
+                EnemyType.FlyingEnemy => Color.FromArgb(0, 255, 255),
+                EnemyType.Mimic => Color.FromArgb(255, 20, 147),
                 _ => Color.Magenta
             };
         }
@@ -267,7 +267,6 @@ namespace ProceduralDungeon
             g.Clear(Color.White);
             g.DrawString("Легенда подземелья:", new Font("Arial", 16), Brushes.Black, 10, y);
             y += step;
-            // Тайлы
             foreach (TileType t in Enum.GetValues(typeof(TileType)))
             {
                 var color = GetBrightMapColor(t);
@@ -276,7 +275,6 @@ namespace ProceduralDungeon
                 y += step;
             }
 
-            // Декор
             foreach (DecorType d in Enum.GetValues(typeof(DecorType)))
             {
                 if (d == DecorType.None) continue;
@@ -285,7 +283,6 @@ namespace ProceduralDungeon
                 y += step;
             }
 
-            // Враги
             foreach (EnemyType e in Enum.GetValues(typeof(EnemyType)))
             {
                 if (e == EnemyType.None) continue;

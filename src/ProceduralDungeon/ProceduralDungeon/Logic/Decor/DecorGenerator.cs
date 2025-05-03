@@ -25,6 +25,13 @@
             var (baseDensity, specialObjects) = GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
+            var validPositions = FindValidDecorPositions(room, map);
+            SortPositionsByDensity(validPositions);
+            PlaceDecorInRoom(validPositions, attempts, room.Type, specialObjects, map);
+        }
+
+        private List<(int x, int y, int density)> FindValidDecorPositions(Room room, TileType[,] map)
+        {
             var validPositions = new List<(int x, int y, int density)>();
             for (var x = room.X + 1; x < room.X + room.Width - 1; x++)
             for (var y = room.Y + 1; y < room.Y + room.Height - 1; y++)
@@ -36,13 +43,22 @@
                 }
             }
 
-            validPositions.Sort((a, b) => b.density.CompareTo(a.density));
+            return validPositions;
+        }
 
+        private void SortPositionsByDensity(List<(int x, int y, int density)> positions)
+        {
+            positions.Sort((a, b) => b.density.CompareTo(a.density));
+        }
+
+        private void PlaceDecorInRoom(List<(int x, int y, int density)> positions, int attempts, RoomType roomType,
+            List<DecorType> specialObjects, TileType[,] map)
+        {
             var placed = 0;
-            foreach (var pos in validPositions)
+            foreach (var pos in positions)
             {
                 if (placed >= attempts) break;
-                var decor = SelectDecorType(room.Type, specialObjects);
+                var decor = SelectDecorType(roomType, specialObjects);
                 if (decor != DecorType.None && IsPositionValid(pos.x, pos.y, map) &&
                     !HasNearbyDecor(pos.x, pos.y, MIN_DISTANCE_BETWEEN_OBJECTS))
                 {
