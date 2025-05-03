@@ -29,38 +29,15 @@
         public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)
         {
             Rooms.Clear();
-            var candidateRooms = new List<Room>();
-            int attempts = 0;
-            while (candidateRooms.Count < roomCount && attempts < roomCount * 10)
-            {
-                var roomWidth = _random.Next(roomMinSize, roomMaxSize + 1);
-                var roomHeight = _random.Next(roomMinSize, roomMaxSize + 1);
-                var roomX = _random.Next(1, _mapWidth - roomWidth - 1);
-                var roomY = _random.Next(1, _mapHeight - roomHeight - 1);
-
-                var roll = _random.NextDouble();
-                var roomType = roll switch
-                {
-                    < 0.05 => RoomType.Hard,
-                    < 0.1 => RoomType.Treatment,
-                    < 0.25 => RoomType.Trap,
-                    _ => RoomType.Normal
-                };
-
-                var newRoom = new Room(roomX, roomY, roomWidth, roomHeight, roomType);
-                if (candidateRooms.Any(otherRoom => newRoom.Intersects(otherRoom)))
-                {
-                    attempts++;
-                    continue;
-                }
-                candidateRooms.Add(newRoom);
-                attempts = 0;
-            }
-
+            // --- Poisson-disc sampling для генерации комнат ---
+            var candidateRooms = GenerateRoomsPoissonDisc(roomCount, roomMinSize, roomMaxSize);
+            if (candidateRooms.Count < roomCount)
+                throw new InvalidOperationException($"Не удалось разместить все комнаты: {candidateRooms.Count} из {roomCount}. Попробуйте уменьшить roomCount или размеры комнат.");
             foreach (var room in candidateRooms)
                 CreateRoom(room);
             Rooms.AddRange(candidateRooms);
 
+            // --- Соединяем комнаты кривыми коридорами ---
             var edges = new List<Edge>();
             int k = 3;
             for (int i = 0; i < Rooms.Count; i++)
@@ -77,9 +54,7 @@
                         edges.Add(new Edge(i, j, dist));
                 }
             }
-
             var mstEdges = KruskalMST(Rooms.Count, edges);
-
             var extraEdges = new List<Edge>();
             var nonMstEdges = edges.Except(mstEdges).ToList();
             int extraCount = Math.Min(2, nonMstEdges.Count);
@@ -89,9 +64,12 @@
                 extraEdges.Add(nonMstEdges[idx]);
                 nonMstEdges.RemoveAt(idx);
             }
-
             foreach (var edge in mstEdges.Concat(extraEdges))
-                CreateCorridor(Rooms[edge.RoomA], Rooms[edge.RoomB]);
+            {
+                var a = Rooms[edge.RoomA];
+                var b = Rooms[edge.RoomB];
+                CreateCurvedCorridor(new Point(a.CenterX, a.CenterY), new Point(b.CenterX, b.CenterY));
+            }
 
             if (Rooms.Count > 0)
             {
@@ -110,7 +88,7 @@
             queue.Enqueue(_startPoint);
             visited[_startPoint.X, _startPoint.Y] = true;
 
-            int[] dx = { 0, 1, 0, -1 };
+            int[] dx = [0, 1, 0, -1];
             int[] dy = { -1, 0, 1, 0 };
 
             while (queue.Count > 0)
@@ -218,51 +196,55 @@
                     Map[x, y] = TileType.Floor;
         }
 
-        private void CreateCorridor(Room roomA, Room roomB)
+        /// <summary>
+        /// Создаёт кривой коридор между двумя точками с помощью random walk с памятью направления
+        /// </summary>
+        private void CreateCurvedCorridor(Point from, Point to, int radius = 1, double directionMemory = 0.7)
         {
-            var x1 = roomA.CenterX;
-            var y1 = roomA.CenterY;
-            var x2 = roomB.CenterX;
-            var y2 = roomB.CenterY;
-
-            if (_random.Next(0, 2) == 0)
+            var path = new List<Point>();
+            int x = from.X, y = from.Y;
+            int dx = Math.Sign(to.X - x), dy = Math.Sign(to.Y - y);
+            int steps = 0, maxSteps = _mapWidth + _mapHeight;
+            double lastDirX = dx, lastDirY = dy;
+            var rand = _random;
+            while ((x != to.X || y != to.Y) && steps < maxSteps)
             {
-                CreateHorizontalCorridor(x1, x2, y1);
-                CreateVerticalCorridor(y1, y2, x2);
+                // Смесь направления к цели и предыдущего направления
+                double tx = to.X - x, ty = to.Y - y;
+                double len = Math.Sqrt(tx * tx + ty * ty);
+                if (len > 0.1) { tx /= len; ty /= len; }
+                double dirX = lastDirX * directionMemory + tx * (1 - directionMemory);
+                double dirY = lastDirY * directionMemory + ty * (1 - directionMemory);
+                // Добавляем случайный шум
+                dirX += (rand.NextDouble() - 0.5) * 0.5;
+                dirY += (rand.NextDouble() - 0.5) * 0.5;
+                // Нормализация
+                double dlen = Math.Sqrt(dirX * dirX + dirY * dirY);
+                if (dlen > 0.1) { dirX /= dlen; dirY /= dlen; }
+                // Дискретизация
+                int stepX = Math.Abs(dirX) > Math.Abs(dirY) ? Math.Sign(dirX) : 0;
+                int stepY = Math.Abs(dirY) >= Math.Abs(dirX) ? Math.Sign(dirY) : 0;
+                // Иногда делаем диагональный шаг
+                if (rand.NextDouble() < 0.2) { stepX = Math.Sign(dirX); stepY = Math.Sign(dirY); }
+                // Делаем шаг
+                x = Math.Clamp(x + stepX, 1, _mapWidth - 2);
+                y = Math.Clamp(y + stepY, 1, _mapHeight - 2);
+                path.Add(new Point(x, y));
+                lastDirX = dirX; lastDirY = dirY;
+                steps++;
             }
-            else
+            // Сглаживание: простое удаление лишних точек (можно улучшить)
+            for (int i = 0; i < path.Count; i += 2)
             {
-                CreateVerticalCorridor(y1, y2, x1);
-                CreateHorizontalCorridor(x1, x2, y2);
+                var p = path[i];
+                for (int dxr = -radius; dxr <= radius; dxr++)
+                    for (int dyr = -radius; dyr <= radius; dyr++)
+                    {
+                        int nx = p.X + dxr, ny = p.Y + dyr;
+                        if (nx >= 0 && nx < _mapWidth && ny >= 0 && ny < _mapHeight)
+                            Map[nx, ny] = TileType.Floor;
+                    }
             }
-        }
-
-        private void CreateHorizontalCorridor(int x1, int x2, int y)
-        {
-            var start = Math.Min(x1, x2);
-            var end = Math.Max(x1, x2);
-
-            for (var x = start; x <= end; x++)
-                for (var dy = -1; dy <= 1; dy++)
-                {
-                    var ny = y + dy;
-                    if (ny >= 0 && ny < _mapHeight)
-                        Map[x, ny] = TileType.Floor;
-                }
-        }
-
-        private void CreateVerticalCorridor(int y1, int y2, int x)
-        {
-            var start = Math.Min(y1, y2);
-            var end = Math.Max(y1, y2);
-
-            for (var y = start; y <= end; y++)
-                for (var dx = -1; dx <= 1; dx++)
-                {
-                    var nx = x + dx;
-                    if (nx >= 0 && nx < _mapWidth)
-                        Map[nx, y] = TileType.Floor;
-                }
         }
 
         // --- Edge и Kruskal ---
@@ -304,6 +286,57 @@
                 X = x;
                 Y = y;
             }
+        }
+
+        /// <summary>
+        /// Генерация прямоугольных комнат с помощью Poisson-disc sampling
+        /// </summary>
+        public List<Room> GenerateRoomsPoissonDisc(int roomCount, int roomMinSize, int roomMaxSize, int k = 30)
+        {
+            var rooms = new List<Room>();
+            var candidates = new List<(int x, int y)>();
+            int minDist = roomMinSize + 2; // минимальное расстояние между центрами комнат
+
+            // Стартовая точка
+            int startX = _random.Next(roomMinSize, _mapWidth - roomMinSize);
+            int startY = _random.Next(roomMinSize, _mapHeight - roomMinSize);
+            candidates.Add((startX, startY));
+
+            int attempts = 0;
+            while (rooms.Count < roomCount && candidates.Count > 0 && attempts < roomCount * k)
+            {
+                int idx = _random.Next(candidates.Count);
+                var (cx, cy) = candidates[idx];
+                candidates.RemoveAt(idx);
+
+                // Случайный размер комнаты
+                int width = _random.Next(roomMinSize, roomMaxSize + 1);
+                int height = _random.Next(roomMinSize, roomMaxSize + 1);
+                int x = Math.Clamp(cx - width / 2, 1, _mapWidth - width - 1);
+                int y = Math.Clamp(cy - height / 2, 1, _mapHeight - height - 1);
+                var room = new Room(x, y, width, height, RoomType.Normal);
+
+                // Проверка на пересечения
+                bool intersects = false;
+                foreach (var other in rooms)
+                    if (room.Intersects(other)) { intersects = true; break; }
+                if (intersects) { attempts++; continue; }
+
+                rooms.Add(room);
+                attempts = 0;
+
+                // Добавляем новые кандидаты вокруг центра
+                for (int i = 0; i < k; i++)
+                {
+                    double angle = 2 * Math.PI * _random.NextDouble();
+                    double dist = minDist + (_random.NextDouble() * minDist);
+                    int nx = (int)(cx + Math.Cos(angle) * dist);
+                    int ny = (int)(cy + Math.Sin(angle) * dist);
+                    if (nx > roomMinSize && nx < _mapWidth - roomMinSize && ny > roomMinSize && ny < _mapHeight - roomMinSize)
+                        candidates.Add((nx, ny));
+                }
+            }
+            return rooms;
         }
     }
 }

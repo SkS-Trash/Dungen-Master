@@ -28,15 +28,32 @@
             var (baseDensity, specialObjects) = GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
-            for (var i = 0; i < attempts; i++)
+            // Новый подход: генерируем все возможные позиции
+            var validPositions = new List<(int x, int y, int density)>();
+            for (int x = room.X + 1; x < room.X + room.Width - 1; x++)
             {
-                var (x, y) = FindValidPosition(room, map, 1);
-                if (x < 0 || y < 0) continue;
-
-                var decor = SelectDecorType(room.Type, specialObjects);
-                if (decor != DecorType.None && IsPositionValid(x, y, map))
+                for (int y = room.Y + 1; y < room.Y + room.Height - 1; y++)
                 {
-                    PlaceDecorWithSize(x, y, decor, map);
+                    if (IsPositionValid(x, y, map) && !HasNearbyDecor(x, y, MIN_DISTANCE_BETWEEN_OBJECTS))
+                    {
+                        int density = CalculatePositionDensity(x, y, map);
+                        validPositions.Add((x, y, density));
+                    }
+                }
+            }
+
+            // Сортируем по убыванию плотности
+            validPositions.Sort((a, b) => b.density.CompareTo(a.density));
+
+            int placed = 0;
+            foreach (var pos in validPositions)
+            {
+                if (placed >= attempts) break;
+                var decor = SelectDecorType(room.Type, specialObjects);
+                if (decor != DecorType.None && IsPositionValid(pos.x, pos.y, map) && !HasNearbyDecor(pos.x, pos.y, MIN_DISTANCE_BETWEEN_OBJECTS))
+                {
+                    PlaceDecorWithSize(pos.x, pos.y, decor, map);
+                    placed++;
                 }
             }
         }
@@ -166,6 +183,25 @@
         private bool IsPositionValid(int x, int y, TileType[,] map)
         {
             return map[x, y] == TileType.Floor;
+        }
+
+        // Новый метод: вычисление плотности позиции (количество свободных соседей)
+        private int CalculatePositionDensity(int x, int y, TileType[,] map)
+        {
+            int density = 0;
+            int[] dx = { -1, 0, 1, 0 };
+            int[] dy = { 0, -1, 0, 1 };
+            for (int dir = 0; dir < 4; dir++)
+            {
+                int nx = x + dx[dir];
+                int ny = y + dy[dir];
+                if (nx >= 0 && nx < map.GetLength(0) && ny >= 0 && ny < map.GetLength(1))
+                {
+                    if (map[nx, ny] == TileType.Floor && DecorLayer[nx, ny] == DecorType.None)
+                        density++;
+                }
+            }
+            return density;
         }
     }
 }
