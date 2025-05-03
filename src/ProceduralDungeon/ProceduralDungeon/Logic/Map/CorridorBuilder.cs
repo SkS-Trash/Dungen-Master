@@ -23,7 +23,24 @@ namespace ProceduralDungeon
             {
                 var a = rooms[edge.RoomA];
                 var b = rooms[edge.RoomB];
-                CreateAStarCorridor(new Point(a.CenterX, a.CenterY), new Point(b.CenterX, b.CenterY));
+                var from = new Point(a.CenterX, a.CenterY);
+                var to = new Point(b.CenterX, b.CenterY);
+                int method = _random.Next(4);
+                switch (method)
+                {
+                    case 0:
+                        CreateAStarCorridor(from, to);
+                        break;
+                    case 1:
+                        CreateLCorridor(from, to);
+                        break;
+                    case 2:
+                        CreateZigzagCorridor(from, to);
+                        break;
+                    case 3:
+                        CreateNoisyCorridor(from, to);
+                        break;
+                }
             }
         }
 
@@ -42,7 +59,7 @@ namespace ProceduralDungeon
             }
         }
 
-        public void CreateAStarCorridor(Point from, Point to, int radius = 1)
+        private void CreateAStarCorridor(Point from, Point to, int radius = 1)
         {
             var path = BuildAStarPath(from, to);
             DrawCorridorPath(path, radius);
@@ -145,6 +162,73 @@ namespace ProceduralDungeon
 
             path.Reverse();
             return path;
+        }
+
+        private void CreateLCorridor(Point from, Point to, int radius = 1)
+        {
+            var path = new List<Point>();
+            if (_random.Next(2) == 0)
+            {
+                for (int x = from.X; x != to.X; x += Math.Sign(to.X - from.X))
+                    path.Add(new Point(x, from.Y));
+                for (int y = from.Y; y != to.Y; y += Math.Sign(to.Y - from.Y))
+                    path.Add(new Point(to.X, y));
+            }
+            else
+            {
+                for (int y = from.Y; y != to.Y; y += Math.Sign(to.Y - from.Y))
+                    path.Add(new Point(from.X, y));
+                for (int x = from.X; x != to.X; x += Math.Sign(to.X - from.X))
+                    path.Add(new Point(x, to.Y));
+            }
+
+            path.Add(to);
+            DrawCorridorPath(path, radius);
+        }
+
+        private void CreateZigzagCorridor(Point from, Point to, int radius = 1)
+        {
+            var path = new List<Point>();
+            int x = from.X, y = from.Y;
+            path.Add(new Point(x, y));
+            int dx = Math.Sign(to.X - x);
+            int dy = Math.Sign(to.Y - y);
+            int steps = Math.Max(Math.Abs(to.X - x), Math.Abs(to.Y - y));
+            for (int i = 0; i < steps; i++)
+            {
+                if (i % 2 == 0 && x != to.X) x += dx;
+                else if (y != to.Y) y += dy;
+                path.Add(new Point(x, y));
+            }
+
+            DrawCorridorPath(path, radius);
+        }
+
+        private void CreateNoisyCorridor(Point from, Point to, int radius = 1)
+        {
+            var path = new List<Point>();
+            int x = from.X, y = from.Y;
+            path.Add(new Point(x, y));
+            while (x != to.X || y != to.Y)
+            {
+                if (x != to.X && y != to.Y)
+                {
+                    if (_random.Next(2) == 0) x += Math.Sign(to.X - x);
+                    else y += Math.Sign(to.Y - y);
+                }
+                else if (x != to.X) x += Math.Sign(to.X - x);
+                else if (y != to.Y) y += Math.Sign(to.Y - y);
+
+                if (_random.Next(6) == 0)
+                {
+                    if (x != to.X && y > 1 && y < _mapHeight - 2) y += _random.Next(2) == 0 ? 1 : -1;
+                    else if (y != to.Y && x > 1 && x < _mapWidth - 2) x += _random.Next(2) == 0 ? 1 : -1;
+                }
+
+                path.Add(new Point(x, y));
+            }
+
+            DrawCorridorPath(path, radius);
         }
     }
 

@@ -33,7 +33,6 @@ namespace ProceduralDungeon
         {
             if (depth >= _maxDepth || width < _minRoomSize * 2 || height < _minRoomSize * 2)
             {
-                // Создаём комнату в этом регионе
                 var roomWidth = _random.Next(_minRoomSize, Math.Min(width, _maxRoomSize) + 1);
                 var roomHeight = _random.Next(_minRoomSize, Math.Min(height, _maxRoomSize) + 1);
                 var roomX = x + _random.Next(0, Math.Max(1, width - roomWidth + 1));

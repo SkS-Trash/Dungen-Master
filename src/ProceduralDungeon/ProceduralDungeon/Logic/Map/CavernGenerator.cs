@@ -22,7 +22,6 @@ namespace ProceduralDungeon
         public TileType[,] GenerateCavern()
         {
             var map = new TileType[_width, _height];
-            // Инициализация случайным образом
             for (var x = 0; x < _width; x++)
             for (var y = 0; y < _height; y++)
             {
@@ -32,7 +31,6 @@ namespace ProceduralDungeon
                     map[x, y] = (_random.Next(100) < _fillPercent) ? TileType.Wall : TileType.Floor;
             }
 
-            // Итерации клеточного автомата
             for (var i = 0; i < _iterations; i++)
                 map = DoSimulationStep(map);
 
