@@ -18,10 +18,13 @@ namespace ProceduralDungeon
             _tileSize = cellSize;
 
             var outputPath = "dungeon.png";
+            var legendPath = "legend.png";
 
             RenderCompositeImage(outputPath);
-
             OpenImage(outputPath);
+            
+            GenerateLegend(legendPath);
+            OpenImage(legendPath);
         }
 
         private void RenderCompositeImage(string outputPath)
@@ -48,7 +51,7 @@ namespace ProceduralDungeon
 
         private void DrawTile(Graphics graphics, int x, int y)
         {
-            var baseColor = GetMapColor(_map[x, y]);
+            var baseColor = GetBrightMapColor(_map[x, y]);
             var decor = _decor[x, y];
             var enemy = _enemies[x, y];
 
@@ -56,54 +59,238 @@ namespace ProceduralDungeon
 
             if (decor != DecorType.None)
             {
-                var decorColor = Color.FromArgb(128, GetDecorColor(decor));
-                DrawCircle(graphics, x, y, decorColor);
+                DrawDecor(graphics, x, y, decor);
             }
 
             if (enemy != EnemyType.None)
             {
-                var enemyColor = GetEnemyColor(enemy);
-                DrawTriangle(graphics, x, y, enemyColor);
+                DrawEnemy(graphics, x, y, enemy);
             }
         }
 
-        private void DrawRectangle(Graphics g, int x, int y, Color color)
+        private static Color GetBrightMapColor(TileType tile)
+        {
+            return tile switch
+            {
+                TileType.Wall => Color.FromArgb(60, 60, 60), // насыщенный тёмно-серый
+                TileType.Floor => Color.FromArgb(220, 220, 220), // яркий светло-серый
+                TileType.Empty => Color.Black,
+                TileType.Start => Color.FromArgb(255, 0, 0), // ярко-красный
+                TileType.Exit => Color.FromArgb(0, 255, 0), // ярко-зелёный
+                _ => Color.Magenta
+            };
+        }
+
+        private static Color GetBrightDecorColor(DecorType decor)
+        {
+            return decor switch
+            {
+                DecorType.None => Color.Transparent,
+                DecorType.Chest => Color.FromArgb(255, 215, 0), // ярко-жёлтый
+                DecorType.Barrel => Color.FromArgb(139, 69, 19), // насыщенный коричневый
+                DecorType.PressurePlate => Color.FromArgb(128, 128, 128), // серый
+                DecorType.Column => Color.FromArgb(0, 191, 255), // ярко-голубой
+                DecorType.Altar => Color.FromArgb(255, 0, 255), // ярко-фиолетовый
+                DecorType.Campfire => Color.FromArgb(255, 140, 0), // ярко-оранжевый
+                DecorType.Spikes => Color.FromArgb(255, 0, 0), // ярко-красный
+                _ => Color.Magenta
+            };
+        }
+
+        private static Color GetBrightEnemyColor(EnemyType enemy)
+        {
+            return enemy switch
+            {
+                EnemyType.None => Color.Transparent,
+                EnemyType.EnemyIsCloseCombat => Color.FromArgb(255, 69, 0), // оранжево-красный
+                EnemyType.EnemyRangedCombat => Color.FromArgb(0, 0, 255), // ярко-синий
+                EnemyType.Boss => Color.FromArgb(128, 0, 128), // насыщенный фиолетовый
+                EnemyType.FlyingEnemy => Color.FromArgb(0, 255, 255), // ярко-голубой
+                EnemyType.Mimic => Color.FromArgb(255, 20, 147), // ярко-розовый
+                _ => Color.Magenta
+            };
+        }
+
+        private void DrawDecor(Graphics g, int x, int y, DecorType decor)
+        {
+            var color = Color.FromArgb(180, GetBrightDecorColor(decor));
+            switch (decor)
+            {
+                case DecorType.Chest:
+                    DrawDiamond(g, x, y, color);
+                    break;
+                case DecorType.Barrel:
+                    DrawCircle(g, x, y, color);
+                    break;
+                case DecorType.PressurePlate:
+                    DrawRectangle(g, x, y, color, 0.5f);
+                    break;
+                case DecorType.Column:
+                    DrawVerticalRect(g, x, y, color);
+                    break;
+                case DecorType.Altar:
+                    DrawCross(g, x, y, color);
+                    break;
+                case DecorType.Campfire:
+                    DrawStar(g, x, y, color);
+                    break;
+                case DecorType.Spikes:
+                    DrawTriangle(g, x, y, color, true);
+                    break;
+            }
+        }
+
+        private void DrawEnemy(Graphics g, int x, int y, EnemyType enemy)
+        {
+            var color = GetBrightEnemyColor(enemy);
+            switch (enemy)
+            {
+                case EnemyType.EnemyIsCloseCombat:
+                    DrawTriangle(g, x, y, color, false);
+                    break;
+                case EnemyType.EnemyRangedCombat:
+                    DrawCircle(g, x, y, color);
+                    break;
+                case EnemyType.Boss:
+                    DrawStar(g, x, y, color);
+                    break;
+                case EnemyType.FlyingEnemy:
+                    DrawDiamond(g, x, y, color);
+                    break;
+                case EnemyType.Mimic:
+                    DrawCross(g, x, y, color);
+                    break;
+            }
+        }
+
+        private void DrawDiamond(Graphics g, int x, int y, Color color)
+        {
+            var cx = x * _tileSize + _tileSize / 2;
+            var cy = y * _tileSize + _tileSize / 2;
+            var r = _tileSize / 3;
+            var points = new[]
+            {
+                new Point(cx, cy - r),
+                new Point(cx + r, cy),
+                new Point(cx, cy + r),
+                new Point(cx - r, cy)
+            };
+            using var brush = new SolidBrush(color);
+            g.FillPolygon(brush, points);
+        }
+
+        private void DrawCross(Graphics g, int x, int y, Color color)
+        {
+            var cx = x * _tileSize + _tileSize / 2;
+            var cy = y * _tileSize + _tileSize / 2;
+            var r = _tileSize / 4;
+            using var pen = new Pen(color, _tileSize / 8f);
+            g.DrawLine(pen, cx - r, cy, cx + r, cy);
+            g.DrawLine(pen, cx, cy - r, cx, cy + r);
+        }
+
+        private void DrawStar(Graphics g, int x, int y, Color color)
+        {
+            var cx = x * _tileSize + _tileSize / 2;
+            var cy = y * _tileSize + _tileSize / 2;
+            var r = _tileSize / 3;
+            var points = new Point[10];
+            for (int i = 0; i < 10; i++)
+            {
+                var angle = Math.PI / 5 * i;
+                var len = (i % 2 == 0) ? r : r / 2;
+                points[i] = new Point(
+                    (int)(cx + len * Math.Sin(angle)),
+                    (int)(cy - len * Math.Cos(angle))
+                );
+            }
+            using var brush = new SolidBrush(color);
+            g.FillPolygon(brush, points);
+        }
+
+        private void DrawVerticalRect(Graphics g, int x, int y, Color color)
         {
             var rect = new Rectangle(
-                x * _tileSize,
+                x * _tileSize + _tileSize / 3,
                 y * _tileSize,
-                _tileSize,
+                _tileSize / 3,
                 _tileSize
             );
-
             using var brush = new SolidBrush(color);
             g.FillRectangle(brush, rect);
         }
 
+        private void DrawRectangle(Graphics g, int x, int y, Color color, float scale = 1f)
+        {
+            var size = (int)(_tileSize * scale);
+            var offset = (_tileSize - size) / 2;
+            var rect = new Rectangle(
+                x * _tileSize + offset,
+                y * _tileSize + offset,
+                size,
+                size
+            );
+            using var brush = new SolidBrush(color);
+            g.FillRectangle(brush, rect);
+        }
+
+        private void DrawTriangle(Graphics g, int x, int y, Color color, bool inverted = false)
+        {
+            int top = inverted ? (y * _tileSize + _tileSize) : (y * _tileSize);
+            int bottom = inverted ? (y * _tileSize) : (y * _tileSize + _tileSize);
+            var points = new[]
+            {
+                new Point(x * _tileSize + _tileSize / 2, top),
+                new Point(x * _tileSize + _tileSize, bottom),
+                new Point(x * _tileSize, bottom)
+            };
+            using var brush = new SolidBrush(color);
+            g.FillPolygon(brush, points);
+        }
+        
         private void DrawCircle(Graphics g, int x, int y, Color color)
         {
-            var rect = new Rectangle(
-                x * _tileSize + _tileSize / 4,
-                y * _tileSize + _tileSize / 4,
-                _tileSize / 2,
-                _tileSize / 2
-            );
-
+            var cx = x * _tileSize + _tileSize / 2;
+            var cy = y * _tileSize + _tileSize / 2;
+            var r = _tileSize / 3;
+            var rect = new Rectangle(cx - r, cy - r, r * 2, r * 2);
             using var brush = new SolidBrush(color);
             g.FillEllipse(brush, rect);
         }
 
-        private void DrawTriangle(Graphics g, int x, int y, Color color)
+        private void GenerateLegend(string outputPath)
         {
-            var points = new[]
+            int w = 400, h = 600, y = 20, step = 20;
+            using var bmp = new Bitmap(w, h);
+            using var g = Graphics.FromImage(bmp);
+            g.Clear(Color.White);
+            g.DrawString("Легенда подземелья:", new Font("Arial", 16), Brushes.Black, 10, y);
+            y += step;
+            // Тайлы
+            foreach (TileType t in Enum.GetValues(typeof(TileType)))
             {
-                new Point(x * _tileSize + _tileSize / 2, y * _tileSize),
-                new Point(x * _tileSize + _tileSize, y * _tileSize + _tileSize),
-                new Point(x * _tileSize, y * _tileSize + _tileSize)
-            };
-
-            using var brush = new SolidBrush(color);
-            g.FillPolygon(brush, points);
+                var color = GetBrightMapColor(t);
+                DrawRectangle(g, 1, y / step, color, 0.5f);
+                g.DrawString(t.ToString(), new Font("Arial", 12), Brushes.Black, 50, y);
+                y += step;
+            }
+            // Декор
+            foreach (DecorType d in Enum.GetValues(typeof(DecorType)))
+            {
+                if (d == DecorType.None) continue;
+                DrawDecor(g, 1, y / step, d);
+                g.DrawString(d.ToString(), new Font("Arial", 12), Brushes.Black, 50, y);
+                y += step;
+            }
+            // Враги
+            foreach (EnemyType e in Enum.GetValues(typeof(EnemyType)))
+            {
+                if (e == EnemyType.None) continue;
+                DrawEnemy(g, 1, y / step, e);
+                g.DrawString(e.ToString(), new Font("Arial", 12), Brushes.Black, 50, y);
+                y += step;
+            }
+            bmp.Save(outputPath, ImageFormat.Png);
         }
     }
 }

@@ -15,10 +15,7 @@
         public void GenerateDecor(TileType[,] map, List<Room> rooms)
         {
             foreach (var room in rooms)
-            {
                 GenerateRoomDecor(map, room);
-                // GenerateWallDecor(map, room);
-            }
 
             GenerateCorridorDecor(map, rooms);
         }
@@ -28,29 +25,26 @@
             var (baseDensity, specialObjects) = GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
-            // Новый подход: генерируем все возможные позиции
             var validPositions = new List<(int x, int y, int density)>();
-            for (int x = room.X + 1; x < room.X + room.Width - 1; x++)
+            for (var x = room.X + 1; x < room.X + room.Width - 1; x++)
+            for (var y = room.Y + 1; y < room.Y + room.Height - 1; y++)
             {
-                for (int y = room.Y + 1; y < room.Y + room.Height - 1; y++)
+                if (IsPositionValid(x, y, map) && !HasNearbyDecor(x, y, MIN_DISTANCE_BETWEEN_OBJECTS))
                 {
-                    if (IsPositionValid(x, y, map) && !HasNearbyDecor(x, y, MIN_DISTANCE_BETWEEN_OBJECTS))
-                    {
-                        int density = CalculatePositionDensity(x, y, map);
-                        validPositions.Add((x, y, density));
-                    }
+                    var density = CalculatePositionDensity(x, y, map);
+                    validPositions.Add((x, y, density));
                 }
             }
 
-            // Сортируем по убыванию плотности
             validPositions.Sort((a, b) => b.density.CompareTo(a.density));
 
-            int placed = 0;
+            var placed = 0;
             foreach (var pos in validPositions)
             {
                 if (placed >= attempts) break;
                 var decor = SelectDecorType(room.Type, specialObjects);
-                if (decor != DecorType.None && IsPositionValid(pos.x, pos.y, map) && !HasNearbyDecor(pos.x, pos.y, MIN_DISTANCE_BETWEEN_OBJECTS))
+                if (decor != DecorType.None && IsPositionValid(pos.x, pos.y, map) &&
+                    !HasNearbyDecor(pos.x, pos.y, MIN_DISTANCE_BETWEEN_OBJECTS))
                 {
                     PlaceDecorWithSize(pos.x, pos.y, decor, map);
                     placed++;
@@ -101,28 +95,25 @@
 
         private void PlaceDecorWithSize(int x, int y, DecorType decor, TileType[,] map)
         {
-            if (CanPlaceDecor(x, y, (1, 1), map))
+            if (!CanPlaceDecor(x, y, (1, 1), map)) return;
+
+            for (var dx = 0; dx < 1; dx++)
+            for (var dy = 0; dy < 1; dy++)
             {
-                for (var dx = 0; dx < 1; dx++)
-                    for (var dy = 0; dy < 1; dy++)
-                    {
-                        DecorLayer[x + dx, y + dy] = decor;
-                    }
+                DecorLayer[x + dx, y + dy] = decor;
             }
         }
 
         private bool CanPlaceDecor(int x, int y, (int W, int H) size, TileType[,] map)
         {
             for (var dx = 0; dx < size.W; dx++)
+            for (var dy = 0; dy < size.H; dy++)
             {
-                for (var dy = 0; dy < size.H; dy++)
-                {
-                    if (x + dx >= map.GetLength(0) ||
-                        y + dy >= map.GetLength(1) ||
-                        map[x + dx, y + dy] != TileType.Floor ||
-                        DecorLayer[x + dx, y + dy] != DecorType.None)
-                        return false;
-                }
+                if (x + dx >= map.GetLength(0) ||
+                    y + dy >= map.GetLength(1) ||
+                    map[x + dx, y + dy] != TileType.Floor ||
+                    DecorLayer[x + dx, y + dy] != DecorType.None)
+                    return false;
             }
 
             return true;
@@ -130,15 +121,12 @@
 
         private void GenerateCorridorDecor(TileType[,] map, List<Room> rooms)
         {
-            foreach (var room in rooms)
+            foreach (var room in rooms.Where(room => _random.NextDouble() < 0.25))
             {
-                if (_random.NextDouble() < 0.25)
+                var (x, y) = FindValidPosition(room, map, 0);
+                if (x > 0 && y > 0)
                 {
-                    var (x, y) = FindValidPosition(room, map, 0);
-                    if (x > 0 && y > 0)
-                    {
-                        DecorLayer[x, y] = DecorType.Barrel;
-                    }
+                    DecorLayer[x, y] = DecorType.Barrel;
                 }
             }
         }
@@ -163,17 +151,15 @@
         private bool HasNearbyDecor(int x, int y, int radius)
         {
             for (var dx = -radius; dx <= radius; dx++)
+            for (var dy = -radius; dy <= radius; dy++)
             {
-                for (var dy = -radius; dy <= radius; dy++)
+                var nx = x + dx;
+                var ny = y + dy;
+                if (nx >= 0 && nx < DecorLayer.GetLength(0) &&
+                    ny >= 0 && ny < DecorLayer.GetLength(1) &&
+                    DecorLayer[nx, ny] != DecorType.None)
                 {
-                    var nx = x + dx;
-                    var ny = y + dy;
-                    if (nx >= 0 && nx < DecorLayer.GetLength(0) &&
-                        ny >= 0 && ny < DecorLayer.GetLength(1) &&
-                        DecorLayer[nx, ny] != DecorType.None)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -185,22 +171,24 @@
             return map[x, y] == TileType.Floor;
         }
 
-        // Новый метод: вычисление плотности позиции (количество свободных соседей)
         private int CalculatePositionDensity(int x, int y, TileType[,] map)
         {
-            int density = 0;
+            var density = 0;
             int[] dx = { -1, 0, 1, 0 };
             int[] dy = { 0, -1, 0, 1 };
-            for (int dir = 0; dir < 4; dir++)
+            for (var dir = 0; dir < 4; dir++)
             {
-                int nx = x + dx[dir];
-                int ny = y + dy[dir];
-                if (nx >= 0 && nx < map.GetLength(0) && ny >= 0 && ny < map.GetLength(1))
+                var nx = x + dx[dir];
+                var ny = y + dy[dir];
+                if (nx >= 0 && nx < map.GetLength(0) &&
+                    ny >= 0 && ny < map.GetLength(1))
                 {
-                    if (map[nx, ny] == TileType.Floor && DecorLayer[nx, ny] == DecorType.None)
+                    if (map[nx, ny] == TileType.Floor &&
+                        DecorLayer[nx, ny] == DecorType.None)
                         density++;
                 }
             }
+
             return density;
         }
     }

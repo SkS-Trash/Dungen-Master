@@ -10,10 +10,11 @@
         {
             EnemyLayer = new EnemyType[width, height];
             for (var x = 0; x < width; x++)
-                for (var y = 0; y < height; y++)
-                {
-                    EnemyLayer[x, y] = EnemyType.None;
-                }
+            for (var y = 0; y < height; y++)
+            {
+                EnemyLayer[x, y] = EnemyType.None;
+            }
+
             _random = random;
         }
 
