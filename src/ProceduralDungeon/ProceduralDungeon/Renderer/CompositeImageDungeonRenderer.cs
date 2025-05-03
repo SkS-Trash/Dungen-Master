@@ -195,7 +195,7 @@ namespace ProceduralDungeon
             var cy = y * _tileSize + _tileSize / 2;
             var r = _tileSize / 3;
             var points = new PointF[10];
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var angle = Math.PI / 5 * i;
                 var len = (i % 2 == 0) ? r : r / 2;
@@ -237,8 +237,8 @@ namespace ProceduralDungeon
 
         private void DrawTriangle(Graphics g, int x, int y, Color color, bool inverted = false)
         {
-            int top = inverted ? (y * _tileSize + _tileSize) : (y * _tileSize);
-            int bottom = inverted ? (y * _tileSize) : (y * _tileSize + _tileSize);
+            var top = inverted ? (y * _tileSize + _tileSize) : (y * _tileSize);
+            var bottom = inverted ? (y * _tileSize) : (y * _tileSize + _tileSize);
             var points = new[]
             {
                 new PointF(x * _tileSize + _tileSize / 2, top),

@@ -71,8 +71,28 @@
             var placer = new RoomPlacerPoissonDisc(_mapWidth, _mapHeight, _random);
             var candidateRooms = placer.GenerateRooms(roomCount, roomMinSize, roomMaxSize);
             if (candidateRooms.Count < roomCount)
+            {
+                var greedyPlacer = new RoomPlacerGreedy(_mapWidth, _mapHeight, _random);
+                candidateRooms = greedyPlacer.GenerateRooms(roomCount, roomMinSize, roomMaxSize);
+            }
+
+            var fallbackRoomCount = roomCount;
+            var minRoomCount = Math.Max(3, roomCount / 2);
+            while (candidateRooms.Count < fallbackRoomCount && fallbackRoomCount > minRoomCount)
+            {
+                fallbackRoomCount--;
+                var placer2 = new RoomPlacerPoissonDisc(_mapWidth, _mapHeight, _random);
+                candidateRooms = placer2.GenerateRooms(fallbackRoomCount, roomMinSize, roomMaxSize);
+                if (candidateRooms.Count < fallbackRoomCount)
+                {
+                    var greedyPlacer2 = new RoomPlacerGreedy(_mapWidth, _mapHeight, _random);
+                    candidateRooms = greedyPlacer2.GenerateRooms(fallbackRoomCount, roomMinSize, roomMaxSize);
+                }
+            }
+
+            if (candidateRooms.Count < minRoomCount)
                 throw new InvalidOperationException(
-                    $"Не удалось разместить все комнаты: {candidateRooms.Count} из {roomCount}. Попробуйте уменьшить roomCount или размеры комнат.");
+                    $"Не удалось разместить даже fallback-комнаты: {candidateRooms.Count} из {roomCount}. Попробуйте уменьшить roomCount или размеры комнат.");
 
             foreach (var room in candidateRooms)
                 CreateRoom(room);
