@@ -1,10 +1,10 @@
-﻿namespace ProceduralDungeon.Data
+﻿namespace ProceduralDungeon.Data.Types
 {
     public enum RoomType
     {
-        Default,
-        Treatment,
-        Trap,
-        Hard,
+        Default, // Обычная комната
+        Treatment, // Лечебная комната
+        Trap, // Комната с ловушкой
+        Hard, // Сложная комната
     }
 }

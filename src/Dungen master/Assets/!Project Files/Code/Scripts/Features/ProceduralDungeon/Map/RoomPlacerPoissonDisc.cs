@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Types;
 
 namespace ProceduralDungeon
 {

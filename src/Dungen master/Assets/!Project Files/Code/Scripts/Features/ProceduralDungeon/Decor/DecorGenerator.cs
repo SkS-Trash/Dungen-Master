@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProceduralDungeon.Data;
-using ProceduralDungeon.Data.Configs;
+using ProceduralDungeon.Data.Configs.Decor;
+using ProceduralDungeon.Data.Types;
 
 namespace ProceduralDungeon
 {
@@ -18,7 +18,7 @@ namespace ProceduralDungeon
         private readonly DecorRandomizer _randomizer;
         private readonly DecorDistanceChecker _distanceChecker;
 
-        public DecorGenerator(DecorConfig config, int width, int height, Random random)
+        public DecorGenerator(DecorGeneratorConfig config, int width, int height, Random random)
         {
             DecorLayer = new DecorType[width, height];
             _random = random;

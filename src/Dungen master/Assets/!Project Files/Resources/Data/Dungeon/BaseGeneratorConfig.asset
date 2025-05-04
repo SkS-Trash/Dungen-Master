@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf93dbabc9df41a5b652453739104fad, type: 3}
+  m_Name: BaseGeneratorConfig
+  m_EditorClassIdentifier: 
+  <MapGenerator>k__BackingField:
+    <Width>k__BackingField: 50
+    <Height>k__BackingField: 50
+    <RoomCount>k__BackingField: 10
+    <RoomMinSize>k__BackingField: 3
+    <RoomMaxSize>k__BackingField: 7
+    <GenerationMode>k__BackingField: 0
+  <Decor>k__BackingField:
+    <SpecialObjectChance>k__BackingField: 0.1
+    <RoomProfiles>k__BackingField:
+      m_keys: 00000000010000000200000003000000
+      m_values:
+      - <BaseDensity>k__BackingField: 1
+        <SpecialObjects>k__BackingField: 
+        <DecorWeights>k__BackingField:
+          m_keys: 
+          m_values: 
+        <DecorConfigs>k__BackingField:
+          m_keys: 
+          m_values: []
+      - <BaseDensity>k__BackingField: 1
+        <SpecialObjects>k__BackingField: 
+        <DecorWeights>k__BackingField:
+          m_keys: 
+          m_values: 
+        <DecorConfigs>k__BackingField:
+          m_keys: 
+          m_values: []
+      - <BaseDensity>k__BackingField: 1
+        <SpecialObjects>k__BackingField: 
+        <DecorWeights>k__BackingField:
+          m_keys: 
+          m_values: 
+        <DecorConfigs>k__BackingField:
+          m_keys: 
+          m_values: []
+      - <BaseDensity>k__BackingField: 1
+        <SpecialObjects>k__BackingField: 
+        <DecorWeights>k__BackingField:
+          m_keys: 
+          m_values: 
+        <DecorConfigs>k__BackingField:
+          m_keys: 
+          m_values: []
+  <Enemy>k__BackingField:
+    <RoomProfiles>k__BackingField:
+      m_keys: 000000000200000003000000
+      m_values:
+      - <MinCount>k__BackingField: 1
+        <MaxCount>k__BackingField: 5
+        EnemyWeights:
+          m_keys: 000000000100000002000000030000000400000005000000
+          m_values: 000000000000000000000000000000000000000000000000
+      - <MinCount>k__BackingField: 1
+        <MaxCount>k__BackingField: 5
+        EnemyWeights:
+          m_keys: 000000000100000002000000030000000400000005000000
+          m_values: 000000000000000000000000000000000000000000000000
+      - <MinCount>k__BackingField: 1
+        <MaxCount>k__BackingField: 1
+        EnemyWeights:
+          m_keys: 000000000100000002000000030000000400000005000000
+          m_values: 000000000000000000000000000000000000000000000000

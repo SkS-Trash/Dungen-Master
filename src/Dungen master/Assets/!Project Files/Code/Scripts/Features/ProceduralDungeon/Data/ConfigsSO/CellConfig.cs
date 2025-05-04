@@ -1,16 +1,13 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace ProceduralDungeon
+namespace ProceduralDungeon.Data
 {
-    [System.Serializable]
-    public class CellConfig<TTile> where TTile : System.Enum
+    [Serializable]
+    public class CellConfig<TTile> where TTile : Enum
     {
-        public CellConfig()
-        {
-        }
-
         public CellConfig(TTile type)
         {
             Type = type;
@@ -21,6 +18,6 @@ namespace ProceduralDungeon
 
         [field: SerializeField, HideLabel]
         [field: ListDrawerSettings(ShowFoldout = false, ShowPaging = false, ShowItemCount = false)]
-        public AssetReference[] Prefabs { get; private set; } = new AssetReference[0];
+        public AssetReference[] Prefabs { get; private set; } = Array.Empty<AssetReference>();
     }
 }

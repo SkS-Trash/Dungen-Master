@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Factories.GameObject;
-using ProceduralDungeon;
 using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Types;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
@@ -22,7 +22,6 @@ namespace Core.Project.Dungeon
             _gameObjectFactory = gameObjectFactory;
             _containerProvider = containerProvider;
         }
-
 
         public async UniTask OnEnterAsync(Unit _)
         {

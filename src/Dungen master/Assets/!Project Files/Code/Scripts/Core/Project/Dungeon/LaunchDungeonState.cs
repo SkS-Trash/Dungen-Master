@@ -71,11 +71,11 @@ namespace Core.Project.Dungeon
             }
 
             var container = _gameContainer.Container;
-            container.Width = levelProgress.dungeon.width;
-            container.Height = levelProgress.dungeon.height;
-            container.RoomCount = levelProgress.dungeon.roomCount;
-            container.RoomMinSize = levelProgress.dungeon.roomMinSize;
-            container.RoomMaxSize = levelProgress.dungeon.roomMaxSize;
+            // container.Width = levelProgress.dungeon.width;
+            // container.Height = levelProgress.dungeon.height;
+            // container.RoomCount = levelProgress.dungeon.roomCount;
+            // container.RoomMinSize = levelProgress.dungeon.roomMinSize;
+            // container.RoomMaxSize = levelProgress.dungeon.roomMaxSize;
             container.Seed = levelProgress.dungeon.seed;
             container.LevelStyleConfig = levelStyleConfigs[levelProgress.dungeon.styleIndex];
         }

@@ -1,4 +1,4 @@
-﻿namespace ProceduralDungeon.Data
+﻿namespace ProceduralDungeon.Data.Types
 {
     public enum DecorType
     {

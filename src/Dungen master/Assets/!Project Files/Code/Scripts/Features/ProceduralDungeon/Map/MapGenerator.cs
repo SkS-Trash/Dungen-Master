@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProceduralDungeon.Data;
-using ProceduralDungeon.Data.Configs;
+using ProceduralDungeon.Data.Configs.Map;
+using ProceduralDungeon.Data.Types;
 
 namespace ProceduralDungeon
 {
@@ -22,20 +22,18 @@ namespace ProceduralDungeon
         private readonly int _mapHeight;
         private readonly Random _random;
         private readonly MapGenerationMode _generationMode;
-        private readonly MapGeneratorConfig _config;
+        private readonly MapGeneratorConfig _generatorConfig;
 
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(MapGeneratorConfig config, Random random)
+        public MapGenerator(MapGeneratorConfig generatorConfig, Random random)
         {
-            _config = config;
-            _mapWidth = config.Width;
-            _mapHeight = config.Height;
+            _generatorConfig = generatorConfig;
+            _mapWidth = generatorConfig.Width;
+            _mapHeight = generatorConfig.Height;
             _random = random;
-            _generationMode = Enum.TryParse<MapGenerationMode>(config.GenerationMode, out var mode)
-                ? mode
-                : MapGenerationMode.Rectangular;
+            _generationMode = generatorConfig.GenerationMode;
             Map = new TileType[_mapWidth, _mapHeight];
         }
 
@@ -48,10 +46,10 @@ namespace ProceduralDungeon
                     MapGenerationModeCavern();
                     break;
                 case MapGenerationMode.BSP:
-                    MapGenerationModeBSP(_config.RoomMinSize, _config.RoomMaxSize);
+                    MapGenerationModeBSP(_generatorConfig.RoomMinSize, _generatorConfig.RoomMaxSize);
                     break;
                 case MapGenerationMode.Rectangular:
-                    MapGenerationModeRectangular(_config.RoomCount, _config.RoomMinSize, _config.RoomMaxSize);
+                    MapGenerationModeRectangular(_generatorConfig.RoomCount, _generatorConfig.RoomMinSize, _generatorConfig.RoomMaxSize);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_generationMode),

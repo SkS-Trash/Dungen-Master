@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Types;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace ProceduralDungeon
+namespace ProceduralDungeon.Data
 {
-    [CreateAssetMenu(fileName = "LevelStyleConfig", menuName = "Data/LevelStyleConfig")]
+    [CreateAssetMenu(fileName = "LevelStyleConfig", menuName = "Data/Dungeon/LevelStyleConfig")]
     public class LevelStyleConfig : ScriptableObject
     {
         [Header("Tile Configs"), SerializeField]

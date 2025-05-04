@@ -1,5 +1,5 @@
 ﻿using GameEventObserver;
-using ProceduralDungeon;
+using ProceduralDungeon.Data;
 using Progress;
 
 namespace Providers.Data

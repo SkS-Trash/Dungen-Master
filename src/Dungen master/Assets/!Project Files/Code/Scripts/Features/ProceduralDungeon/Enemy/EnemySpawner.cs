@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProceduralDungeon.Data;
-using ProceduralDungeon.Data.Configs;
+using ProceduralDungeon.Data.Configs.Enemy;
+using ProceduralDungeon.Data.Types;
 
 namespace ProceduralDungeon
 {
@@ -10,9 +10,9 @@ namespace ProceduralDungeon
         public EnemyType[,] EnemyLayer { get; }
 
         private readonly Random _random;
-        private readonly EnemyConfig _config;
+        private readonly EnemyGeneratorConfig _config;
 
-        public EnemySpawner(EnemyConfig config, int width, int height, Random random)
+        public EnemySpawner(EnemyGeneratorConfig config, int width, int height, Random random)
         {
             _config = config;
             EnemyLayer = new EnemyType[width, height];

@@ -1,4 +1,4 @@
-﻿using ProceduralDungeon.Data;
+﻿using ProceduralDungeon.Data.Types;
 
 namespace ProceduralDungeon
 {
