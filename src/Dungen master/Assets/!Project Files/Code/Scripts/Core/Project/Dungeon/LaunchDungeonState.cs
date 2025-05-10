@@ -58,25 +58,23 @@ namespace Core.Project.Dungeon
 
             if (levelProgress.currentLevelIndex != gameProgress.currentLevelIndex)
             {
-                levelProgress.dungeon.width = 50;
-                levelProgress.dungeon.height = 50;
-                levelProgress.dungeon.roomCount = 10;
-                levelProgress.dungeon.roomMinSize = 5;
-                levelProgress.dungeon.roomMaxSize = 10;
-
+                var generatorConfig = _staticData.GetBaseGeneratorConfig();
+                
                 levelProgress.dungeon.seed = Random.Range(0, 10000);
+                levelProgress.dungeon.mapConfig = generatorConfig.Tile;
+                levelProgress.dungeon.decorConfig = generatorConfig.Decor;
+                levelProgress.dungeon.enemyConfig = generatorConfig.Enemy;
 
                 var styleIndex = Random.Range(0, levelStyleConfigs.Length);
                 levelProgress.dungeon.styleIndex = styleIndex;
             }
 
             var container = _gameContainer.Container;
-            container.Width = levelProgress.dungeon.width;
-            container.Height = levelProgress.dungeon.height;
-            container.RoomCount = levelProgress.dungeon.roomCount;
-            container.RoomMinSize = levelProgress.dungeon.roomMinSize;
-            container.RoomMaxSize = levelProgress.dungeon.roomMaxSize;
+            container.MapGeneratorConfig = levelProgress.dungeon.mapConfig;
+            container.DecorConfig = levelProgress.dungeon.decorConfig;
+            container.EnemyConfig = levelProgress.dungeon.enemyConfig;
             container.Seed = levelProgress.dungeon.seed;
+            
             container.LevelStyleConfig = levelStyleConfigs[levelProgress.dungeon.styleIndex];
         }
 

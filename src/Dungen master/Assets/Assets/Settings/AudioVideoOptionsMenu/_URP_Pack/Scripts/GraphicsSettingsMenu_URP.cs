@@ -59,11 +59,11 @@ namespace Settings.AudioVideoOptionsMenu
         else saveFileDataPath = Application.persistentDataPath + "/QualitySettings.ini";
 
         //get available resolutions and filter them.
-        Resolution[] availableResolutionsAll = Screen.resolutions;//checking the available resolution options.
+        var availableResolutionsAll = Screen.resolutions;//checking the available resolution options.
 
         //we get every resolution with every available refreshrate, we only need the resolution ones.
         float resX = 0, resY= 0;
-        for (int i = 0; i < availableResolutionsAll.Length; i++)
+        for (var i = 0; i < availableResolutionsAll.Length; i++)
         {
             if (resX != availableResolutionsAll[i].width && resY != availableResolutionsAll[i].height)
             {
@@ -254,7 +254,7 @@ namespace Settings.AudioVideoOptionsMenu
 
         CurrentSettings.RenderScale = _slider.value/ 10;
 
-        UniversalRenderPipelineAsset URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+        var URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
         URPAsset.renderScale = CurrentSettings.RenderScale;
         URPAsset = null;
 
@@ -319,7 +319,7 @@ namespace Settings.AudioVideoOptionsMenu
 
         CurrentSettings.AntiAliaslevel = _antiAliaslevel;
 
-        UniversalRenderPipelineAsset URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+        var URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
         URPAsset.msaaSampleCount = CurrentSettings.AntiAliaslevel;
 
         if (CurrentSettings.AntiAliaslevel != 0)
@@ -423,7 +423,7 @@ namespace Settings.AudioVideoOptionsMenu
         {
             if (PlayerPrefs.HasKey("Qualitylevel"))//to check if there are playerprefs saved.
             {
-                MenuVariablesSimple_URP newMenuVars = new MenuVariablesSimple_URP();
+                var newMenuVars = new MenuVariablesSimple_URP();
 
                 newMenuVars.Qualitylevel = PlayerPrefs.GetInt("Qualitylevel");
                 newMenuVars.ResolutionX = PlayerPrefs.GetInt("ResolutionX");
@@ -450,7 +450,7 @@ namespace Settings.AudioVideoOptionsMenu
         {
             if (File.Exists(saveFileDataPath))//to check if the file exists.
             {
-                MenuVariablesSimple_URP newMenuVars = JsonUtility.FromJson<MenuVariablesSimple_URP>(File.ReadAllText(saveFileDataPath));
+                var newMenuVars = JsonUtility.FromJson<MenuVariablesSimple_URP>(File.ReadAllText(saveFileDataPath));
 
                 ApplySettings(newMenuVars);
 
@@ -506,7 +506,7 @@ namespace Settings.AudioVideoOptionsMenu
             resolutionText.SetText("{0}x{1}", _varsLoaded.ResolutionX, _varsLoaded.ResolutionY);
 
             //finding the applied resolution index NR
-            for (int i = 0; i < availableResolutions.Count; i++)
+            for (var i = 0; i < availableResolutions.Count; i++)
             {
                 if (availableResolutions[i].width == _varsLoaded.ResolutionX && availableResolutions[i].height == _varsLoaded.ResolutionY)
                 {
@@ -540,7 +540,7 @@ namespace Settings.AudioVideoOptionsMenu
 
         if (antiAliasingUsed == SettingsUsedState.used)
         {
-            UniversalRenderPipelineAsset URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+            var URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
             URPAsset.msaaSampleCount = _varsLoaded.AntiAliaslevel;           
             URPAsset = null;
 
@@ -551,7 +551,7 @@ namespace Settings.AudioVideoOptionsMenu
 
         if (renderScaleUsed == SettingsUsedState.used)
         {
-            UniversalRenderPipelineAsset URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+            var URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
             URPAsset.renderScale = _varsLoaded.RenderScale;
             URPAsset = null;
 
@@ -673,7 +673,7 @@ namespace Settings.AudioVideoOptionsMenu
         else if (saveFormat == SaveFormat.iniFile)
         {
             #region Setting the correct values for settings the are not used but will show on the ini file .
-            MenuVariablesSimple_URP menuVarsToSave = new MenuVariablesSimple_URP();
+            var menuVarsToSave = new MenuVariablesSimple_URP();
 
             if (qualityLevelUsed == SettingsUsedState.used)
                 menuVarsToSave.Qualitylevel = CurrentSettings.Qualitylevel;
@@ -694,7 +694,7 @@ namespace Settings.AudioVideoOptionsMenu
                 menuVarsToSave.RenderScale = CurrentSettings.RenderScale;
             else
             {
-                UniversalRenderPipelineAsset URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+                var URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
                 menuVarsToSave.RenderScale = URPAsset.renderScale;
                 URPAsset = null;
             }
@@ -728,7 +728,7 @@ namespace Settings.AudioVideoOptionsMenu
                 menuVarsToSave.AntiAliaslevel = CurrentSettings.AntiAliaslevel;
             else
             {
-                UniversalRenderPipelineAsset URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+                var URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
                 menuVarsToSave.AntiAliaslevel = URPAsset.msaaSampleCount;
                 URPAsset = null;
             }

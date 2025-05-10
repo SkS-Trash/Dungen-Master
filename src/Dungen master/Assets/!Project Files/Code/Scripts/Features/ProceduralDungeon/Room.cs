@@ -1,4 +1,6 @@
-﻿namespace ProceduralDungeon
+﻿using ProceduralDungeon.Data.Types;
+
+namespace ProceduralDungeon
 {
     public class Room
     {

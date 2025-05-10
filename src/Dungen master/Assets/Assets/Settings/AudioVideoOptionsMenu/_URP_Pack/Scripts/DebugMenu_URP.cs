@@ -44,7 +44,7 @@ namespace Settings.AudioVideoOptionsMenu
             while (true)
             {
                 debugText.text = "Debug\n";
-                UniversalRenderPipelineAsset URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+                var URPAsset = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
 
                 debugText.text += QualitySettings.names[QualitySettings.GetQualityLevel()] + " : Quality\n";
                 debugText.text += Screen.currentResolution + " : Resolution\n";
@@ -56,13 +56,13 @@ namespace Settings.AudioVideoOptionsMenu
                 debugText.text += QualitySettings.anisotropicFiltering + " : AnisoFilteringMode\n";
                 //debugText.text += graphicsMenu.CurrentSettings.AnisotropicLevel + " : AnisoLevel\n";
 
-                AudioConfiguration config = AudioSettings.GetConfiguration();
+                var config = AudioSettings.GetConfiguration();
 
-                masterMixer.GetFloat("mainVolume", out float val);
+                masterMixer.GetFloat("mainVolume", out var val);
                 debugText.text += val + " : Vol Main\n";
-                masterMixer.GetFloat("fxVolume", out float val2);
+                masterMixer.GetFloat("fxVolume", out var val2);
                 debugText.text += val2 + " : Vol FXs\n";
-                masterMixer.GetFloat("musicVolume", out float val3);
+                masterMixer.GetFloat("musicVolume", out var val3);
                 debugText.text += val3 + " : Vol Music\n";
                 debugText.text += config.speakerMode + " : SpeakerMode\n";
 

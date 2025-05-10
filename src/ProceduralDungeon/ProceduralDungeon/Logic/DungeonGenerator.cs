@@ -1,4 +1,6 @@
-﻿namespace ProceduralDungeon
+﻿using ProceduralDungeon.Data;
+
+namespace ProceduralDungeon
 {
     public class DungeonGenerator
     {
@@ -9,30 +11,27 @@
         private readonly IMapGenerator _mapGenerator;
         private readonly IDecorGenerator _decorGenerator;
         private readonly IEnemySpawner _enemySpawner;
-        private readonly Random _random;
 
         public DungeonGenerator(
             IMapGenerator mapGenerator,
             IDecorGenerator decorGenerator,
-            IEnemySpawner enemySpawner,
-            int? seed = null
+            IEnemySpawner enemySpawner
         )
         {
-            _random = seed.HasValue ? new Random(seed.Value) : new Random();
             _mapGenerator = mapGenerator;
             _decorGenerator = decorGenerator;
             _enemySpawner = enemySpawner;
         }
 
-        public void GenerateDungeon(int roomCount, int roomMinSize, int roomMaxSize)
+        public void GenerateDungeon()
         {
-            _mapGenerator.GenerateMap(roomCount, roomMinSize, roomMaxSize);
+            _mapGenerator.GenerateMap();
             MapLayer = _mapGenerator.Map;
 
             _decorGenerator.GenerateDecor(MapLayer, _mapGenerator.Rooms);
             DecorLayer = _decorGenerator.DecorLayer;
 
-            _enemySpawner.SpawnEnemies(MapLayer, _mapGenerator.Rooms);
+            _enemySpawner.SpawnEnemies(MapLayer, DecorLayer, _mapGenerator.Rooms);
             EnemyLayer = _enemySpawner.EnemyLayer;
         }
     }

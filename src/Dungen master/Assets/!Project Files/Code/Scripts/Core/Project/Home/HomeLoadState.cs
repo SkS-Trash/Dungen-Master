@@ -2,7 +2,6 @@
 using Factories.GameEvent;
 using GameEventObserver;
 using Services.ProjectManager;
-using Services.Window;
 using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Home

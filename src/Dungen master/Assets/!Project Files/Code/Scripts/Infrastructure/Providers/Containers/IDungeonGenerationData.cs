@@ -1,4 +1,8 @@
-﻿using ProceduralDungeon;
+﻿using ProceduralDungeon.Data.Configs;
+using ProceduralDungeon.Data.Configs.Decor;
+using ProceduralDungeon.Data.Configs.Enemy;
+using ProceduralDungeon.Data.Configs.Map;
+using ProceduralDungeon.Data.Types;
 
 namespace Providers.Containers
 {
@@ -7,13 +11,10 @@ namespace Providers.Containers
         LevelStyleConfig LevelStyleConfig { get; set; }
 
         int Seed { get; set; }
-        
-        int Width { get; set; }
-        int Height { get; set; }
 
-        int RoomCount { get; set; }
-        int RoomMinSize { get; set; }
-        int RoomMaxSize { get; set; }
+        TileGeneratorConfig MapGeneratorConfig { get; set; }
+        DecorGeneratorConfig DecorConfig { get; set; }
+        EnemyGeneratorConfig EnemyConfig { get; set; }
 
         TileType[,] MapLayer { get; set; }
         DecorType[,] DecorLayer { get; set; }

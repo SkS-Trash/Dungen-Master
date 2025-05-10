@@ -1,5 +1,5 @@
 ﻿using GameEventObserver;
-using ProceduralDungeon;
+using ProceduralDungeon.Data.Configs;
 using Progress;
 
 namespace Providers.Data
@@ -12,5 +12,6 @@ namespace Providers.Data
         ProgressGameDataHolder GetProgressGameDataHolder();
         LevelStyleConfig[] GetLevelStyleConfigs();
         GameEventObserverCollection GetGameEventObserverCollection();
+        BaseGeneratorConfig GetBaseGeneratorConfig();
     }
 }

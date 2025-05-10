@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Factories.GameObject;
-using ProceduralDungeon;
+using ProceduralDungeon.Data.Configs;
+using ProceduralDungeon.Data.Types;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
@@ -21,7 +22,6 @@ namespace Core.Project.Dungeon
             _gameObjectFactory = gameObjectFactory;
             _containerProvider = containerProvider;
         }
-
 
         public async UniTask OnEnterAsync(Unit _)
         {
@@ -57,11 +57,11 @@ namespace Core.Project.Dungeon
         private async UniTask InstantCell(TileType tileType, LevelStyleConfig dataConfig, int x, int y,
             Transform parent)
         {
-            var prefabs = dataConfig.GetTileConfig(tileType).Prefabs;
+            var prefabs = dataConfig.GetTileConfig(tileType).Configs;
 
             if (prefabs == null || prefabs.Length == 0) return;
 
-            var assetReference = prefabs[Random.Range(0, prefabs.Length)];
+            var assetReference = prefabs[Random.Range(0, prefabs.Length)].Reference;
 
             if (assetReference == null) return;
 

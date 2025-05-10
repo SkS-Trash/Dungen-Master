@@ -1,149 +1,208 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProceduralDungeon.Data.Configs.Map;
+using ProceduralDungeon.Data.Types;
 
-namespace ProceduralDungeon.Map
+namespace ProceduralDungeon
 {
+    public enum MapGenerationMode
+    {
+        Rectangular,
+        Cavern,
+        BSP,
+    }
+
     public class MapGenerator : IMapGenerator
     {
-        public TileType[,] Map { get; }
+        public TileType[,] Map { get; private set; }
         public List<Room> Rooms { get; } = new();
 
-        private readonly Random _random;
         private readonly int _mapWidth;
         private readonly int _mapHeight;
+        private readonly Random _random;
+        private readonly MapGenerationMode _generationMode;
+        private readonly TileGeneratorConfig _generatorConfig;
 
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(int width, int height, int seed)
+        public MapGenerator(TileGeneratorConfig generatorConfig, Random random)
         {
-            _mapWidth = width;
-            _mapHeight = height;
-
+            _generatorConfig = generatorConfig;
+            _mapWidth = generatorConfig.Width;
+            _mapHeight = generatorConfig.Height;
+            _random = random;
+            _generationMode = generatorConfig.GenerationMode;
             Map = new TileType[_mapWidth, _mapHeight];
-
-            for (var x = 0; x < _mapWidth; x++)
-            for (var y = 0; y < _mapHeight; y++)
-                Map[x, y] = TileType.Wall;
-
-            _random = new Random(seed);
         }
 
-        public void GenerateMap(int roomCount, int roomMinSize, int roomMaxSize)
+        public void GenerateMap()
         {
-            for (var i = 0; i < roomCount; i++)
+            Rooms.Clear();
+            switch (_generationMode)
             {
-                var roomWidth = _random.Next(roomMinSize, roomMaxSize + 1);
-                var roomHeight = _random.Next(roomMinSize, roomMaxSize + 1);
-                var roomX = _random.Next(1, _mapWidth - roomWidth - 1);
-                var roomY = _random.Next(1, _mapHeight - roomHeight - 1);
-
-                var roll = _random.NextDouble();
-                var roomType = roll switch
-                {
-                    < 0.05 => RoomType.Hard,
-                    < 0.1 => RoomType.Treatment,
-                    < 0.25 => RoomType.Trap,
-                    _ => RoomType.Normal
-                };
-
-                var newRoom = new Room(roomX, roomY, roomWidth, roomHeight, roomType);
-
-                if (Rooms.Any(otherRoom => newRoom.Intersects(otherRoom)))
-                    continue;
-
-                CreateRoom(newRoom);
-
-                if (Rooms.Count > 0)
-                {
-                    var prevRoom = Rooms[^1];
-                    CreateCorridor(prevRoom, newRoom);
-                }
-
-                Rooms.Add(newRoom);
-            }
-
-            if (Rooms.Count > 0)
-            {
-                PlaceStartAndExit();
-            }
-            else throw new InvalidOperationException("Комнаты не сгенерированы.");
-
-            CleanDungeon();
-        }
-
-        private void CleanDungeon()
-        {
-            for (var x = 0; x < _mapWidth; x++)
-            for (var y = 0; y < _mapHeight; y++)
-            {
-                if (Map[x, y] != TileType.Wall) continue;
-
-                var keepWall = false;
-                for (var dx = -1; dx <= 1 && !keepWall; dx++)
-                for (var dy = -1; dy <= 1; dy++)
-                {
-                    if (dx == 0 && dy == 0) continue;
-
-                    int nx = x + dx, ny = y + dy;
-
-                    if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
-
-                    var neighbor = Map[nx, ny];
-
-                    if (neighbor is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
-
-                    keepWall = true;
+                case MapGenerationMode.Cavern:
+                    MapGenerationModeCavern();
                     break;
-                }
-
-                if (!keepWall)
-                    Map[x, y] = TileType.Empty;
+                case MapGenerationMode.BSP:
+                    MapGenerationModeBSP(_generatorConfig.RoomMinSize, _generatorConfig.RoomMaxSize);
+                    break;
+                case MapGenerationMode.Rectangular:
+                    MapGenerationModeRectangular(_generatorConfig.RoomCount, _generatorConfig.RoomMinSize,
+                        _generatorConfig.RoomMaxSize);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(_generationMode),
+                        $"Неизвестный режим генерации карты: {_generationMode}");
             }
         }
 
-        private void PlaceStartAndExit()
+        private void MapGenerationModeCavern()
         {
-            Room? startRoom = null;
-            Room? exitRoom = null;
-            float maxDistance = 0;
+            var cavernGen = new CavernGenerator(_mapWidth, _mapHeight, _random);
+            Map = cavernGen.GenerateCavern();
+            var floorPoints = new List<Point>();
+            for (var x = 0; x < _mapWidth; x++)
+            for (var y = 0; y < _mapHeight; y++)
+                if (Map[x, y] == TileType.Floor)
+                    floorPoints.Add(new Point(x, y));
 
-            foreach (var roomA in Rooms)
-            foreach (var roomB in Rooms)
+            if (floorPoints.Count >= 2)
             {
-                if (roomA == roomB) continue;
-
-                var distance = CalculateDistance(roomA, roomB);
-
-                if (distance > maxDistance)
+                _startPoint = floorPoints[_random.Next(floorPoints.Count)];
+                do
                 {
-                    maxDistance = distance;
-                    startRoom = roomA;
-                    exitRoom = roomB;
+                    _exitPoint = floorPoints[_random.Next(floorPoints.Count)];
+                } while (_exitPoint.Equals(_startPoint));
+
+                Map[_startPoint.X, _startPoint.Y] = TileType.Start;
+                Map[_exitPoint.X, _exitPoint.Y] = TileType.Exit;
+            }
+
+            Rooms.Clear();
+            var visited = new bool[_mapWidth, _mapHeight];
+            int[] dx = { 0, 1, 0, -1 };
+            int[] dy = { -1, 0, 1, 0 };
+            for (var x = 0; x < _mapWidth; x++)
+            for (var y = 0; y < _mapHeight; y++)
+            {
+                if (visited[x, y]) continue;
+                if (Map[x, y] is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+                var queue = new Queue<Point>();
+                var component = new List<Point>();
+                queue.Enqueue(new Point(x, y));
+                visited[x, y] = true;
+                while (queue.Count > 0)
+                {
+                    var p = queue.Dequeue();
+                    component.Add(p);
+                    for (var dir = 0; dir < 4; dir++)
+                    {
+                        int nx = p.X + dx[dir], ny = p.Y + dy[dir];
+                        if (nx < 0 || ny < 0 || nx >= _mapWidth || ny >= _mapHeight) continue;
+                        if (visited[nx, ny]) continue;
+                        if (Map[nx, ny] is not (TileType.Floor or TileType.Start or TileType.Exit)) continue;
+                        visited[nx, ny] = true;
+                        queue.Enqueue(new Point(nx, ny));
+                    }
+                }
+
+                var minX = component.Min(p => p.X);
+                var minY = component.Min(p => p.Y);
+                var maxX = component.Max(p => p.X);
+                var maxY = component.Max(p => p.Y);
+                var width = maxX - minX + 1;
+                var height = maxY - minY + 1;
+                Rooms.Add(new Room(minX, minY, width, height, RoomType.Default));
+            }
+
+            Cleaning();
+            EditingWalls();
+        }
+
+        private void MapGenerationModeBSP(int roomMinSize, int roomMaxSize)
+        {
+            var bspGen = new BspRoomGenerator(_mapWidth, _mapHeight, _random, roomMinSize, roomMaxSize);
+            var bspRooms = bspGen.GenerateRooms();
+            foreach (var room in bspRooms)
+                CreateRoom(room);
+            Rooms.AddRange(bspRooms);
+            BuildingGraphRoomsAndMST(out var extraEdges, out var mstEdges);
+            BuildingCorridors(mstEdges, extraEdges);
+            PlaceStartAndExit();
+            Cleaning();
+            EditingWalls();
+        }
+
+        private void MapGenerationModeRectangular(int roomCount, int roomMinSize, int roomMaxSize)
+        {
+            RoomPlacement(roomCount, roomMinSize, roomMaxSize);
+            BuildingGraphRoomsAndMST(out var extraEdges, out var mstEdges);
+            BuildingCorridors(mstEdges, extraEdges);
+            PlaceStartAndExit();
+            Cleaning();
+            EditingWalls();
+        }
+
+        private void EditingWalls()
+        {
+            var wallFixer = new WallFixer(Map, _mapWidth, _mapHeight);
+            wallFixer.CleanDungeon();
+        }
+
+        private void Cleaning()
+        {
+            var cleaner = new MapCleaner(Map, _mapWidth, _mapHeight);
+            cleaner.CleanUnreachableFloor(_startPoint);
+        }
+
+        private void BuildingCorridors(List<Edge> mstEdges, List<Edge> extraEdges)
+        {
+            var corridorBuilder = new CorridorBuilder(Map, _mapWidth, _mapHeight, _random);
+            corridorBuilder.CreateCorridors(Rooms, mstEdges.Concat(extraEdges));
+        }
+
+        private void BuildingGraphRoomsAndMST(out List<Edge> extraEdges, out List<Edge> mstEdges)
+        {
+            var graphBuilder = new CorridorGraphBuilder(_random);
+            var edges = graphBuilder.BuildGraph(Rooms);
+            mstEdges = graphBuilder.KruskalMST(Rooms.Count, edges);
+            extraEdges = graphBuilder.SelectExtraEdges(edges, mstEdges);
+        }
+
+        private void RoomPlacement(int roomCount, int roomMinSize, int roomMaxSize)
+        {
+            var placer = new RoomPlacerPoissonDisc(_mapWidth, _mapHeight, _random);
+            var candidateRooms = placer.GenerateRooms(roomCount, roomMinSize, roomMaxSize);
+            if (candidateRooms.Count < roomCount)
+            {
+                var greedyPlacer = new RoomPlacerGreedy(_mapWidth, _mapHeight, _random);
+                candidateRooms = greedyPlacer.GenerateRooms(roomCount, roomMinSize, roomMaxSize);
+            }
+
+            var fallbackRoomCount = roomCount;
+            var minRoomCount = Math.Max(3, roomCount / 2);
+            while (candidateRooms.Count < fallbackRoomCount && fallbackRoomCount > minRoomCount)
+            {
+                fallbackRoomCount--;
+                var placer2 = new RoomPlacerPoissonDisc(_mapWidth, _mapHeight, _random);
+                candidateRooms = placer2.GenerateRooms(fallbackRoomCount, roomMinSize, roomMaxSize);
+                if (candidateRooms.Count < fallbackRoomCount)
+                {
+                    var greedyPlacer2 = new RoomPlacerGreedy(_mapWidth, _mapHeight, _random);
+                    candidateRooms = greedyPlacer2.GenerateRooms(fallbackRoomCount, roomMinSize, roomMaxSize);
                 }
             }
 
-            if (startRoom != null && exitRoom != null)
-            {
-                _startPoint = new Point(startRoom.CenterX, startRoom.CenterY);
-                _exitPoint = new Point(exitRoom.CenterX, exitRoom.CenterY);
-            }
-            else if (Rooms.Count == 1)
-            {
-                var room = Rooms[0];
-                _startPoint = _exitPoint = new Point(room.CenterX, room.CenterY);
-            }
+            if (candidateRooms.Count < minRoomCount)
+                throw new InvalidOperationException(
+                    $"Не удалось разместить даже fallback-комнаты: {candidateRooms.Count} из {roomCount}. " +
+                    "Попробуйте уменьшить roomCount или размеры комнат.");
 
-            Map[_startPoint.X, _startPoint.Y] = TileType.Start;
-            Map[_exitPoint.X, _exitPoint.Y] = TileType.Exit;
-        }
-
-        private float CalculateDistance(Room a, Room b)
-        {
-            var dx = a.CenterX - b.CenterX;
-            var dy = a.CenterY - b.CenterY;
-            return (float)Math.Sqrt(dx * dx + dy * dy);
+            foreach (var room in candidateRooms)
+                CreateRoom(room);
+            Rooms.AddRange(candidateRooms);
         }
 
         private void CreateRoom(Room room)
@@ -153,63 +212,35 @@ namespace ProceduralDungeon.Map
                 Map[x, y] = TileType.Floor;
         }
 
-        private void CreateCorridor(Room roomA, Room roomB)
+        private void PlaceStartAndExit()
         {
-            var x1 = roomA.CenterX;
-            var y1 = roomA.CenterY;
-            var x2 = roomB.CenterX;
-            var y2 = roomB.CenterY;
+            if (Rooms.Count <= 0)
+                throw new InvalidOperationException("Комнаты не сгенерированы.");
 
-            if (_random.Next(0, 2) == 0)
+            Room? startRoom = null;
+            Room? exitRoom = null;
+            float maxDistance = 0;
+            foreach (var roomA in Rooms)
+            foreach (var roomB in Rooms)
             {
-                CreateHorizontalCorridor(x1, x2, y1);
-                CreateVerticalCorridor(y1, y2, x2);
+                if (roomA == roomB) continue;
+                var dx = roomA.CenterX - roomB.CenterX;
+                var dy = roomA.CenterY - roomB.CenterY;
+                var dist = dx * dx + dy * dy;
+                if (dist > maxDistance)
+                {
+                    maxDistance = dist;
+                    startRoom = roomA;
+                    exitRoom = roomB;
+                }
             }
-            else
-            {
-                CreateVerticalCorridor(y1, y2, x1);
-                CreateHorizontalCorridor(x1, x2, y2);
-            }
-        }
 
-        private void CreateHorizontalCorridor(int x1, int x2, int y)
-        {
-            var start = Math.Min(x1, x2);
-            var end = Math.Max(x1, x2);
-
-            for (var x = start; x <= end; x++)
-            for (var dy = -1; dy <= 1; dy++)
-            {
-                var ny = y + dy;
-                if (ny >= 0 && ny < _mapHeight)
-                    Map[x, ny] = TileType.Floor;
-            }
-        }
-
-        private void CreateVerticalCorridor(int y1, int y2, int x)
-        {
-            var start = Math.Min(y1, y2);
-            var end = Math.Max(y1, y2);
-
-            for (var y = start; y <= end; y++)
-            for (var dx = -1; dx <= 1; dx++)
-            {
-                var nx = x + dx;
-                if (nx >= 0 && nx < _mapWidth)
-                    Map[nx, y] = TileType.Floor;
-            }
-        }
-
-        private struct Point
-        {
-            public int X { get; }
-            public int Y { get; }
-
-            public Point(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
+            if (startRoom == null || exitRoom == null)
+                throw new InvalidOperationException("Не удалось выбрать стартовую и выходную комнату.");
+            _startPoint = new Point(startRoom.CenterX, startRoom.CenterY);
+            _exitPoint = new Point(exitRoom.CenterX, exitRoom.CenterY);
+            Map[_startPoint.X, _startPoint.Y] = TileType.Start;
+            Map[_exitPoint.X, _exitPoint.Y] = TileType.Exit;
         }
     }
 }

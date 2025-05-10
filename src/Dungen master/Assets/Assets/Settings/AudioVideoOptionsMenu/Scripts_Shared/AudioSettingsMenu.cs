@@ -100,10 +100,10 @@ namespace Settings.AudioVideoOptionsMenu
 
         currentSpeakerMode = _speakerMode;
 
-        AudioConfiguration config = AudioSettings.GetConfiguration();
+        var config = AudioSettings.GetConfiguration();
 
-        AudioSpeakerMode wantedMode = config.speakerMode;
-        string wantedModeText = "";
+        var wantedMode = config.speakerMode;
+        var wantedModeText = "";
 
         switch (currentSpeakerMode)
         {
@@ -185,10 +185,10 @@ namespace Settings.AudioVideoOptionsMenu
 
         if (speakerModeUsed == SettingsUsedState.used)//must be first
         {
-            AudioConfiguration config = AudioSettings.GetConfiguration();
+            var config = AudioSettings.GetConfiguration();
 
-            AudioSpeakerMode wantedMode = config.speakerMode;
-            string wantedModeText = "";
+            var wantedMode = config.speakerMode;
+            var wantedModeText = "";
 
             switch (currentSpeakerMode)
             {

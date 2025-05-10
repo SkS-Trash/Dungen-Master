@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProceduralDungeon.Data.Configs.Decor;
+using ProceduralDungeon.Data.Configs.Enemy;
+using ProceduralDungeon.Data.Configs.Map;
 using UnityEngine;
 
 namespace Progress
@@ -8,7 +11,7 @@ namespace Progress
     public class LevelSaveData
     {
         public int currentLevelIndex = -1;
-        
+
         [Space] public DungeonLevelData dungeon = new();
         [Space] public PlayerLevelData player = new();
         [Space] public List<EnemyData> enemies = new();
@@ -20,11 +23,9 @@ namespace Progress
     {
         public int seed;
         [Space] public int styleIndex;
-        [Space] public int width;
-        public int height;
-        public int roomCount;
-        public int roomMinSize;
-        public int roomMaxSize;
+        [Space] public TileGeneratorConfig mapConfig;
+        [Space] public DecorGeneratorConfig decorConfig;
+        [Space] public EnemyGeneratorConfig enemyConfig;
     }
 
     [Serializable]

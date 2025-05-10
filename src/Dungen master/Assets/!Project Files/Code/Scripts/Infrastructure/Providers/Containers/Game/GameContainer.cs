@@ -1,4 +1,8 @@
-﻿using ProceduralDungeon;
+﻿using ProceduralDungeon.Data.Configs;
+using ProceduralDungeon.Data.Configs.Decor;
+using ProceduralDungeon.Data.Configs.Enemy;
+using ProceduralDungeon.Data.Configs.Map;
+using ProceduralDungeon.Data.Types;
 using UnityEngine;
 
 namespace Providers.Containers.Game
@@ -8,15 +12,12 @@ namespace Providers.Containers.Game
         #region DungeonGenerationData
 
         public LevelStyleConfig LevelStyleConfig { get; set; }
-        
+
         public int Seed { get; set; }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
-
-        public int RoomCount { get; set; }
-        public int RoomMinSize { get; set; }
-        public int RoomMaxSize { get; set; }
+        public TileGeneratorConfig MapGeneratorConfig { get; set; }
+        public DecorGeneratorConfig DecorConfig { get; set; }
+        public EnemyGeneratorConfig EnemyConfig { get; set; }
 
         public TileType[,] MapLayer { get; set; }
         public DecorType[,] DecorLayer { get; set; }

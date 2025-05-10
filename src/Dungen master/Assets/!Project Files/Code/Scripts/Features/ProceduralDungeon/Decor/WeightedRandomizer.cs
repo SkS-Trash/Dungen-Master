@@ -1,20 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProceduralDungeon.Decor
+namespace ProceduralDungeon
 {
     public static class WeightedRandomizer
     {
-        public static T GetRandom<T>(Dictionary<T, int> weights)
+        public static T GetRandom<T>(IDictionary<T, int> weights, Random random)
         {
             var total = weights.Values.Sum();
-            var random = new Random().Next(total);
+            var randomValue = random.Next(total);
 
             foreach (var kvp in weights)
             {
-                if (random < kvp.Value) return kvp.Key;
-                random -= kvp.Value;
+                if (randomValue < kvp.Value) return kvp.Key;
+                randomValue -= kvp.Value;
             }
 
             return default;
