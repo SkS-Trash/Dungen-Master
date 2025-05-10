@@ -41,16 +41,16 @@ namespace ProceduralDungeon
             var (baseDensity, specialObjects) = _profileProvider.GetRoomDecorProfile(room.Type);
             var attempts = CalculateDecorAttempts(room, baseDensity);
 
-            int count;
             var validPositions = _positionSelector.FindValidDecorPositions(room, map, DecorLayer,
-                MIN_DISTANCE_BETWEEN_OBJECTS, _distanceChecker, out count);
+                MIN_DISTANCE_BETWEEN_OBJECTS, _distanceChecker, out var count);
+
             _positionSelector.SortPositionsByDensity(validPositions, count);
+
             PlaceDecorInRoom(validPositions, count, attempts, room.Type, specialObjects, map);
         }
 
-        private void PlaceDecorInRoom((int x, int y, int density)[] positions, int count, int attempts,
-            RoomType roomType,
-            List<DecorType> specialObjects, TileType[,] map)
+        private void PlaceDecorInRoom((int x, int y, int density)[] positions, int count, float attempts,
+            RoomType roomType, List<DecorType> specialObjects, TileType[,] map)
         {
             var placed = 0;
             var used = new HashSet<(int, int)>();
@@ -129,10 +129,10 @@ namespace ProceduralDungeon
             return cluster;
         }
 
-        private int CalculateDecorAttempts(Room room, int baseDensity)
+        private float CalculateDecorAttempts(Room room, float baseDensity)
         {
             var roomArea = room.Width * room.Height;
-            return (int)(roomArea * baseDensity * 0.1);
+            return (float)(roomArea * baseDensity * 0.1);
         }
 
         private void PlaceDecorWithSize(int x, int y, DecorType decor, TileType[,] map)

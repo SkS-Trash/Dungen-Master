@@ -3,12 +3,12 @@
     public enum DecorType
     {
         None,
-        Chest,
+        Altar,
         Barrel,
+        Campfire,
+        Chest,
         Column,
         PressurePlate,
-        Campfire,
-        Altar,
         Spikes,
     }
 }

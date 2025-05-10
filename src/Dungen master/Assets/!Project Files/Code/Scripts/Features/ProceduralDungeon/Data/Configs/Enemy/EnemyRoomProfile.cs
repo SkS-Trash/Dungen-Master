@@ -16,83 +16,45 @@ namespace ProceduralDungeon.Data.Configs.Enemy
         [field: SerializeField, Range(0, 10), LabelText("Макс количество врагов")]
         public int MaxCount { get; private set; } = 5;
 
-        [field: SerializeField, HideLabel, Title("Типы врагов", titleAlignment: TitleAlignments.Centered),
-                ListDrawerSettings, InfoBox("Список типов врагов, которые могут появиться в комнате")]
-        public EnemyType[] EnemyTypes { get; private set; } = Array.Empty<EnemyType>();
-
-        [field: SerializeField, HideLabel, Title("Вес врагов", titleAlignment: TitleAlignments.Centered),
+        [field: SerializeField, LabelText(" "), Title("Вес врагов", titleAlignment: TitleAlignments.Centered),
                 DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine, IsReadOnly = true,
-                    KeyLabel = "Тип", KeyColumnWidth = 100, ValueLabel = "Вес врагов")]
+                    KeyLabel = "Тип", KeyColumnWidth = 100, ValueLabel = "Вес")]
         public SerializableDictionary<EnemyType, int> EnemyWeights { get; private set; } = new();
-
-        [field: SerializeField, HideLabel, Title("Конфигурация врагов", titleAlignment: TitleAlignments.Centered),
-                DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine, IsReadOnly = true,
-                    KeyLabel = "Тип", KeyColumnWidth = 100, ValueLabel = "Конфигурация врагов")]
-        public SerializableDictionary<EnemyType, EnemyConfig[]> EnemyConfigs { get; private set; } = new();
 
         public void Validate()
         {
-            RemoveDuplicateEnemyTypes();
-            EnsureConfigsContainEnemyTypes();
-            EnsureWeightsContainEnemyTypes();
-            RemoveInvalidWeights();
-            RemoveInvalidConfigs();
-            MinWeight();
+            RemoveDuplicate();
+            AddAllAnyEnemyTypes();
+            RemoveNoneEnemyType();
         }
 
-        private void RemoveDuplicateEnemyTypes()
+        private void RemoveDuplicate()
         {
-            EnemyTypes = EnemyTypes.Distinct().ToArray();
-        }
-
-        private void EnsureConfigsContainEnemyTypes()
-        {
-            foreach (var enemyType in EnemyTypes)
-            {
-                EnemyConfigs.TryAdd(enemyType, null);
-            }
-        }
-
-        private void EnsureWeightsContainEnemyTypes()
-        {
-            foreach (var enemyType in EnemyTypes)
-            {
-                EnemyWeights.TryAdd(enemyType, 1);
-            }
-        }
-
-        private void RemoveInvalidWeights()
-        {
-            var invalidKeys = EnemyWeights
-                .Keys
-                .Where(enemyType => !EnemyTypes.Contains(enemyType))
+            var enemies = EnemyWeights
+                .Where(item => item.Key != EnemyType.None)
                 .ToList();
 
-            foreach (var key in invalidKeys)
-            {
-                EnemyWeights.Remove(key);
-            }
+            foreach (var item in enemies)
+                EnemyWeights.Remove(item.Key);
+
+            foreach (var item in enemies) 
+                EnemyWeights.Add(item.Key, item.Value);
         }
 
-        private void RemoveInvalidConfigs()
+        private void AddAllAnyEnemyTypes()
         {
-            var invalidKeys = EnemyConfigs
-                .Keys
-                .Where(enemyType => !EnemyTypes.Contains(enemyType))
-                .ToList();
-
-            foreach (var key in invalidKeys)
+            var enums = (EnemyType[])Enum.GetValues(typeof(EnemyType));
+            foreach (var enemyType in enums)
             {
-                EnemyConfigs.Remove(key);
+                if (enemyType == EnemyType.None) continue;
+                
+                EnemyWeights.TryAdd(enemyType, 0);
             }
         }
-
-        private void MinWeight()
+        
+        private void RemoveNoneEnemyType()
         {
-            foreach (var key in EnemyWeights.Keys.Where(key => EnemyWeights[key] < 1))
-            {
-                EnemyWeights[key] = 1;
-            }
+            EnemyWeights.Remove(EnemyType.None);
         }
     }
 }

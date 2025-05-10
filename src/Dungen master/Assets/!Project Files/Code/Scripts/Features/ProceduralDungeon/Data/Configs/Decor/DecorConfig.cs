@@ -1,24 +1,19 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace ProceduralDungeon.Data.Configs.Decor
 {
     [CreateAssetMenu(fileName = nameof(DecorConfig), menuName = "Data/Dungeon/" + nameof(DecorConfig))]
-    public class DecorConfig : ScriptableObject
+    public class DecorConfig : LevelStyleConfig.ItemConfig
     {
-        [field: SerializeField, LabelText("Сылка на префаб декора"), Required,
-                InfoBox("Ссылка на префаб декора, который будет использоваться в комнате")]
-        public AssetReference Reference { get; private set; }
-
         [field: SerializeField, LabelText("Варианты декора"),
                 InfoBox("Список вариантов декора, которые могут появиться в комнате")]
         public Vector3[] AllowedRotations { get; private set; }
 
-        [field: SerializeField, LabelText("Минимальный размер декора")]
+        [field: SerializeField, LabelText("Минимальный размер")]
         public Vector3 MinScale { get; private set; } = Vector3.one;
 
-        [field: SerializeField, LabelText("Максимальный размер декора")]
+        [field: SerializeField, LabelText("Максимальный размер")]
         public Vector3 MaxScale { get; private set; } = Vector3.one;
 
         private void OnValidate()
@@ -35,14 +30,11 @@ namespace ProceduralDungeon.Data.Configs.Decor
             if (AllowedRotations == null || AllowedRotations.Length == 0)
                 AllowedRotations = new[] { Vector3.zero };
 
-            for (int i = 0; i < AllowedRotations.Length; i++)
+            for (var i = 0; i < AllowedRotations.Length; i++)
             {
                 if (AllowedRotations[i].x < 0 || AllowedRotations[i].y < 0 || AllowedRotations[i].z < 0)
                     AllowedRotations[i] = Vector3.zero;
             }
-
-            if (Reference == null)
-                Debug.LogError("Reference is null", this);
         }
     }
 }

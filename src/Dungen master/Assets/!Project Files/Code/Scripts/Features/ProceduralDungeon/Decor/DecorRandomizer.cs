@@ -25,10 +25,12 @@ namespace ProceduralDungeon
             return GetWeightedDecor(roomType);
         }
 
-        private DecorType GetWeightedDecor(RoomType roomType)
+        public DecorType GetWeightedDecor(RoomType roomType)
         {
             var weights = _config.RoomProfiles[roomType].DecorWeights;
+
             var decor = WeightedRandomizer.GetRandom(weights, _random);
+
             return decor;
         }
     }

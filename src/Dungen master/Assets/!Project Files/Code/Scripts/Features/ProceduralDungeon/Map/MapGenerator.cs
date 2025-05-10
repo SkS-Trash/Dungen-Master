@@ -22,12 +22,12 @@ namespace ProceduralDungeon
         private readonly int _mapHeight;
         private readonly Random _random;
         private readonly MapGenerationMode _generationMode;
-        private readonly MapGeneratorConfig _generatorConfig;
+        private readonly TileGeneratorConfig _generatorConfig;
 
         private Point _startPoint = new(0, 0);
         private Point _exitPoint = new(0, 0);
 
-        public MapGenerator(MapGeneratorConfig generatorConfig, Random random)
+        public MapGenerator(TileGeneratorConfig generatorConfig, Random random)
         {
             _generatorConfig = generatorConfig;
             _mapWidth = generatorConfig.Width;
@@ -49,7 +49,8 @@ namespace ProceduralDungeon
                     MapGenerationModeBSP(_generatorConfig.RoomMinSize, _generatorConfig.RoomMaxSize);
                     break;
                 case MapGenerationMode.Rectangular:
-                    MapGenerationModeRectangular(_generatorConfig.RoomCount, _generatorConfig.RoomMinSize, _generatorConfig.RoomMaxSize);
+                    MapGenerationModeRectangular(_generatorConfig.RoomCount, _generatorConfig.RoomMinSize,
+                        _generatorConfig.RoomMaxSize);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_generationMode),

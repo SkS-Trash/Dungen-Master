@@ -1,4 +1,4 @@
-﻿using ProceduralDungeon.Data;
+﻿using ProceduralDungeon.Data.Configs;
 using ProceduralDungeon.Data.Configs.Decor;
 using ProceduralDungeon.Data.Configs.Enemy;
 using ProceduralDungeon.Data.Configs.Map;
@@ -15,7 +15,7 @@ namespace Providers.Containers.Game
 
         public int Seed { get; set; }
 
-        public MapGeneratorConfig MapGeneratorConfig { get; set; }
+        public TileGeneratorConfig MapGeneratorConfig { get; set; }
         public DecorGeneratorConfig DecorConfig { get; set; }
         public EnemyGeneratorConfig EnemyConfig { get; set; }
 

@@ -13,85 +13,51 @@ namespace ProceduralDungeon.Data.Configs.Decor
         [field: SerializeField, HideLabel, Title("Базовая плотность декора", titleAlignment: TitleAlignments.Centered),
                 Range(0, 5), InfoBox("Плотность декора в комнате от 0 до 5, " +
                                      "где 0 - нет декора, 5 - максимальная плотность (заполнено 50% комнаты)")]
-        public int BaseDensity { get; private set; } = 1;
+        public float BaseDensity { get; private set; } = 1;
 
-        [field: SerializeField, LabelText(" "), Title("Специальные объекты", titleAlignment: TitleAlignments.Centered),
-                ListDrawerSettings, InfoBox("Список специальных объектов, которые могут появиться в комнате")]
-        public List<DecorType> SpecialObjects { get; private set; } = new();
-
-        [field: SerializeField, HideLabel, Title("Вес декора", titleAlignment: TitleAlignments.Centered),
+        [field: SerializeField, LabelText(" "), Title("Конфигурация декора", titleAlignment: TitleAlignments.Centered),
                 DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine, IsReadOnly = true,
-                    KeyLabel = "Тип", KeyColumnWidth = 100, ValueLabel = "Вес декора")]
+                    KeyLabel = "Тип", KeyColumnWidth = 100, ValueLabel = "Вес")]
         public SerializableDictionary<DecorType, int> DecorWeights { get; private set; } = new();
-
-        [field: SerializeField, HideLabel, Title("Конфигурация декора", titleAlignment: TitleAlignments.Centered),
-                DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine, IsReadOnly = true,
-                    KeyLabel = "Тип", KeyColumnWidth = 100, ValueLabel = "Конфигурация декора")]
-        public SerializableDictionary<DecorType, DecorConfig> DecorConfigs { get; private set; } = new();
 
         public void Validate()
         {
-            RemoveDuplicateSpecialObjects();
-            EnsureConfigsContainSpecialObjects();
-            EnsureWeightsContainSpecialObjects();
-            RemoveInvalidWeights();
-            RemoveInvalidConfigs();
-            MinWeight();
+            RemoveDuplicate();
+            AddAllAnyDecorTypes();
+            RemoveNoneDecorType();
         }
 
-        private void EnsureConfigsContainSpecialObjects()
+        private void RemoveDuplicate()
         {
-            foreach (var decorType in SpecialObjects)
-            {
-                DecorConfigs.TryAdd(decorType, null);
-            }
-        }
-
-        private void EnsureWeightsContainSpecialObjects()
-        {
-            foreach (var decorType in SpecialObjects)
-            {
-                DecorWeights.TryAdd(decorType, 1);
-            }
-        }
-
-        private void RemoveInvalidWeights()
-        {
-            var invalidKeys = DecorWeights
-                .Keys
-                .Where(decorType => !SpecialObjects.Contains(decorType))
+            var specialObjects = DecorWeights
+                .Where(item => item.Key != DecorType.None)
                 .ToList();
 
-            foreach (var key in invalidKeys)
+            foreach (var item in specialObjects)
             {
-                DecorWeights.Remove(key);
+                DecorWeights.Remove(item.Key);
+            }
+
+            foreach (var item in specialObjects)
+            {
+                DecorWeights.Add(item.Key, item.Value);
             }
         }
 
-        private void RemoveInvalidConfigs()
+        private void AddAllAnyDecorTypes()
         {
-            var invalidKeys = DecorConfigs
-                .Keys
-                .Where(decorType => !SpecialObjects.Contains(decorType))
-                .ToList();
-
-            foreach (var key in invalidKeys)
+            var enums = (DecorType[])Enum.GetValues(typeof(DecorType));
+            foreach (var enumValue in enums)
             {
-                DecorConfigs.Remove(key);
+                if (enumValue == DecorType.None) continue;
+
+                DecorWeights.TryAdd(enumValue, 0);
             }
         }
 
-        private void MinWeight()
+        private void RemoveNoneDecorType()
         {
-            foreach (var key in DecorWeights.Keys.Where(key => DecorWeights[key] < 1))
-            {
-                DecorWeights[key] = 1;
-            }
-        }
-
-        private void RemoveDuplicateSpecialObjects()
-        {
-            SpecialObjects = SpecialObjects.Distinct().ToList();
+            DecorWeights.Remove(DecorType.None);
         }
     }
 }

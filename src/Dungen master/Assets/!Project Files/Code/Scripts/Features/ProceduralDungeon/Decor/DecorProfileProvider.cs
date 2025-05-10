@@ -15,7 +15,7 @@ namespace ProceduralDungeon
             _config = config;
         }
 
-        public (int baseDensity, List<DecorType> specialObjects) GetRoomDecorProfile(RoomType type)
+        public (float baseDensity, List<DecorType> specialObjects) GetRoomDecorProfile(RoomType type)
         {
             _config.RoomProfiles.TryGetValue(type, out var profile);
 

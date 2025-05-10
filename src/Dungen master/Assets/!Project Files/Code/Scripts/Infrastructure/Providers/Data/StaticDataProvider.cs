@@ -1,5 +1,5 @@
 ﻿using GameEventObserver;
-using ProceduralDungeon.Data;
+using ProceduralDungeon.Data.Configs;
 using Progress;
 using UnityEngine;
 using static DataPaths;
@@ -24,6 +24,11 @@ namespace Providers.Data
         public GameEventObserverCollection GetGameEventObserverCollection()
         {
             return Resources.Load<GameEventObserverCollection>(GAME_EVENT_OBSERVER_COLLECTION);
+        }
+        
+        public BaseGeneratorConfig GetBaseGeneratorConfig()
+        {
+            return Resources.Load<BaseGeneratorConfig>(BASE_GENERATOR_CONFIG);
         }
     }
 }

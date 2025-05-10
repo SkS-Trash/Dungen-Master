@@ -128,11 +128,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 59046ce6232db37489d4fbd4225e08a5
-    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Statue/Statue 1.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5c0a824682bc50a4d90eb106e5e2d1eb
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Barrel/Barrel Variant.prefab
     m_ReadOnly: 0
@@ -186,11 +181,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 92663619cb8e79549843b6b07c494b61
-    m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Statue/Statue.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9e50d8f3eea65f341ab0e899b5f7f4e0
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Chest/Chest Variant

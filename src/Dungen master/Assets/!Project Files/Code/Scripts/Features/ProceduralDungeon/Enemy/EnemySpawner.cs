@@ -73,8 +73,8 @@ namespace ProceduralDungeon
                 return EnemyType.Boss;
 
             return _random.NextDouble() < 0.5
-                ? EnemyType.EnemyIsCloseCombat
-                : EnemyType.EnemyRangedCombat;
+                ? EnemyType.IsCloseCombat
+                : EnemyType.RangedCombat;
         }
     }
 }

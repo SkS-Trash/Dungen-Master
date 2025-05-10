@@ -3,10 +3,10 @@
     public enum EnemyType
     {
         None,
-        EnemyIsCloseCombat,
-        EnemyRangedCombat,
         Boss,
-        FlyingEnemy,
-        Mimic
+        Flying,
+        IsCloseCombat,
+        Mimic,
+        RangedCombat,
     }
 }
