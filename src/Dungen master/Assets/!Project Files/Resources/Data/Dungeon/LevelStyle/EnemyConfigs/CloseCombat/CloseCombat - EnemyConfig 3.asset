@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 396dd692c6ae4bcda669c32602e3d574, type: 3}
-  m_Name: IsCloseCombat - EnemyConfig 2
+  m_Name: CloseCombat - EnemyConfig 3
   m_EditorClassIdentifier: 
   <Reference>k__BackingField:
-    m_AssetGUID: e277583cc8101354bb83777e92fb30bc
+    m_AssetGUID: 3e10938722e43af4ea604e1cead265d3
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

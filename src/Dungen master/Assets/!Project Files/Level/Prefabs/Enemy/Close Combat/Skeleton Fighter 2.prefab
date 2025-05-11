@@ -359,6 +359,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1431202298174528720}
     m_Modifications:
+    - target: {fileID: 129345500943618140, guid: 4f9b5969698af7042866d3b0e4b6888d, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 173711404023131746, guid: 4f9b5969698af7042866d3b0e4b6888d, type: 3}
       propertyPath: m_Name
       value: Enemy Stats Canvas
