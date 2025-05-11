@@ -25,20 +25,20 @@ MonoBehaviour:
       m_values:
       - <BaseDensity>k__BackingField: 3
         <DecorWeights>k__BackingField:
-          m_keys: 07000000060000000500000004000000030000000200000001000000
-          m_values: 01000000010000000100000001000000010000000100000000000000
-      - <BaseDensity>k__BackingField: 1
-        <DecorWeights>k__BackingField:
-          m_keys: 07000000060000000500000004000000030000000200000001000000
-          m_values: 01000000010000000100000001000000010000000100000001000000
-      - <BaseDensity>k__BackingField: 1
-        <DecorWeights>k__BackingField:
           m_keys: 01000000020000000300000004000000050000000600000007000000
           m_values: 00000000010000000100000001000000010000000100000001000000
       - <BaseDensity>k__BackingField: 1
         <DecorWeights>k__BackingField:
+          m_keys: 01000000020000000300000004000000050000000600000007000000
+          m_values: 01000000010000000100000001000000010000000100000001000000
+      - <BaseDensity>k__BackingField: 1
+        <DecorWeights>k__BackingField:
           m_keys: 07000000060000000500000004000000030000000200000001000000
           m_values: 01000000010000000100000001000000010000000100000000000000
+      - <BaseDensity>k__BackingField: 1
+        <DecorWeights>k__BackingField:
+          m_keys: 01000000020000000300000004000000050000000600000007000000
+          m_values: 00000000010000000100000001000000010000000100000001000000
   <Enemy>k__BackingField:
     <RoomProfiles>k__BackingField:
       m_keys: 000000000200000003000000
@@ -46,15 +46,15 @@ MonoBehaviour:
       - <MinCount>k__BackingField: 2
         <MaxCount>k__BackingField: 5
         <EnemyWeights>k__BackingField:
-          m_keys: 0500000004000000030000000200000001000000
-          m_values: 0100000000000000020000000000000000000000
+          m_keys: 0100000002000000030000000400000005000000
+          m_values: 0000000000000000050000000000000002000000
       - <MinCount>k__BackingField: 2
         <MaxCount>k__BackingField: 5
         <EnemyWeights>k__BackingField:
-          m_keys: 0500000004000000030000000200000001000000
-          m_values: 0100000000000000020000000000000000000000
+          m_keys: 0100000002000000030000000400000005000000
+          m_values: 0000000000000000050000000000000001000000
       - <MinCount>k__BackingField: 5
         <MaxCount>k__BackingField: 10
         <EnemyWeights>k__BackingField:
-          m_keys: 0500000004000000030000000200000001000000
-          m_values: 0200000000000000050000000000000000000000
+          m_keys: 0100000002000000030000000400000005000000
+          m_values: 0000000000000000050000000000000003000000

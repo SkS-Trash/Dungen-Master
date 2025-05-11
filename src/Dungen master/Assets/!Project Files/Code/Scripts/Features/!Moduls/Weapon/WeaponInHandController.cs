@@ -51,7 +51,8 @@ namespace Weapon
             weapon.localPosition = Vector3.zero;
             weapon.localRotation = Quaternion.identity;
 
-            _currentWeapon = weapon.GetComponentInChildren<WeaponMarker>();
+            _currentWeapon = weapon.GetComponent<WeaponMarker>();
+            _currentWeapon ??= weapon.GetComponentInChildren<WeaponMarker>();
             if (_currentWeapon == null)
             {
                 Debug.LogError("Загруженное оружие не содержит компонент WeaponMarker!");

@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: de7c0619d59fe844b93480ee600bcdbb
   m_SerializeEntries:
+  - m_GUID: 011ca792e94a562459e51e8d9e9d35a3
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Close Combat/Axe-Warrior
+      1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 024cecb295879df43a91f85aa7997c2e
     m_Address: Scenes/Home
     m_ReadOnly: 0
@@ -120,6 +126,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 42913affeef760d488191ffbbfeef5df
     m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49d02d3a60cc34940a2df2f1a42a75dd
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Close Combat/Fist-Warrior
+      1.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -261,6 +273,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e08a2efde2007ec49865a3717a8c80f7
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Close Combat/Axe-Warrior
+      2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e277583cc8101354bb83777e92fb30bc
     m_Address: Assets/!Project Files/Level/Prefabs/Enemies/Skeleton Fighter 2.prefab
