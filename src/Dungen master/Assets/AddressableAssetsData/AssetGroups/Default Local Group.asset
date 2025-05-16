@@ -155,6 +155,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5898753f2103bf945a53e4ea88b7ec88
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Boss/Magician-Skeleton 1
+      (Boss).prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5c0a824682bc50a4d90eb106e5e2d1eb
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Barrel/Barrel Variant.prefab
     m_ReadOnly: 0
@@ -239,6 +245,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: add5eb6b5b56d2f4a82eb83d8792bf07
     m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall - Green.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2f3fa34401d7874f83b34e964fc4080
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Boss/Axe-Warrior 1 (Boss).prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
