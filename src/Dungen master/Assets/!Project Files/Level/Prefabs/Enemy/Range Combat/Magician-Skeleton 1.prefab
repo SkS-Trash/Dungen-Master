@@ -110,13 +110,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3789949255556219475}
-  - component: {fileID: 7714611732398366113}
+  - component: {fileID: 6372521492329067260}
+  - component: {fileID: 209656213572879584}
+  - component: {fileID: 5071137751576429137}
   - component: {fileID: 61590068528837062}
   - component: {fileID: 2465517567268060691}
   - component: {fileID: 3000954911655714054}
-  - component: {fileID: 6372521492329067260}
-  - component: {fileID: 209656213572879584}
   - component: {fileID: 8371493759070384707}
+  - component: {fileID: -8598670761987129224}
+  - component: {fileID: 8649998901611155994}
   m_Layer: 0
   m_Name: Magician-Skeleton 1
   m_TagString: Untagged
@@ -137,68 +139,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4951327889271559490}
   - {fileID: 3620654522100522818}
+  - {fileID: 4951327889271559490}
   - {fileID: 8691719445811816437}
   - {fileID: 6848656645281626664}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7714611732398366113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7101358657488164710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb3f1a4ef86469ba1f0609593f06c49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  multiplierOutOfRanges: 1.5
-  aggroRange: 5
-  attackRange: 1.5
-  attackCooldown: 7.5
-  patrolSpeed: 0.5
-  chaseSpeed: 2
---- !u!114 &61590068528837062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7101358657488164710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeb9590d1e204fa58f6f36bf9754724b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 100
---- !u!114 &2465517567268060691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7101358657488164710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2eee9cabae584e539819ef04b3aada19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3000954911655714054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7101358657488164710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aedb04a845de4283bd743bc074db7f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1321396028728528696}
 --- !u!54 &6372521492329067260
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -248,6 +194,60 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!114 &5071137751576429137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c4c2f148f6458cadc219e763e84d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: {fileID: 11400000, guid: 3801af37f5faafc4e9aff00b34053ab3, type: 2}
+  <Stats>k__BackingField: {fileID: 11400000, guid: e43765b211caa164d8511060dc8fb989, type: 2}
+  <AttackPattern>k__BackingField: {fileID: 11400000, guid: 019d41b1fd305d94ca4d4f402b4d9b67, type: 2}
+--- !u!114 &61590068528837062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb9590d1e204fa58f6f36bf9754724b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CurrentHealth>k__BackingField: 0
+  <MaxHealth>k__BackingField: 100
+--- !u!114 &2465517567268060691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eee9cabae584e539819ef04b3aada19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3000954911655714054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aedb04a845de4283bd743bc074db7f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1321396028728528696}
 --- !u!114 &8371493759070384707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +263,32 @@ MonoBehaviour:
   targetUnits: 01000000
   magicCastPoint: {fileID: 6848656645281626664}
   spell: {fileID: 11400000, guid: ddb011c755b705549a50001e79259fb1, type: 2}
+--- !u!114 &-8598670761987129224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74276478c123f44baad0ee556b7ff49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationEvents: {fileID: 770372553514108548}
+  magicCastController: {fileID: 8371493759070384707}
+--- !u!114 &8649998901611155994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101358657488164710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7979098c2ad94f689aaf434bb9d7b29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7877534717203382475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -345,7 +371,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2499452444250165043, guid: 9257ae217dd1b404c845ae1f178cbfd8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4889136850586558880}
+      addedObject: {fileID: 770372553514108548}
   m_SourcePrefab: {fileID: 100100000, guid: 9257ae217dd1b404c845ae1f178cbfd8, type: 3}
 --- !u!95 &1321396028728528696 stripped
 Animator:
@@ -362,7 +388,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2499452444250165043, guid: 9257ae217dd1b404c845ae1f178cbfd8, type: 3}
   m_PrefabInstance: {fileID: 7877534717203382475}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4889136850586558880
+--- !u!114 &770372553514108548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -371,7 +397,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5763893768125435896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 121f6239529f4167af4ae41c80a638a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cfc53f11ade6c347af8c1908a27177d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &9031095893824747374
@@ -466,6 +492,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 908656859960084723, guid: 4f9b5969698af7042866d3b0e4b6888d, type: 3}
+      propertyPath: stateController
+      value: 
+      objectReference: {fileID: 5071137751576429137}
     - target: {fileID: 1870851620777500098, guid: 4f9b5969698af7042866d3b0e4b6888d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -474,6 +504,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8319449157202125898, guid: 4f9b5969698af7042866d3b0e4b6888d, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 61590068528837062}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

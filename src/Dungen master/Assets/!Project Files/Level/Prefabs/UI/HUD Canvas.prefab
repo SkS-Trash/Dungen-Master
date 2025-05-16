@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 4271372146161169220}
   - component: {fileID: 4391273903445974492}
   - component: {fileID: 1472353077817038343}
-  - component: {fileID: 5599367881475489208}
+  - component: {fileID: 4208065286232697285}
   m_Layer: 5
   m_Name: HUD Canvas
   m_TagString: Untagged
@@ -330,7 +330,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &5599367881475489208
+--- !u!114 &4208065286232697285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5863312710501481265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b6f5b9d0ced4b7a8dc543145cf42cfb, type: 3}
+  m_Script: {fileID: 11500000, guid: d93ccba6d13b790458687095afaea447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <PlayerHealthBar>k__BackingField: {fileID: 5744465253949560705}
