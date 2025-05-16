@@ -89,7 +89,7 @@ namespace Weapon
             _currentWeapon.SetTargetUnits(targetUnits);
         }
 
-        private void UnequipCurrentWeapon()
+        public void UnequipCurrentWeapon()
         {
             if (HasWeapon())
             {

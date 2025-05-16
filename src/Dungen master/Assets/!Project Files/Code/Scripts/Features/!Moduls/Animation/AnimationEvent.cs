@@ -6,7 +6,9 @@ namespace Animation
     public abstract class AnimationEvent<TEventType> : MonoBehaviour where TEventType : Enum
     {
         public event Action<TEventType> OnAnimationEvent;
-        
+
+        public TEventType LastEvent { get; set; }
+
         // Этот метод вызывается из анимационного события в аниматоре.
         public void AnimationEventHandler(string eventName)
         {
@@ -14,6 +16,9 @@ namespace Animation
             if (eventType is TEventType eventEnum)
             {
                 OnAnimationEvent?.Invoke(eventEnum);
+
+                LastEvent = eventEnum;
+
                 return;
             }
 
