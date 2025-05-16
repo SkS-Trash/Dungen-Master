@@ -3,13 +3,13 @@ using Services.CursorControl;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
-namespace Core.Project.Dungeon
+namespace Core.Project.Home
 {
-    public class ConfiguredGameState : IStateOneShot
+    public class ConfiguredHomeState : IStateOneShot
     {
         private readonly ICursorControlService _cursorControl;
 
-        public ConfiguredGameState(
+        public ConfiguredHomeState(
             ICursorControlService cursorControl
         )
         {
@@ -18,10 +18,15 @@ namespace Core.Project.Dungeon
 
         public UniTask OnEnterAsync(Unit _)
         {
-            _cursorControl.SetLock(CursorLockMode.Locked);
-            _cursorControl.SetVisible(false);
+            CursorLock();
 
             return UniTask.CompletedTask;
+        }
+
+        private void CursorLock()
+        {
+            _cursorControl.SetLock(CursorLockMode.Locked);
+            _cursorControl.SetVisible(false);
         }
     }
 }
