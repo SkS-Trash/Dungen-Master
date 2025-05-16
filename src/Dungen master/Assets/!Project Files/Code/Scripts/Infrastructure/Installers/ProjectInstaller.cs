@@ -10,6 +10,7 @@ using Providers.Containers.Game;
 using Providers.Containers.Scene;
 using Providers.Data;
 using Services.CoroutineRunner;
+using Services.CursorControl;
 using Services.Progress;
 using Services.ProjectManager;
 using Services.SaveLoadData;
@@ -47,6 +48,7 @@ namespace Installers
             builder.Register<ISaveLoadDataService, SaveLoadLocalDataService>(Lifetime.Singleton);
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IWindowService, WindowService>(Lifetime.Singleton);
+            builder.Register<ICursorControlService, CursorControlService>(Lifetime.Singleton);
 
             builder.Register<StateMachines.DirectControlMultiLayer.IStatesFactory, StateMachines.DirectControlMultiLayer.StatesFactory>(Lifetime.Singleton);
             builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine, StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);

@@ -1,10 +1,12 @@
 ﻿using Core.Project.Home;
 using Core.Project.Settings;
 using Cysharp.Threading.Tasks;
+using Services.CursorControl;
 using Services.Progress;
 using Services.ProjectManager;
 using Services.Window;
 using StateMachines.DirectControlMultiLayer;
+using UnityEngine;
 
 namespace Core.Project.MainMenu
 {
@@ -14,15 +16,18 @@ namespace Core.Project.MainMenu
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _windows;
         private readonly IProgressService _progress;
+        private readonly ICursorControlService _cursorControl;
 
         public MainMenuState(
             IProjectEngine projectEngine,
             IWindowService windows,
-            IProgressService progress
+            IProgressService progress,
+            ICursorControlService cursorControl
         )
         {
             _windows = windows;
             _progress = progress;
+            _cursorControl = cursorControl;
             _projectEngine = projectEngine;
         }
 
@@ -30,6 +35,9 @@ namespace Core.Project.MainMenu
 
         public async UniTask OnEnterAsync(Unit _)
         {
+            _cursorControl.SetLock(CursorLockMode.None);
+            _cursorControl.SetVisible(true);
+
             await _projectEngine.RunOneShot<LoadHomeSceneState>();
 
             await _windows.Open(WindowID.MainMenu);
@@ -52,7 +60,7 @@ namespace Core.Project.MainMenu
 
         public void OpenSettings() =>
             _projectEngine.ChangeState<SettingsState>();
-        
+
         #endregion
 
         #region Exit
