@@ -8,7 +8,7 @@ namespace Weapon
     public class WeaponInHandController : MonoBehaviour
     {
         private bool WeaponInHand => isInHand;
-        private bool NotInHand => isInHand == false;
+        private bool NotInHand => !isInHand;
 
         [SerializeField] private UnitType[] targetUnits = { UnitType.Player };
         [Space] [SerializeField] private bool isInHand;
@@ -51,7 +51,8 @@ namespace Weapon
             weapon.localPosition = Vector3.zero;
             weapon.localRotation = Quaternion.identity;
 
-            _currentWeapon = weapon.GetComponentInChildren<WeaponMarker>();
+            _currentWeapon = weapon.GetComponent<WeaponMarker>();
+            _currentWeapon ??= weapon.GetComponentInChildren<WeaponMarker>();
             if (_currentWeapon == null)
             {
                 Debug.LogError("Загруженное оружие не содержит компонент WeaponMarker!");
@@ -67,7 +68,7 @@ namespace Weapon
             UnequipCurrentWeapon();
 
             var weaponInstance = await Addressables.InstantiateAsync(config.ObjectReference, weaponParent).Task;
-            if (weaponInstance == null)
+            if (!weaponInstance)
             {
                 Debug.LogError("Не удалось загрузить оружие!");
                 return;
@@ -77,7 +78,7 @@ namespace Weapon
             weaponInstance.transform.localRotation = Quaternion.Euler(config.OffsetRotation);
 
             _currentWeapon = weaponInstance.GetComponentInChildren<WeaponMarker>();
-            if (_currentWeapon == null)
+            if (!_currentWeapon)
             {
                 Debug.LogError("Загруженное оружие не содержит компонент WeaponMarker!");
                 Destroy(weaponInstance);
@@ -88,7 +89,7 @@ namespace Weapon
             _currentWeapon.SetTargetUnits(targetUnits);
         }
 
-        private void UnequipCurrentWeapon()
+        public void UnequipCurrentWeapon()
         {
             if (HasWeapon())
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Magic.Data;
 using UnityEngine;
 
 namespace Magic
@@ -14,23 +15,15 @@ namespace Magic
 
         public bool CanCast()
         {
-            if (spell == null)
-            {
-                return false;
-            }
-
-            if (_spellCooldown > 0 && Time.time < _spellCooldown + _spellCastToTime)
-            {
-                return false;
-            }
-
-            return true;
+            return _spellCooldown <= 0 || Time.time >= _spellCooldown + _spellCastToTime;
         }
 
-        public void CastSpell()
+        public void CastSpell(Spell spell = null)
         {
             var spawnPosition = magicCastPoint.position;
             var targetPosition = magicCastPoint.position + magicCastPoint.forward * 10;
+
+            spell ??= this.spell;
             spell.Cast(targetUnits, spawnPosition, targetPosition);
 
             StartCoroutine(CooldownCoroutine());

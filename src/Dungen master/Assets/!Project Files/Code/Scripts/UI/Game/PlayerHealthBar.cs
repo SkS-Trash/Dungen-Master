@@ -1,4 +1,6 @@
-﻿namespace UI.Game
+﻿using Health;
+
+namespace UI.Game
 {
     public class PlayerHealthBar : HealthBar, IPlayerHealthPercentageSubscriber
     {

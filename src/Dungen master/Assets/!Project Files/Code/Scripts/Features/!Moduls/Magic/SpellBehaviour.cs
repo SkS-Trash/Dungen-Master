@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Magic.Data;
+using UnityEngine;
 
 namespace Magic
 {

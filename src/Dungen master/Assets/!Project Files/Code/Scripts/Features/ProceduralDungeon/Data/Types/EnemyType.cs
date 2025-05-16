@@ -5,7 +5,7 @@
         None,
         Boss,
         Flying,
-        IsCloseCombat,
+        CloseCombat,
         Mimic,
         RangedCombat,
     }
