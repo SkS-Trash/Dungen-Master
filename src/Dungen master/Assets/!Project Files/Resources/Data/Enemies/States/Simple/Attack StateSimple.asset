@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 855e25570ef841608b9f61dbb4320429, type: 3}
-  m_Name: AttackState
+  m_Name: Attack StateSimple
   m_EditorClassIdentifier: 
   onEnter:
   - {fileID: 11400000, guid: 4aee64bdbe8a8094696b1dbdb9fa501d, type: 2}
@@ -20,9 +20,11 @@ MonoBehaviour:
   onExit:
   - {fileID: 11400000, guid: 0bd065799e984a94eb57a7a864b15ce2, type: 2}
   transitions:
-  - decision: {fileID: 11400000, guid: 265c9dbc842494a4a8ff30cfb608c8d8, type: 2}
+  - decisions:
+    - {fileID: 11400000, guid: bc53c3373e5cdaf488a3c3e03fc29bb2, type: 2}
     trueState: {fileID: 11400000, guid: 657121b7ae5d07749b40e028d23495c6, type: 2}
     falseState: {fileID: 0}
-  - decision: {fileID: 11400000, guid: bc53c3373e5cdaf488a3c3e03fc29bb2, type: 2}
+  - decisions:
+    - {fileID: 11400000, guid: 265c9dbc842494a4a8ff30cfb608c8d8, type: 2}
     trueState: {fileID: 11400000, guid: 03cd2094224fae94bb4655217a86722d, type: 2}
     falseState: {fileID: 0}

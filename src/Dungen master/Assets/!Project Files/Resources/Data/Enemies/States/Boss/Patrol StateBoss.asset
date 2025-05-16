@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855e25570ef841608b9f61dbb4320429, type: 3}
+  m_Name: Patrol StateBoss
+  m_EditorClassIdentifier: 
+  onEnter: []
+  actions:
+  - {fileID: 11400000, guid: dca9f2589a60cbc438ef8ea5cc5d1220, type: 2}
+  onExit:
+  - {fileID: 11400000, guid: 4aee64bdbe8a8094696b1dbdb9fa501d, type: 2}
+  transitions:
+  - decisions:
+    - {fileID: 11400000, guid: 186032df72dfe0f42bd2ca37fa2db3f5, type: 2}
+    trueState: {fileID: 11400000, guid: 8733ae86c5b24e4489ec2273c06b7777, type: 2}
+    falseState: {fileID: 0}
+  - decisions:
+    - {fileID: 11400000, guid: 2e34c048d27f7464eb6e8759e7a85cab, type: 2}
+    trueState: {fileID: 11400000, guid: ffa327e0ccaf1ee47b06f610710e5a61, type: 2}
+    falseState: {fileID: 0}

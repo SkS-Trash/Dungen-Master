@@ -1,13 +1,28 @@
-﻿namespace Enemy.Core
+﻿using System.Linq;
+
+namespace Enemy.Core
 {
     [System.Serializable]
     public class Transition
     {
-        public DecisionSO decision;
+        public DecisionSO[] decisions;
         public State trueState;
         public State falseState;
 
-        public void TryTransition(StateController c) =>
-            c.TransitionTo(decision.Decide(c) ? trueState : falseState);
+        public void TryTransition(StateController c)
+        {
+            if (decisions.Length == 0) return;
+
+            var decisionResult = decisions.All(d => d.Decide(c));
+            switch (decisionResult)
+            {
+                case true when trueState:
+                    c.TransitionTo(trueState);
+                    return;
+                case false when falseState:
+                    c.TransitionTo(falseState);
+                    return;
+            }
+        }
     }
 }
