@@ -22,10 +22,7 @@ namespace Progress
     public class DungeonLevelData
     {
         public int seed;
-        [Space] public int styleIndex;
-        [Space] public TileGeneratorConfig mapConfig;
-        [Space] public DecorGeneratorConfig decorConfig;
-        [Space] public EnemyGeneratorConfig enemyConfig;
+        public int styleIndex;
     }
 
     [Serializable]
