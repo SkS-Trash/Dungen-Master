@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using UI;
+using UI.Game;
+using UnityEngine;
 
-namespace UI.Game.Player
+namespace Player
 {
     public class HudUI : ElementUI
     {
