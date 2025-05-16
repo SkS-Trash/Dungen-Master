@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3777739608551979915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3061528467208455061}
+  - component: {fileID: 5248126717460138051}
+  - component: {fileID: 6169538989180404296}
+  m_Layer: 0
+  m_Name: Fist Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3061528467208455061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777739608551979915}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 8892798798605238955}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5248126717460138051
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777739608551979915}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6169538989180404296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777739608551979915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5253dd6cdb884bb69b897df7b7ca6ce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Damage>k__BackingField: 15
+  <TargetUnits>k__BackingField: 01000000
+  hitDetector: {fileID: 5248126717460138051}
 --- !u!1 &4711809483905801268
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +180,7 @@ Transform:
   - {fileID: 385406383507858660}
   - {fileID: 6965716601221123447}
   - {fileID: 8876510957252800842}
-  - {fileID: 8643168446066520249}
+  - {fileID: 8892798798605238955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &514460920319297461
@@ -231,9 +300,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetUnits: 01000000
   isInHand: 1
-  weaponParent: {fileID: 6965869102637391583}
+  weaponParent: {fileID: 8892798798605238955}
   startingWeapon: {fileID: 11400000, guid: c5324831982ffe1438ab5a2bf946ccee, type: 2}
-  weaponTransform: {fileID: 8643168446066520249}
+  weaponTransform: {fileID: 3061528467208455061}
 --- !u!114 &-4811695423580207971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7979098c2ad94f689aaf434bb9d7b29c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5692905157875595119
+--- !u!1 &6802809629840349716
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,67 +337,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8643168446066520249}
-  - component: {fileID: 4968625407164292869}
-  - component: {fileID: 4759624337364261086}
+  - component: {fileID: 8892798798605238955}
   m_Layer: 0
-  m_Name: Fist Weapon
+  m_Name: Weapon Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8643168446066520249
+--- !u!4 &8892798798605238955
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5692905157875595119}
+  m_GameObject: {fileID: 6802809629840349716}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9644669, y: -0.09475638, z: -0.24312094, w: 0.04143619}
-  m_LocalPosition: {x: 0.20239517, y: 0.5261111, z: -0.0061252}
-  m_LocalScale: {x: 0.24999984, y: 0.25000006, z: 0.25000027}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3061528467208455061}
   m_Father: {fileID: 740626684797489185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4968625407164292869
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5692905157875595119}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4759624337364261086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5692905157875595119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5253dd6cdb884bb69b897df7b7ca6ce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Damage>k__BackingField: 15
-  <TargetUnits>k__BackingField: 01000000
-  hitDetector: {fileID: 4968625407164292869}
 --- !u!1001 &6964110919293975773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -429,11 +461,6 @@ MonoBehaviour:
 --- !u!4 &6965716601221123447 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4028250183184810, guid: f7902c99c75cad34f934860c6b6ddd9e, type: 3}
-  m_PrefabInstance: {fileID: 6964110919293975773}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6965869102637391583 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4152791370932738, guid: f7902c99c75cad34f934860c6b6ddd9e, type: 3}
   m_PrefabInstance: {fileID: 6964110919293975773}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &7059248926573556375 stripped
