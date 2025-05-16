@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4e38851c6d44119a318e51ee5573d92, type: 3}
-  m_Name: Magic Attack SO
+  m_Name: Magic Normal Attack SO
   m_EditorClassIdentifier: 
   cooldown: 5
   minDistance: 1
   maxDistance: 5
-  spell: {fileID: 11400000, guid: ddb011c755b705549a50001e79259fb1, type: 2}
+  spell: {fileID: 11400000, guid: 0db005e513c191843a2dd6bf5201dbc2, type: 2}

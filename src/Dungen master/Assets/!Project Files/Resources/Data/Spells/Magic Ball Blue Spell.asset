@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fc5fdce66694630b4194875caf64af9, type: 3}
-  m_Name: Magic Ball Spell
+  m_Name: Magic Ball Blue Spell
   m_EditorClassIdentifier: 
   <SpellName>k__BackingField: "\u0417\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435
     \u0432\u043E\u043B\u0448\u0435\u0431\u043D\u043E\u0433\u043E \u0448\u0430\u0440\u0430"
   <SpellPrefab>k__BackingField:
-    m_AssetGUID: 42913affeef760d488191ffbbfeef5df
+    m_AssetGUID: 42a9399704b303a4b86ea4ab7f5d3c4d
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 1
   <Cooldown>k__BackingField: 3
-  speed: 1
+  <Speed>k__BackingField: 3.5
+  damage: 10
