@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Infrastructure.Factories.GameObject;
-using Infrastructure.Services.Window;
+using Factories.GameObject;
+using Services.Window;
 using UnityEngine;
 
-namespace Infrastructure.Factories.UI
+namespace Factories.UI
 {
     /// <summary>
     /// Фабрика UI.

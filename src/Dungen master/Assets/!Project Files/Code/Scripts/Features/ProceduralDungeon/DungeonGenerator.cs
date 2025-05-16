@@ -1,42 +1,38 @@
-﻿using System.Collections.Generic;
-using Dungeon;
+﻿using ProceduralDungeon.Data.Types;
 
-namespace Features.ProceduralDungeon
+namespace ProceduralDungeon
 {
     public class DungeonGenerator
     {
-        public TileType[,] MapLayer;
-        public DecorType[,] DecorLayer;
-        public EnemyType[,] EnemyLayer;
+        public TileType[,] MapLayer { get; private set; }
+        public DecorType[,] DecorLayer { get; private set; }
+        public EnemyType[,] EnemyLayer { get; private set; }
 
-        private List<Room> _rooms;
+        private readonly IMapGenerator _mapGenerator;
+        private readonly IDecorGenerator _decorGenerator;
+        private readonly IEnemySpawner _enemySpawner;
 
-        private readonly int _width;
-        private readonly int _height;
-
-        public DungeonGenerator(int width, int height)
+        public DungeonGenerator(
+            IMapGenerator mapGenerator,
+            IDecorGenerator decorGenerator,
+            IEnemySpawner enemySpawner
+        )
         {
-            _width = width;
-            _height = height;
+            _mapGenerator = mapGenerator;
+            _decorGenerator = decorGenerator;
+            _enemySpawner = enemySpawner;
         }
 
-        public void GenerateDungeon(int roomCount, int roomMinSize, int roomMaxSize)
+        public void GenerateDungeon()
         {
-            // Генерация базовой карты
-            var mapGen = new MapGenerator(_width, _height);
-            mapGen.GenerateMap(roomCount, roomMinSize, roomMaxSize);
-            MapLayer = mapGen.Map;
-            _rooms = mapGen.Rooms;
+            _mapGenerator.GenerateMap();
+            MapLayer = _mapGenerator.Map;
 
-            // Генерация декора
-            var decorGen = new DecorGenerator(_width, _height);
-            decorGen.GenerateDecor(MapLayer, _rooms);
-            DecorLayer = decorGen.DecorLayer;
+            _decorGenerator.GenerateDecor(MapLayer, _mapGenerator.Rooms);
+            DecorLayer = _decorGenerator.DecorLayer;
 
-            // Расстановка врагов
-            var enemySpawner = new EnemySpawner(_width, _height);
-            enemySpawner.SpawnEnemies(MapLayer, _rooms);
-            EnemyLayer = enemySpawner.EnemyLayer;
+            _enemySpawner.SpawnEnemies(MapLayer, DecorLayer, _mapGenerator.Rooms);
+            EnemyLayer = _enemySpawner.EnemyLayer;
         }
     }
 }

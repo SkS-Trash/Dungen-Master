@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396dd692c6ae4bcda669c32602e3d574, type: 3}
+  m_Name: RangedCombat - EnemyConfig 2
+  m_EditorClassIdentifier: 
+  <Reference>k__BackingField:
+    m_AssetGUID: e599bf126aa68d44f9af1d8668dd5256
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
+  <AllowedRotations>k__BackingField:
+  - {x: 0, y: 0, z: 0}
+  <MinScale>k__BackingField: {x: 0.85, y: 0.85, z: 0.85}
+  <MaxScale>k__BackingField: {x: 1, y: 1, z: 1}

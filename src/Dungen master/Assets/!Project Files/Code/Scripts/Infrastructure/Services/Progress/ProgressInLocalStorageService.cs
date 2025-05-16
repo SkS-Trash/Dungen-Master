@@ -1,61 +1,81 @@
-﻿using Infrastructure.Services.SaveLoadData;
-using Progress;
+﻿using Progress;
+using Services.SaveLoadData;
 using UnityEngine;
 
-namespace Infrastructure.Services.Progress
+namespace Services.Progress
 {
     /// <summary>
     /// Сервис для работы с прогрессом игры, сохраняемым в локальном хранилище.
     /// </summary>
     public class ProgressInLocalStorageService : IProgressService
     {
-        private const string DATA_KEY = "ProgressGameData";
+        public GlobalSaveData GlobalProgress { get; private set; }
+        public LevelSaveData LevelProgress { get; private set; }
 
-        private readonly ISaveLoadDataService _saveLoadDataService;
+        private const string GLOBAL_SAVE_DATA_KEY = "GlobalSaveData";
+        private const string LEVEL_SAVE_DATA_KEY = "LevelSaveData";
 
-        /// <inheritdoc/>
-        public ProgressGameData CurrentProgress { get; private set; }
+        private static LevelProgressSaveCollectorsProvider LevelProgressSaveCollectors =>
+            LevelProgressSaveCollectorsProvider.Instance;
 
-        public ProgressInLocalStorageService(ISaveLoadDataService saveLoadDataService)
+        private readonly ISaveLoadDataService _saveLoad;
+
+        public ProgressInLocalStorageService(ISaveLoadDataService saveLoad)
         {
-            _saveLoadDataService = saveLoadDataService;
-
-            LoadProgress();
+            _saveLoad = saveLoad;
         }
 
         /// <inheritdoc/>
-        public void SaveProgress()
+        public void SaveGlobal()
         {
-            if (CurrentProgress == null)
-            {
-                Debug.LogWarning("Нет данных о прогрессе для сохранения.");
-                return;
-            }
+            GlobalProgress.isFirstLaunch = false;
+            GlobalProgress.version = GlobalSaveData.VERSION;
 
-            _saveLoadDataService.Save(CurrentProgress, DATA_KEY);
+            _saveLoad.Save(GlobalProgress, GLOBAL_SAVE_DATA_KEY);
+        }
+
+        /// <inheritdoc/>
+        public void SaveLevel()
+        {
+            LevelProgressSaveCollectors.Collect(LevelProgress);
+
+            _saveLoad.Save(LevelProgress, LEVEL_SAVE_DATA_KEY);
         }
 
         /// <inheritdoc/>
         public void LoadProgress()
         {
-            var loadedData = _saveLoadDataService.Load<ProgressGameData>(DATA_KEY);
+            GlobalProgress = _saveLoad.Load<GlobalSaveData>(GLOBAL_SAVE_DATA_KEY);
 
-            if (loadedData == null)
+            if (GlobalProgress == null)
             {
-                Debug.LogWarning("Сохранённые данные не найдены. Создаём новый прогресс.");
-                CurrentProgress = new ProgressGameData();
+                ResetProgress();
+
+                return;
             }
-            else
+
+            if (GlobalProgress.version != GlobalSaveData.VERSION)
             {
-                CurrentProgress = loadedData;
+                Debug.LogWarning(
+                    $"Версия сохранённых данных ({GlobalProgress.version}) не совпадает с текущей ({GlobalSaveData.VERSION}). " +
+                    $"Сбросим прогресс до начальных значений.");
+
+                ResetProgress();
+
+                return;
             }
+
+            LevelProgress = _saveLoad.Load<LevelSaveData>(LEVEL_SAVE_DATA_KEY) ?? new LevelSaveData();
         }
 
         /// <inheritdoc/>
         public void ResetProgress()
         {
-            CurrentProgress = new ProgressGameData();
-            SaveProgress();
+            GlobalProgress = new GlobalSaveData();
+            LevelProgress = new LevelSaveData();
+
+            _saveLoad.Save(GlobalProgress, GLOBAL_SAVE_DATA_KEY);
+            _saveLoad.Save(LevelProgress, LEVEL_SAVE_DATA_KEY);
         }
     }
 }

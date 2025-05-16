@@ -1,52 +1,75 @@
-﻿using Cysharp.Threading.Tasks;
-using Dungeon;
-using Infrastructure.Factories.GameObject;
-using Infrastructure.Providers.Assets;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+﻿using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using Factories.GameObject;
+using ProceduralDungeon.Data.Configs;
+using ProceduralDungeon.Data.Types;
+using Providers.Containers.Game;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
 namespace Core.Project.Dungeon
 {
-    public class ConstructionMapState : IStateOneShot<(TileType[,] map, LevelStyleConfig config)>
+    public class ConstructionMapState : IStateOneShot
     {
         private readonly IGameObjectFactory _gameObjectFactory;
-        private readonly IAssetsProvider _assetsProvider;
+        private readonly IGameContainerProvider _containerProvider;
 
         public ConstructionMapState(
             IGameObjectFactory gameObjectFactory,
-            IAssetsProvider assetsProvider
+            IGameContainerProvider containerProvider
         )
         {
             _gameObjectFactory = gameObjectFactory;
-            _assetsProvider = assetsProvider;
+            _containerProvider = containerProvider;
         }
 
-        public async UniTask OnEnterAsync((TileType[,] map, LevelStyleConfig config) data)
+        public async UniTask OnEnterAsync(Unit _)
         {
-            await ConstructionLayer(data.map, data.config);
+            var container = _containerProvider.Container;
+
+            await ConstructionLayer(container.MapLayer, container.LevelStyleConfig);
         }
 
         private async UniTask ConstructionLayer(TileType[,] mapLayer, LevelStyleConfig dataConfig)
         {
+            var parent = await CreatedParent();
+
             for (var x = 0; x < mapLayer.GetLength(0); x++)
             for (var y = 0; y < mapLayer.GetLength(1); y++)
             {
                 if (mapLayer[x, y] == TileType.Empty) continue;
-                
-                await InstantCell(mapLayer, dataConfig, x, y);
+
+                if (mapLayer[x, y] == TileType.Start || mapLayer[x, y] == TileType.Exit)
+                    await InstantCell(TileType.Floor, dataConfig, x, y, parent);
+
+                await InstantCell(mapLayer[x, y], dataConfig, x, y, parent);
             }
         }
 
-        private async UniTask InstantCell(TileType[,] mapLayer, LevelStyleConfig dataConfig, int x, int y)
+        private async Task<Transform> CreatedParent()
         {
-            var tileType = mapLayer[x, y];
-            var prefabs = dataConfig.GetTileConfig(tileType).Prefabs;
-            var assetReference = prefabs[Random.Range(0, prefabs.Length)];
+            var parentObject = await _gameObjectFactory.InstantiateAsync(GameObjectsPaths.EMPTY_GAME_OBJECT);
+            parentObject.name = "Dungeon map";
+            var parent = parentObject.transform;
+            return parent;
+        }
+
+        private async UniTask InstantCell(TileType tileType, LevelStyleConfig dataConfig, int x, int y,
+            Transform parent)
+        {
+            var prefabs = dataConfig.GetTileConfig(tileType).Configs;
+
+            if (prefabs == null || prefabs.Length == 0) return;
+
+            var assetReference = prefabs[Random.Range(0, prefabs.Length)].Reference;
+
+            if (assetReference == null) return;
 
             await _gameObjectFactory.InstantiateAsync(
                 assetReference,
                 new Vector3(x, 0, y),
-                Quaternion.identity
+                Quaternion.identity,
+                parent
             );
         }
     }

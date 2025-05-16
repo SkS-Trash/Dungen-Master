@@ -1,7 +1,8 @@
-﻿using Dungeon;
+﻿using GameEventObserver;
+using ProceduralDungeon.Data.Configs;
 using Progress;
 
-namespace Infrastructure.Providers.Data
+namespace Providers.Data
 {
     /// <summary>
     /// Интерфейс для предоставления статических данных.
@@ -10,5 +11,7 @@ namespace Infrastructure.Providers.Data
     {
         ProgressGameDataHolder GetProgressGameDataHolder();
         LevelStyleConfig[] GetLevelStyleConfigs();
+        GameEventObserverCollection GetGameEventObserverCollection();
+        BaseGeneratorConfig GetBaseGeneratorConfig();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Infrastructure.Observers.UnityGameLoop
+namespace Observers.UnityGameLoop
 {
     /// <summary>
     /// Интерфейс для наблюдателей за игровым циклом Unity.

@@ -2,7 +2,7 @@
 using VContainer;
 using VContainer.Unity;
 
-namespace Infrastructure.Installers
+namespace Installers
 {
     public class GameBootstrapInstaller : LifetimeScope
     {

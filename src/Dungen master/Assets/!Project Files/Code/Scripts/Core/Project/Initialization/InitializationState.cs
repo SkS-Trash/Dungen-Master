@@ -1,8 +1,7 @@
 ﻿using Core.Project.MainMenu;
 using Cysharp.Threading.Tasks;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
-using UnityEngine;
+using Services.ProjectManager;
+using StateMachines.DirectControlMultiLayer;
 
 namespace Core.Project.Initialization
 {
@@ -24,7 +23,7 @@ namespace Core.Project.Initialization
             await _projectEngine.RunOneShot<LoadingBasicResourcesState>();
             await _projectEngine.RunOneShot<LoadProgressState>();
 
-            _projectEngine.ChangeState<MainMenuState>();
+            await _projectEngine.ChangeState<MainMenuState>();
         }
     }
 }

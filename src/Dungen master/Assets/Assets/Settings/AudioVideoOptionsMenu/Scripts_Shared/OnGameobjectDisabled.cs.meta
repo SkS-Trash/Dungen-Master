@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f0e5a4e23be5f9648bbe1ab9303a1064
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33781
+  packageName: Audio Video Options/Settings Menu
+  packageVersion: 4.2
+  assetPath: Assets/@PaulosCreations/AudioVideoOptionsMenu/Scripts_Shared/OnGameobjectDisabled.cs
+  uploadId: 701258

@@ -1,25 +1,33 @@
-﻿using Core.Project.Base;
-using Core.Project.Dungeon;
+﻿using Core.Project.Home;
+using Core.Project.Settings;
 using Cysharp.Threading.Tasks;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.Services.Window;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
-using UI.MainMenu;
+using Services.CursorControl;
+using Services.Progress;
+using Services.ProjectManager;
+using Services.Window;
+using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
 namespace Core.Project.MainMenu
 {
-    public class MainMenuState : IState, IEnterable, IExitable
+    public class MainMenuState : IState, IEnterable, IExitable,
+        ILaunchNewGameEvent, ILaunchContinueGameEvent, IQuitApplicationEvent, IOpenSettingsEvent
     {
-        private readonly IWindowService _windowService;
         private readonly IProjectEngine _projectEngine;
+        private readonly IWindowService _windows;
+        private readonly IProgressService _progress;
+        private readonly ICursorControlService _cursorControl;
 
         public MainMenuState(
             IProjectEngine projectEngine,
-            IWindowService windowService
+            IWindowService windows,
+            IProgressService progress,
+            ICursorControlService cursorControl
         )
         {
-            _windowService = windowService;
+            _windows = windows;
+            _progress = progress;
+            _cursorControl = cursorControl;
             _projectEngine = projectEngine;
         }
 
@@ -27,49 +35,31 @@ namespace Core.Project.MainMenu
 
         public async UniTask OnEnterAsync(Unit _)
         {
-            await InstantiateMainMenu();
+            _cursorControl.SetLock(CursorLockMode.None);
+            _cursorControl.SetVisible(true);
 
-            SetupMainMenuCallbacks();
+            await _projectEngine.RunOneShot<LoadHomeSceneState>();
 
-            ShowMainMenu();
-            HideLoadingScreen();
+            await _windows.Open(WindowID.MainMenu);
+
+            EventBus.RaiseEvent<IGlobalProgressLoadEvent>(s => s.OnProgressLoaded(_progress.GlobalProgress));
+
+            // HideLoadingScreen();
+
+            EventBus.Subscribe(this);
         }
 
-        private async UniTask InstantiateMainMenu()
-        {
-            var mainMenuUI = await _windowService.OpenAndGet<MainMenuUI>(WindowID.MainMenu);
-            mainMenuUI.Hide();
-        }
+        public void OnLaunchNewGame() =>
+            _projectEngine.ChangeState<LaunchNewGameState>();
 
-        private void SetupMainMenuCallbacks()
-        {
-            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
-            mainMenuWindow.OnStartGame += OnStartGame;
-            mainMenuWindow.OnExit += OnExit;
-        }
+        public void OnLaunchContinueGame() =>
+            _projectEngine.ChangeState<LaunchContinueGameState>();
 
-        private void OnStartGame()
-        {
-            _projectEngine.ChangeState<TestState>();
-
-            Debug.Log("Start Game");
-        }
-
-        private void OnExit()
-        {
+        public void OnQuitApplication() =>
             _projectEngine.ChangeState<ExitFromApplicationState>();
-        }
 
-        private void ShowMainMenu()
-        {
-            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
-            mainMenuWindow.Show();
-        }
-
-        private void HideLoadingScreen()
-        {
-            // TODO: Скрыть экран загрузки
-        }
+        public void OnOpenSettings() =>
+            _projectEngine.ChangeState<SettingsState>();
 
         #endregion
 
@@ -77,15 +67,11 @@ namespace Core.Project.MainMenu
 
         public UniTask OnExitAsync()
         {
-            HideMainMenu();
+            EventBus.Unsubscribe(this);
+
+            _windows.Close(WindowID.MainMenu);
 
             return UniTask.CompletedTask;
-        }
-
-        private void HideMainMenu()
-        {
-            var mainMenuWindow = _windowService.Get<MainMenuUI>(WindowID.MainMenu);
-            mainMenuWindow.Hide();
         }
 
         #endregion

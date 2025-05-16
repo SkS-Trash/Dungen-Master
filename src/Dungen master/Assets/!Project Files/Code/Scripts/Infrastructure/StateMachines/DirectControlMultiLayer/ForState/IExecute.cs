@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace Infrastructure.StateMachines.DirectControlMultiLayer.ForState
+namespace StateMachines.DirectControlMultiLayer
 {
     /// <summary>
     /// Интерфейс для состояний, поддерживающих периодический вызов метода OnExecuteAsync.

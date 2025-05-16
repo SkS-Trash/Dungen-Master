@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d39ca8a18248589abbe2b2913f4744, type: 3}
+  m_Name: Simple Magic Attack Pattern SO
+  m_EditorClassIdentifier: 
+  attacks:
+  - {fileID: 11400000, guid: 57d5eb55afd757e49a7b7259934c584c, type: 2}
+  - {fileID: 11400000, guid: b67ba726d8d31184c8c38857bf52d87b, type: 2}
+  - {fileID: 11400000, guid: 8b84544551b53964a8996ca8e9fb23c8, type: 2}
+  selectionType: 0

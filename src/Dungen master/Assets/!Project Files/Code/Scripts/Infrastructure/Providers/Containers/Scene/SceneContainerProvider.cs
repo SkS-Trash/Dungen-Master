@@ -1,22 +1,22 @@
-﻿namespace Infrastructure.Providers.Containers.Scene
+﻿namespace Providers.Containers.Scene
 {
-    /// <summary>
-    /// Обеспечивает контейнер сцены.
-    /// </summary>
     public class SceneContainerProvider : ISceneContainerProvider
     {
-        private SceneContainer _sceneContainer;
+        private ISceneContainer _sceneContainer;
 
-        /// <inheritdoc/>
-        public SceneContainer GetSceneContainer()
+        public ISceneContainer Get()
         {
             return _sceneContainer;
         }
 
-        /// <inheritdoc/>
-        public void SetSceneContainer(SceneContainer sceneContainer)
+        public void Set(ISceneContainer sceneContainer)
         {
             _sceneContainer = sceneContainer;
+        }
+
+        public void Clear()
+        {
+            _sceneContainer = null;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using StateMachines.DirectControlMultiLayer;
 
-namespace Core.Project.Base
+namespace Core.Project
 {
     public class ExitFromApplicationState : IStateOneShot
     {

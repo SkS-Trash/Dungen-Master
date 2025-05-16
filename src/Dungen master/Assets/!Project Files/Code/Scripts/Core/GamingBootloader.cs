@@ -1,5 +1,5 @@
-﻿using Core.Project.Base;
-using Infrastructure.Services.ProjectManager;
+﻿using Core.Project;
+using Services.ProjectManager;
 using VContainer.Unity;
 
 namespace Core
@@ -9,18 +9,18 @@ namespace Core
     /// </summary>
     public class GamingBootloader : IStartable
     {
-        private readonly IProjectEngine _stateMachineService;
+        private readonly IProjectEngine _projectEngine;
 
         public GamingBootloader(
-            IProjectEngine stateMachineService
+            IProjectEngine projectEngine
         )
         {
-            _stateMachineService = stateMachineService;
+            _projectEngine = projectEngine;
         }
 
         public void Start()
         {
-            _stateMachineService.ChangeState<BootstrapState>();
+            _projectEngine.ChangeState<BootstrapState>();
         }
     }
 }

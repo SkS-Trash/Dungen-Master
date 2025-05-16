@@ -1,26 +1,26 @@
-﻿using Core.Project.Base;
-using Core.Project.Dungeon;
-using Core.Project.Initialization;
-using Core.Project.MainMenu;
-using Infrastructure.Factories.GameObject;
-using Infrastructure.Factories.UI;
-using Infrastructure.Observers.Input;
-using Infrastructure.Observers.UnityGameLoop;
-using Infrastructure.Providers.Assets;
-using Infrastructure.Providers.Containers.Scene;
-using Infrastructure.Providers.Data;
-using Infrastructure.Services.CoroutineRunner;
-using Infrastructure.Services.Progress;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.Services.SaveLoadData;
-using Infrastructure.Services.SceneLoader;
-using Infrastructure.Services.Window;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Factories.GameEvent;
+using Factories.GameObject;
+using Factories.UI;
+using Observers.Input;
+using Observers.UnityGameLoop;
+using Providers.Assets;
+using Providers.Containers.Game;
+using Providers.Containers.Scene;
+using Providers.Data;
+using Services.CoroutineRunner;
+using Services.CursorControl;
+using Services.Progress;
+using Services.ProjectManager;
+using Services.SaveLoadData;
+using Services.SceneLoader;
+using Services.Window;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Infrastructure.Installers
+namespace Installers
 {
     public class ProjectInstaller : LifetimeScope
     {
@@ -28,12 +28,16 @@ namespace Infrastructure.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
+            ForceResolveNonLazyBindings(builder);
+
             builder.Register<IGameObjectFactory, GameObjectFactory>(Lifetime.Singleton);
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
+            builder.Register<IGameEventFactory, GameEventFactory>(Lifetime.Singleton);
 
             builder.RegisterInstance(inputActionReader).AsImplementedInterfaces().AsSelf();
             builder.Register<IUnityGameLoopObserver, UnityGameLoopObserver>(Lifetime.Singleton);
 
+            builder.Register<IGameContainerProvider, GameContainerProvider>(Lifetime.Singleton);
             builder.Register<ISceneContainerProvider, SceneContainerProvider>(Lifetime.Singleton);
             builder.Register<IStaticDataProvider, StaticDataProvider>(Lifetime.Singleton);
             builder.Register<IAssetsProvider, AssetsAddressablesProvider>(Lifetime.Singleton);
@@ -44,30 +48,39 @@ namespace Infrastructure.Installers
             builder.Register<ISaveLoadDataService, SaveLoadLocalDataService>(Lifetime.Singleton);
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IWindowService, WindowService>(Lifetime.Singleton);
+            builder.Register<ICursorControlService, CursorControlService>(Lifetime.Singleton);
 
-            builder.Register<IStatesFactory, StatesFactory>(Lifetime.Singleton);
+            builder.Register<StateMachines.DirectControlMultiLayer.IStatesFactory, StateMachines.DirectControlMultiLayer.StatesFactory>(Lifetime.Singleton);
             builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine, StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);
 
-            builder.Register<StateMachines.TransitionMultiLayer.IStateMachine, StateMachines.TransitionMultiLayer.StateMachine>(Lifetime.Transient);
-            
-            // States
-            
-            builder.Register<BootstrapState>(Lifetime.Transient).AsSelf();
-            builder.Register<ExitFromApplicationState>(Lifetime.Transient).AsSelf();
+            builder.Register<StateMachines.Transition.IStateMachine, StateMachines.Transition.StateMachine>(Lifetime.Transient);
 
-            builder.Register<InitializationState>(Lifetime.Transient).AsSelf();
-            builder.Register<LoadEmptySceneState>(Lifetime.Transient).AsSelf();
-            builder.Register<LoadingBasicResourcesState>(Lifetime.Transient).AsSelf();
-            builder.Register<LoadProgressState>(Lifetime.Transient).AsSelf();
-            builder.Register<OpenLoadingScreenState>(Lifetime.Transient).AsSelf();
+            BindProjectStates(builder);
+        }
 
-            builder.Register<MainMenuState>(Lifetime.Transient).AsSelf();
-            
-            builder.Register<TestState>(Lifetime.Transient).AsSelf();
-            builder.Register<GenerateMapState>(Lifetime.Transient).AsSelf();
-            builder.Register<ConstructionMapState>(Lifetime.Transient).AsSelf();
-            builder.Register<ConstructionDecorState>(Lifetime.Transient).AsSelf();
-            builder.Register<ConstructionEnemyState>(Lifetime.Transient).AsSelf();
+        private static void ForceResolveNonLazyBindings(IContainerBuilder builder)
+        {
+            builder.RegisterBuildCallback(container =>
+            {
+                // Принудительно разрешить не ленивые зависимости
+                container.Resolve<IEnumerable<INonLazy>>();
+            });
+        }
+
+        private static void BindProjectStates(IContainerBuilder builder)
+        {
+            var states = typeof(StateMachines.DirectControlMultiLayer.IState)
+                .Assembly
+                .GetTypes()
+                .Where(x => x.IsClass && typeof(StateMachines.DirectControlMultiLayer.IState).IsAssignableFrom(x));
+
+            foreach (var state in states)
+            {
+                if (state.IsAbstract || state.IsInterface) 
+                    continue;
+                
+                builder.Register(state, Lifetime.Transient).AsSelf();
+            }
         }
     }
 }

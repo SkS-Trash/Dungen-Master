@@ -1,9 +1,9 @@
 ﻿using Core.Project.Initialization;
 using Cysharp.Threading.Tasks;
-using Infrastructure.Services.ProjectManager;
-using Infrastructure.StateMachines.DirectControlMultiLayer.ForState;
+using Services.ProjectManager;
+using StateMachines.DirectControlMultiLayer;
 
-namespace Core.Project.Base
+namespace Core.Project
 {
     public class BootstrapState : IState, IEnterable
     {
@@ -19,7 +19,7 @@ namespace Core.Project.Base
         public UniTask OnEnterAsync(Unit _)
         {
             _stateMachine.ChangeState<InitializationState>();
-            
+
             return UniTask.CompletedTask;
         }
     }

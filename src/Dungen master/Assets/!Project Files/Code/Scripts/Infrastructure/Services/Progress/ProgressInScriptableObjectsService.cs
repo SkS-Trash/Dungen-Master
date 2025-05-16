@@ -1,15 +1,18 @@
-﻿using Infrastructure.Providers.Data;
-using Progress;
+﻿using Progress;
+using Providers.Data;
 
-namespace Infrastructure.Services.Progress
+namespace Services.Progress
 {
     /// <summary>
     /// Сервис для работы с прогрессом, хранящимся в Scriptable Object.
     /// </summary>
     public class ProgressInScriptableObjectsService : IProgressService
     {
-        /// <inheritdoc/>
-        public ProgressGameData CurrentProgress => _progressGameDataHolder.ProgressGameData;
+        public GlobalSaveData GlobalProgress => _progressGameDataHolder.GlobalSaveData;
+        public LevelSaveData LevelProgress => _progressGameDataHolder.LevelSaveData;
+
+        private static LevelProgressSaveCollectorsProvider LevelProgressSaveCollectors =>
+            LevelProgressSaveCollectorsProvider.Instance;
 
         private readonly IStaticDataProvider _staticDataProvider;
         private ProgressGameDataHolder _progressGameDataHolder;
@@ -24,9 +27,15 @@ namespace Infrastructure.Services.Progress
         }
 
         /// <inheritdoc/>
-        public void SaveProgress()
+        public void SaveGlobal()
         {
-            // Ничего не делаем, так как данные хранятся в Scriptable Object.
+            GlobalProgress.isFirstLaunch = false;
+            GlobalProgress.version = GlobalSaveData.VERSION;
+        }
+
+        public void SaveLevel()
+        {
+            LevelProgressSaveCollectors.Collect(LevelProgress);
         }
 
         /// <inheritdoc/>
