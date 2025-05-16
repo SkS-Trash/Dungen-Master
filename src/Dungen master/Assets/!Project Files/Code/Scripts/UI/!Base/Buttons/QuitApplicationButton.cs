@@ -4,7 +4,7 @@
     {
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<IQuitApplication>(x => x.QuitApplication());
+            EventBus.RaiseEvent<IQuitApplicationEvent>(x => x.OnQuitApplication());
         }
     }
 }

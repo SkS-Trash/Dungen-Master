@@ -82,8 +82,8 @@ namespace Core.Project.Dungeon
             }
             else
             {
-                EventBus.RaiseEvent<ILevelProgressLoadSubscriber>(x => x.OnProgressLoaded(levelProgress));
-                EventBus.RaiseEvent<IGlobalProgressLoadSubscriber>(x => x.OnProgressLoaded(gameProgress));
+                EventBus.RaiseEvent<ILevelProgressLoadEvent>(x => x.OnProgressLoaded(levelProgress));
+                EventBus.RaiseEvent<IGlobalProgressLoadEvent>(x => x.OnProgressLoaded(gameProgress));
             }
         }
     }

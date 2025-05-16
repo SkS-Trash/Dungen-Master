@@ -3,7 +3,7 @@
 /// <summary>
 /// Интерфейс для подписчиков на загрузку глобального прогресса.
 /// </summary>
-public interface IGlobalProgressLoadSubscriber : IGlobalSubscriber
+public interface IGlobalProgressLoadEvent : IGlobalSubscriber
 {
     /// <summary>
     /// Загрузить глобальный прогресс.

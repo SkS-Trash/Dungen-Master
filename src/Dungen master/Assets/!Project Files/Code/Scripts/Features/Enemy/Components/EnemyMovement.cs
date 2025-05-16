@@ -7,7 +7,7 @@ namespace Enemy.Components
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyMovement : MonoBehaviour,
-        ILevelProgressLoadSubscriber, ILevelProgressCollector
+        ILevelProgressLoadEvent, ILevelProgressCollector
     {
         public Vector3 CurrentDestination => _agent.destination;
 

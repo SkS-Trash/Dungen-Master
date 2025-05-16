@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Core.Project.MainMenu
 {
     public class MainMenuState : IState, IEnterable, IExitable,
-        ILaunchNewGame, ILaunchContinueGame, IQuitApplication, IOpenSettingsSubscriber
+        ILaunchNewGameEvent, ILaunchContinueGameEvent, IQuitApplicationEvent, IOpenSettingsEvent
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _windows;
@@ -42,23 +42,23 @@ namespace Core.Project.MainMenu
 
             await _windows.Open(WindowID.MainMenu);
 
-            EventBus.RaiseEvent<IGlobalProgressLoadSubscriber>(s => s.OnProgressLoaded(_progress.GlobalProgress));
+            EventBus.RaiseEvent<IGlobalProgressLoadEvent>(s => s.OnProgressLoaded(_progress.GlobalProgress));
 
             // HideLoadingScreen();
 
             EventBus.Subscribe(this);
         }
 
-        public void LaunchNewGame() =>
+        public void OnLaunchNewGame() =>
             _projectEngine.ChangeState<LaunchNewGameState>();
 
-        public void LaunchContinueGame() =>
+        public void OnLaunchContinueGame() =>
             _projectEngine.ChangeState<LaunchContinueGameState>();
 
-        public void QuitApplication() =>
+        public void OnQuitApplication() =>
             _projectEngine.ChangeState<ExitFromApplicationState>();
 
-        public void OpenSettings() =>
+        public void OnOpenSettings() =>
             _projectEngine.ChangeState<SettingsState>();
 
         #endregion

@@ -3,7 +3,7 @@
 /// <summary>
 /// Интерфейс для подписчиков на загрузку прогресса уровня.
 /// </summary>
-public interface ILevelProgressLoadSubscriber : IGlobalSubscriber
+public interface ILevelProgressLoadEvent : IGlobalSubscriber
 {
     /// <summary>
     /// Загрузить прогресс уровня.

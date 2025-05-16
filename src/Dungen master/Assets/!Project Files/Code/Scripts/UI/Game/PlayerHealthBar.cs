@@ -2,7 +2,7 @@
 
 namespace UI.Game
 {
-    public class PlayerHealthBar : HealthBar, IPlayerHealthPercentageSubscriber
+    public class PlayerHealthBar : HealthBar, IPlayerHealthPercentageEvent
     {
         public void OnEnable()
         {

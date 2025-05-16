@@ -7,7 +7,7 @@ using StateMachines.DirectControlMultiLayer;
 namespace Core.Project.Settings
 {
     public class SettingsState : IState, IEnterable, IExitable,
-        ISettingsCloseSubscriber
+        ISettingsCloseEvent
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _window;
@@ -37,7 +37,7 @@ namespace Core.Project.Settings
             return UniTask.CompletedTask;
         }
 
-        public void CloseSettings()
+        public void OnCloseSettings()
         {
             _projectEngine.ChangeState<MainMenuState>();
         }

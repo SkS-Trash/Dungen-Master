@@ -4,7 +4,7 @@
     {
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<IExitFromPauseScreenSubscriber>(x => x.OnExitFromPauseHomeScreen());
+            EventBus.RaiseEvent<IExitFromPauseScreenEvent>(x => x.OnExitFromPauseScreen());
         }
     }
 }

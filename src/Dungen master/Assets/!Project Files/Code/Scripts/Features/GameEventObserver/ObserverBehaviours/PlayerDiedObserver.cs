@@ -1,7 +1,7 @@
 ﻿namespace GameEventObserver
 {
     public class PlayerDiedObserver : GameEventObserverBehaviour,
-        IPlayerDiedSubscriber
+        IPlayerDeathEvent
     {
         public override GameEventType EventType => GameEventType.PlayerDied;
         

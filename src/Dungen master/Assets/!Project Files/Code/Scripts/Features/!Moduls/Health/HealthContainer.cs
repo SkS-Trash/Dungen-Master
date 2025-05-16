@@ -13,7 +13,7 @@ namespace Health
 
         private void Start()
         {
-            SetCurrentHealth(CurrentHealth);
+            SetCurrentHealth(MaxHealth);
         }
 
         public virtual void TakeDamage(int damage)

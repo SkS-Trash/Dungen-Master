@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace UI.Game
 {
-    public class MagicCooldown : ElementUI, IPlayerMagicCooldownSubscriber
+    public class MagicCooldown : ElementUI, IPlayerMagicCooldownEvent
     {
         [SerializeField] private Image magicCooldown;
 
