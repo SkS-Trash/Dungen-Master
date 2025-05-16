@@ -43,7 +43,7 @@ namespace Magic
             while (currentSpellCooldown < _spellCooldown)
             {
                 currentSpellCooldown += Time.deltaTime;
-                EventBus.RaiseEvent<IPlayerMagicCooldownSubscriber>(x =>
+                EventBus.RaiseEvent<IPlayerMagicCooldownEvent>(x =>
                     x.OnPlayerMagicCooldownChanged(CurrentSpellCooldown(currentSpellCooldown)));
 
                 yield return null;

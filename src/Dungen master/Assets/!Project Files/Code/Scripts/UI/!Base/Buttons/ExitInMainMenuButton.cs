@@ -4,7 +4,7 @@
     {
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<IExitInMainMenuSubscriber>(x => x.OnExitInMainMenu());
+            EventBus.RaiseEvent<IExitInMainMenuEvent>(x => x.OnExitInMainMenu());
         }
     }
 }

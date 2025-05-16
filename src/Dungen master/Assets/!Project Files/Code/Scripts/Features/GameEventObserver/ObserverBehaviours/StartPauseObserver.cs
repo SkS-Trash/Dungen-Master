@@ -4,7 +4,7 @@ using VContainer;
 namespace GameEventObserver
 {
     public class StartPauseObserver : GameEventObserverBehaviour,
-        IPauseGameSubscriber
+        IPauseGameEvent
     {
         public override GameEventType EventType => GameEventType.StartPause;
 

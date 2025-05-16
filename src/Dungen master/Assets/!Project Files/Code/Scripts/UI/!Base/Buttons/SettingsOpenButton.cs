@@ -4,7 +4,7 @@
     {
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<IOpenSettingsSubscriber>(x => x.OpenSettings());
+            EventBus.RaiseEvent<IOpenSettingsEvent>(x => x.OnOpenSettings());
         }
     }
 }

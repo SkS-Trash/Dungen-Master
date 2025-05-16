@@ -125,7 +125,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 42913affeef760d488191ffbbfeef5df
-    m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall.prefab
+    m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall - Red.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42a9399704b303a4b86ea4ab7f5d3c4d
+    m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall - Blue.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -147,6 +152,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4f9b5969698af7042866d3b0e4b6888d
     m_Address: UI/Enemy Stats
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5898753f2103bf945a53e4ea88b7ec88
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Boss/Magician-Skeleton 1
+      (Boss).prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -231,6 +242,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: add5eb6b5b56d2f4a82eb83d8792bf07
+    m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall - Green.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2f3fa34401d7874f83b34e964fc4080
+    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Boss/Axe-Warrior 1 (Boss).prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c658eb53f4b402c41985b34d6c2da6ea
     m_Address: Assets/!Project Files/Level/Prefabs/!Test/EnemyRangedCombat.prefab

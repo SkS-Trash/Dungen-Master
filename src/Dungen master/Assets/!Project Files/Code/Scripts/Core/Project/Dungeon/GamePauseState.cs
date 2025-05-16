@@ -6,13 +6,14 @@ using Services.CursorControl;
 using Services.ProjectManager;
 using Services.Window;
 using StateMachines.DirectControlMultiLayer;
+using UnityEngine;
 
 namespace Core.Project.Dungeon
 {
     public class GamePauseState : IStateOneShot,
-        IExitInMainMenuSubscriber,
-        IExitFromPauseScreenSubscriber,
-        IExitInHomeSubscriber
+        IExitInMainMenuEvent,
+        IExitFromPauseScreenEvent,
+        IExitInHomeEvent
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _window;
@@ -36,14 +37,21 @@ namespace Core.Project.Dungeon
 
         public async UniTask OnEnterAsync(Unit _)
         {
-            _cursorSnapshot = _cursorControl.Capture();
+            CursorSetup();
 
             await _window.Open(WindowID.GamePauseMenu);
 
             _inputActionReader.OnCancelChanged += ExitFromPause;
 
             EventBus.Subscribe(this);
-            EventBus.RaiseEvent<IPauseGameSubscriber>(x => x.OnPauseGame(true));
+            EventBus.RaiseEvent<IPauseGameEvent>(x => x.OnPauseGame(true));
+        }
+
+        private void CursorSetup()
+        {
+            _cursorSnapshot = _cursorControl.Capture();
+            _cursorControl.SetLock(CursorLockMode.None);
+            _cursorControl.SetVisible(true);
         }
 
         private void OnExit()
@@ -55,7 +63,7 @@ namespace Core.Project.Dungeon
             _inputActionReader.OnCancelChanged -= ExitFromPause;
             EventBus.Unsubscribe(this);
 
-            EventBus.RaiseEvent<IPauseGameSubscriber>(x => x.OnPauseGame(false));
+            EventBus.RaiseEvent<IPauseGameEvent>(x => x.OnPauseGame(false));
         }
 
         public void OnExitInMainMenu()
@@ -72,7 +80,7 @@ namespace Core.Project.Dungeon
             _projectEngine.ChangeState<HomeState>();
         }
 
-        public void OnExitFromPauseHomeScreen() => OnExit();
+        public void OnExitFromPauseScreen() => OnExit();
 
         private void ExitFromPause() => OnExit();
     }

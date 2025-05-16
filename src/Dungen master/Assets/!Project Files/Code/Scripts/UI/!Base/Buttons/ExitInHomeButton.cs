@@ -4,7 +4,7 @@
     {
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<IExitInHomeSubscriber>(x => x.OnExitInHome());
+            EventBus.RaiseEvent<IExitInHomeEvent>(x => x.OnExitInHome());
         }
     }
 }

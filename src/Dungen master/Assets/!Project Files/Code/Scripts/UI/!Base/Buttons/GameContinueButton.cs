@@ -3,7 +3,7 @@
 namespace UI.Buttons
 {
     public class GameContinueButton : ButtonView,
-        IGlobalProgressLoadSubscriber
+        IGlobalProgressLoadEvent
     {
         protected override void OnEnable()
         {
@@ -19,7 +19,7 @@ namespace UI.Buttons
 
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<ILaunchContinueGame>(x => x.LaunchContinueGame());
+            EventBus.RaiseEvent<ILaunchContinueGameEvent>(x => x.OnLaunchContinueGame());
         }
 
         public void OnProgressLoaded(GlobalSaveData progress)

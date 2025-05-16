@@ -4,7 +4,7 @@
     {
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<ILaunchNewGame>(x => x.LaunchNewGame());
+            EventBus.RaiseEvent<ILaunchNewGameEvent>(x => x.OnLaunchNewGame());
         }
     }
 }

@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 namespace Enemy.Components
 {
     public class EnemyHealth : HealthContainer,
-        ILevelProgressLoadSubscriber, ILevelProgressCollector
+        ILevelProgressLoadEvent, ILevelProgressCollector
     {
         [field: ShowInInspector, HideInEditorMode]
         public bool WasDamaged { get; set; }

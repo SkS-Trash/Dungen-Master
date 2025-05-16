@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Boss - EnemyConfig 1
   m_EditorClassIdentifier: 
   <Reference>k__BackingField:
-    m_AssetGUID: 
+    m_AssetGUID: b2f3fa34401d7874f83b34e964fc4080
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
-  <AllowedRotations>k__BackingField: []
-  <MinScale>k__BackingField: {x: 1, y: 1, z: 1}
-  <MaxScale>k__BackingField: {x: 1, y: 1, z: 1}
+    m_EditorAssetChanged: 1
+  <AllowedRotations>k__BackingField:
+  - {x: 0, y: 0, z: 0}
+  <MinScale>k__BackingField: {x: 1.25, y: 1.25, z: 1.25}
+  <MaxScale>k__BackingField: {x: 1.5, y: 1.5, z: 1.5}

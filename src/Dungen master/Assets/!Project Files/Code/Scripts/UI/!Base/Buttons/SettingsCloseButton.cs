@@ -4,7 +4,7 @@
     {
         protected override void OnClick()
         {
-            EventBus.RaiseEvent<ISettingsCloseSubscriber>(x => x.CloseSettings());
+            EventBus.RaiseEvent<ISettingsCloseEvent>(x => x.OnCloseSettings());
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 namespace Player
 {
     public class ThirdPersonController : MonoBehaviour,
-        ILevelProgressLoadSubscriber, ILevelProgressCollector
+        ILevelProgressLoadEvent, ILevelProgressCollector
     {
         [SerializeField] private Transform camera;
         [SerializeField] private float turnSmoothVelocity = 2f;

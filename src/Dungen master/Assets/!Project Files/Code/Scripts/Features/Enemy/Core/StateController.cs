@@ -18,11 +18,9 @@ namespace Enemy.Core
         public EnemyMovement Movement { get; private set; }
         public Transform Player { get; private set; }
 
-
         private void Awake()
         {
             Movement = GetComponent<EnemyMovement>();
-
             Animator = GetComponent<EnemyAnimator>();
 
             Health = GetComponent<EnemyHealth>();

@@ -8,8 +8,8 @@ using StateMachines.DirectControlMultiLayer;
 namespace Core.Project.Home
 {
     public class HomePauseState : IStateOneShot,
-        IExitInMainMenuSubscriber,
-        IExitFromPauseScreenSubscriber
+        IExitInMainMenuEvent,
+        IExitFromPauseScreenEvent
     {
         private readonly IProjectEngine _projectEngine;
         private readonly IWindowService _window;
@@ -32,7 +32,7 @@ namespace Core.Project.Home
             _inputActionReader.OnCancelChanged += ExitFromPause;
             EventBus.Subscribe(this);
 
-            EventBus.RaiseEvent<IPauseGameSubscriber>(x => x.OnPauseGame(true));
+            EventBus.RaiseEvent<IPauseGameEvent>(x => x.OnPauseGame(true));
         }
 
         private void OnExit()
@@ -41,7 +41,7 @@ namespace Core.Project.Home
             _inputActionReader.OnCancelChanged -= ExitFromPause;
             EventBus.Unsubscribe(this);
 
-            EventBus.RaiseEvent<IPauseGameSubscriber>(x => x.OnPauseGame(false));
+            EventBus.RaiseEvent<IPauseGameEvent>(x => x.OnPauseGame(false));
         }
 
         public void OnExitInMainMenu()
@@ -51,7 +51,7 @@ namespace Core.Project.Home
             _projectEngine.ChangeState<MainMenuState>();
         }
 
-        public void OnExitFromPauseHomeScreen() => OnExit();
+        public void OnExitFromPauseScreen() => OnExit();
 
         private void ExitFromPause() => OnExit();
     }

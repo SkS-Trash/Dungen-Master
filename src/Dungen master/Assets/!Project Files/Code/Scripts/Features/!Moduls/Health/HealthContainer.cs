@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Health
@@ -7,13 +8,12 @@ namespace Health
     {
         public event Action<int> OnHealthChanged;
 
-        [field: SerializeField] public int CurrentHealth { get; protected set; }
-
-        [field: SerializeField] public int MaxHealth { get; protected set; } = 100;
+        [field: ShowInInspector, ReadOnly] public int CurrentHealth { get; protected set; }
+        [field: ShowInInspector, ReadOnly] public int MaxHealth { get; protected set; } = 100;
 
         private void Start()
         {
-            SetCurrentHealth(CurrentHealth);
+            SetCurrentHealth(MaxHealth);
         }
 
         public virtual void TakeDamage(int damage)

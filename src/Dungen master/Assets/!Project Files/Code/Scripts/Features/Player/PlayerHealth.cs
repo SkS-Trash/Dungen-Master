@@ -5,7 +5,7 @@ using Services.Progress;
 namespace Player
 {
     public class PlayerHealth : HealthContainer,
-        ILevelProgressLoadSubscriber, ILevelProgressCollector
+        ILevelProgressLoadEvent, ILevelProgressCollector
     {
         private void OnEnable()
         {
@@ -27,7 +27,7 @@ namespace Player
 
             if (CurrentHealth <= 0)
             {
-                EventBus.RaiseEvent<IPlayerDiedSubscriber>(subscriber => subscriber.OnPlayerDeath());
+                EventBus.RaiseEvent<IPlayerDeathEvent>(subscriber => subscriber.OnPlayerDeath());
             }
         }
 
@@ -54,7 +54,7 @@ namespace Player
 
         private void OnHealthChanged()
         {
-            EventBus.RaiseEvent<IPlayerHealthPercentageSubscriber>(subscriber =>
+            EventBus.RaiseEvent<IPlayerHealthPercentageEvent>(subscriber =>
                 subscriber.OnPlayerHealthPercentageChanged(GetPercentage()));
         }
     }

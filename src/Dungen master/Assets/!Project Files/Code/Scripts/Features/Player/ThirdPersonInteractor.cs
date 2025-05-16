@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public interface IInteractableFocusSubscriber : IGlobalSubscriber
+    public interface IInteractableFocusEvent : IGlobalSubscriber
     {
         void OnInteractableFocus(InteractableBase interactable);
         void OnInteractableLoseFocus();
@@ -49,7 +49,7 @@ namespace Player
 
                 interactableBase.OnGainFocus();
 
-                EventBus.RaiseEvent<IInteractableFocusSubscriber>(x =>
+                EventBus.RaiseEvent<IInteractableFocusEvent>(x =>
                     x.OnInteractableFocus(_currentInteractableBase));
 
                 return;
@@ -74,7 +74,7 @@ namespace Player
             _currentInteractableBase.OnLoseFocus();
             _currentInteractableBase = null;
 
-            EventBus.RaiseEvent<IInteractableFocusSubscriber>(x => x.OnInteractableLoseFocus());
+            EventBus.RaiseEvent<IInteractableFocusEvent>(x => x.OnInteractableLoseFocus());
         }
 
         private void OnDrawGizmosSelected()

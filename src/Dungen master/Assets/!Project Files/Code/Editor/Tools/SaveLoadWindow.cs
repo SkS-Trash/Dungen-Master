@@ -190,8 +190,8 @@ public class SaveLoadWindow : EditorWindow
             return;
         }
 
-        EventBus.RaiseEvent<ILevelProgressLoadSubscriber>(x => x.OnProgressLoaded(ProgressService.LevelProgress));
-        EventBus.RaiseEvent<IGlobalProgressLoadSubscriber>(x => x.OnProgressLoaded(ProgressService.GlobalProgress));
+        EventBus.RaiseEvent<ILevelProgressLoadEvent>(x => x.OnProgressLoaded(ProgressService.LevelProgress));
+        EventBus.RaiseEvent<IGlobalProgressLoadEvent>(x => x.OnProgressLoaded(ProgressService.GlobalProgress));
         Debug.Log("Подписчики оповещены о прогрессе.");
     }
 
