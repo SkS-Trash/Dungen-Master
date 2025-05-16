@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Services.Window;
 using StateMachines.DirectControlMultiLayer;
-using UI.Game;
+using UI.Game.Player;
 
 namespace Core.Project.Dungeon
 {

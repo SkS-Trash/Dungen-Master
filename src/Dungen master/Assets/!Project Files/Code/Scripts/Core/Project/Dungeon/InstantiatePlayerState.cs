@@ -1,9 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using Factories.GameObject;
-using Player;
 using ProceduralDungeon.Data.Types;
 using Providers.Containers.Game;
 using StateMachines.DirectControlMultiLayer;
+using UI.Game.Player;
 using UnityEngine;
 using static GameObjectsPaths;
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Enemy;
+using Enemy.Core;
 using Factories.GameObject;
 using ProceduralDungeon.Data.Configs;
 using ProceduralDungeon.Data.Types;
@@ -72,12 +72,12 @@ namespace Core.Project.Dungeon
                 Quaternion.identity,
                 parent
             );
-            
+
             enemyInstance.name = $"Enemy - {enemyType} ({x}, {y})";
 
-            enemyInstance.GetComponent<EnemyCore>()
-                .SetPlayerTransform(_playerTransform)
-                .Initialize();
+            enemyInstance
+                .GetComponent<StateController>()
+                .SetPlayerTransform(_playerTransform);
         }
     }
 }

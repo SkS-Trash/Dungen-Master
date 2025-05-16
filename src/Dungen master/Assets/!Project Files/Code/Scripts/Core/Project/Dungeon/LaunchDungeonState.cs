@@ -1,7 +1,4 @@
-﻿using Core.Project.MainMenu;
-using Cysharp.Threading.Tasks;
-using Factories.GameEvent;
-using GameEventObserver;
+﻿using Cysharp.Threading.Tasks;
 using Providers.Containers.Game;
 using Providers.Data;
 using Services.Progress;
@@ -93,51 +90,6 @@ namespace Core.Project.Dungeon
             {
                 EventBus.RaiseEvent<ILevelProgressLoadSubscriber>(x => x.OnProgressLoaded(levelProgress));
                 EventBus.RaiseEvent<IGlobalProgressLoadSubscriber>(x => x.OnProgressLoaded(gameProgress));
-            }
-        }
-    }
-
-    public class SetupGameEventState : IStateOneShot
-    {
-        private readonly IGameEventFactory _gameEventFactory;
-        private readonly IProjectEngine _projectEngine;
-
-        public SetupGameEventState(
-            IGameEventFactory gameEventFactory,
-            IProjectEngine projectEngine
-        )
-        {
-            _gameEventFactory = gameEventFactory;
-            _projectEngine = projectEngine;
-        }
-
-        public UniTask OnEnterAsync(Unit _)
-        {
-            SetupStartPauseEvent();
-            SetupPlayerDeathEvent();
-
-            return UniTask.CompletedTask;
-        }
-
-        private void SetupStartPauseEvent()
-        {
-            var @event = _gameEventFactory.CreateGameEvent(GameEventType.StartPause);
-            @event.Register(OnStartPauseEvent);
-
-            void OnStartPauseEvent(GameEventObserverBehaviour gameEventObserverBehaviour)
-            {
-                _projectEngine.RunOneShot<GamePauseState>();
-            }
-        }
-
-        private void SetupPlayerDeathEvent()
-        {
-            var @event = _gameEventFactory.CreateGameEvent(GameEventType.PlayerDied);
-            @event.Register(OnPlayerDeathEvent);
-
-            void OnPlayerDeathEvent(GameEventObserverBehaviour gameEventObserverBehaviour)
-            {
-                _projectEngine.ChangeState<MainMenuState>();
             }
         }
     }

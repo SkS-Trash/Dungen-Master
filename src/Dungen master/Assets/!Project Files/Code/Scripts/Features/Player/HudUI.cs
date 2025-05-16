@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UI.Game
+namespace UI.Game.Player
 {
     public class HudUI : ElementUI
     {
