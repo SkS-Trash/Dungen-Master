@@ -13,7 +13,7 @@ namespace Enemy.Actions
             foreach (var collider in colliders)
                 collider.enabled = false;
 
-            c.GetComponent<Canvas>().gameObject.SetActive(false);
+            c.GetComponentInChildren<Canvas>().gameObject.SetActive(false);
 
             c.Animator.ApplyRootMotion(true);
 
