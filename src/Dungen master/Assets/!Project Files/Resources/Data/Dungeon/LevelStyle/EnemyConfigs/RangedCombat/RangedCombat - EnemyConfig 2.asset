@@ -20,5 +20,5 @@ MonoBehaviour:
     m_EditorAssetChanged: 1
   <AllowedRotations>k__BackingField:
   - {x: 0, y: 0, z: 0}
-  <MinScale>k__BackingField: {x: 1, y: 1, z: 1}
+  <MinScale>k__BackingField: {x: 0.85, y: 0.85, z: 0.85}
   <MaxScale>k__BackingField: {x: 1, y: 1, z: 1}
