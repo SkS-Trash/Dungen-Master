@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Reflection;
-using System;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 [CustomPropertyDrawer(typeof(SerializableDictionaryBase), true)]
 #if NET_4_6 || NET_STANDARD_2_0
