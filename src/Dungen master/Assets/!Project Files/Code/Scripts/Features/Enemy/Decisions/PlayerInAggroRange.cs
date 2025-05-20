@@ -7,6 +7,6 @@ namespace Enemy.Decisions
     public class PlayerInAggroRange : DecisionSO
     {
         public override bool Decide(StateController c) =>
-            Vector3.Distance(c.transform.position, c.Player.position) < c.Stats.aggroRadius;
+            Vector3.Distance(c.transform.position, c.Player.position) < c.Stats.CurrentValue.aggroRadius;
     }
 }

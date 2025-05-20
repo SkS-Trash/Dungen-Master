@@ -1,5 +1,6 @@
 ﻿using Enemy.Components;
 using Enemy.Components.Events;
+using R3;
 using UnityEngine;
 
 namespace Enemy.Core
@@ -11,7 +12,7 @@ namespace Enemy.Core
     {
         [Tooltip("Start State (SO)")] public State currentState;
 
-        [field: SerializeField] public EnemyStatsSO Stats { get; private set; }
+        [field: SerializeField] public ReactiveProperty<EnemyStatsSO> Stats { get; private set; }
         [field: SerializeField] public AttackPatternSO AttackPattern { get; private set; }
 
         public EnemyAnimator Animator { get; private set; }
@@ -31,7 +32,7 @@ namespace Enemy.Core
             AttackCooldownTracker = GetComponent<AttackCooldownTracker>();
 
             Health = GetComponent<EnemyHealth>();
-            Health.SetMaxHealth(Stats.maxHealth);
+            Health.SetMaxHealth(Stats.CurrentValue.maxHealth);
         }
 
         private void Update() => currentState?.UpdateState(this);

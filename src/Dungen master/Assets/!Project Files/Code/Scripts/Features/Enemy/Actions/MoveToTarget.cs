@@ -8,7 +8,7 @@ namespace Enemy.Actions
     {
         public override void Act(StateController c)
         {
-            c.Movement.SetSpeed(c.Stats.moveSpeed);
+            c.Movement.SetSpeed(c.Stats.CurrentValue.moveSpeed);
             c.Movement.MoveTo(c.Player.position);
             c.Animator.SetIsRun(true);
         }
