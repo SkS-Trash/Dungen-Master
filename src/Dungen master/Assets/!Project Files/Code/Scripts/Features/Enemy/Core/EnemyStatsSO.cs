@@ -9,5 +9,6 @@ namespace Enemy.Core
         public float moveSpeed = 3;
         public float aggroRadius = 10;
         public float attackRadius = 2;
+        public float fleeDistance = 5;
     }
 }
