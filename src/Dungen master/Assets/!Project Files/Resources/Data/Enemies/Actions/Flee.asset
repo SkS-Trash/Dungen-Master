@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b9b18734e6a415c89f19555f5c4f03d, type: 3}
-  m_Name: Attack From Pattern Action
+  m_Script: {fileID: 11500000, guid: 5d50b913e77e4f7e8f16a5063ef5bbc1, type: 3}
+  m_Name: Flee
   m_EditorClassIdentifier: 
