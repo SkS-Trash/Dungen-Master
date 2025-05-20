@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Weapon;
 
-namespace Player
+namespace Player.Components
 {
     public class PlayerCombatController : MonoBehaviour
     {

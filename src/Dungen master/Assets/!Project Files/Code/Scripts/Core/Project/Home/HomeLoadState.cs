@@ -15,7 +15,7 @@ namespace Core.Project.Home
             _projectEngine = projectEngine;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await _projectEngine.RunOneShot<LoadHomeSceneState>();
             await _projectEngine.RunOneShot<InstantiatePlayerState>();

@@ -21,7 +21,7 @@ namespace Core.Project.Dungeon
             _projectEngine = projectEngine;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             SetupStartPauseEvent();
             SetupPlayerDeathEvent();

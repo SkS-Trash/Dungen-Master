@@ -17,7 +17,7 @@ namespace Core.Project
             _sceneLoaderService = sceneLoaderService;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             var scenePath = ScenesPaths.EMPTY;
 

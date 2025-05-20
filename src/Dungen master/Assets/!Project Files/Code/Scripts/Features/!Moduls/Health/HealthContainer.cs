@@ -1,4 +1,5 @@
 ﻿using System;
+using R3;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace Health
     public class HealthContainer : MonoBehaviour
     {
         public event Action<int> OnHealthChanged;
+
+        public ReactiveProperty<float> HealthPercentage { get; } = new(1f);
 
         [field: ShowInInspector, ReadOnly] public int CurrentHealth { get; protected set; }
         [field: ShowInInspector, ReadOnly] public int MaxHealth { get; protected set; } = 100;
@@ -35,7 +38,7 @@ namespace Health
                 CurrentHealth = maxHealth;
             }
 
-            OnHealthChanged?.Invoke(CurrentHealth);
+            NotifyChanged();
         }
 
         public virtual void SetCurrentHealth(int currentHealth)
@@ -47,7 +50,14 @@ namespace Health
                 CurrentHealth = MaxHealth;
             }
 
+            NotifyChanged();
+        }
+
+        protected virtual void NotifyChanged()
+        {
             OnHealthChanged?.Invoke(CurrentHealth);
+
+            HealthPercentage.Value = (float)CurrentHealth / MaxHealth;
         }
     }
 }

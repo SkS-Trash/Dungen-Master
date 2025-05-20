@@ -33,7 +33,7 @@ namespace Core.Project.MainMenu
 
         #region Enter
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             _cursorControl.SetLock(CursorLockMode.None);
             _cursorControl.SetVisible(true);

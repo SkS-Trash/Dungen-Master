@@ -26,7 +26,7 @@ namespace Core.Project.Dungeon
             _containerProvider = containerProvider;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             var container = _containerProvider.Container;
             _playerTransform = container.PlayerTransform;

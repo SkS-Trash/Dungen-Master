@@ -13,7 +13,7 @@ namespace Enemy.Actions
             if (c.Movement.HasReachedDestination())
             {
                 var pos = c.transform.position;
-                _target = pos + (Random.insideUnitSphere * 4f);
+                _target = pos + Random.insideUnitSphere * 4f;
                 _target.y = pos.y;
                 c.Movement.SetSpeed(c.Stats.moveSpeed * 0.6f);
                 c.Movement.MoveTo(_target);

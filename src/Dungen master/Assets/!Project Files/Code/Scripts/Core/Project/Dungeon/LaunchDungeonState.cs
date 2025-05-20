@@ -28,7 +28,7 @@ namespace Core.Project.Dungeon
             _progress = progress;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await _projectEngine.RunOneShot<LoadEmptySceneState>();
 
@@ -39,7 +39,6 @@ namespace Core.Project.Dungeon
             await _projectEngine.RunOneShot<ConstructionDecorState>();
             await _projectEngine.RunOneShot<BakeNavMeshState>();
             await _projectEngine.RunOneShot<InstantiatePlayerState>();
-            await _projectEngine.RunOneShot<InstantiateUIState>();
             await _projectEngine.RunOneShot<ConstructionEnemyState>();
             await _projectEngine.RunOneShot<ConfiguredGameState>();
             await _projectEngine.RunOneShot<SetupGameEventState>();

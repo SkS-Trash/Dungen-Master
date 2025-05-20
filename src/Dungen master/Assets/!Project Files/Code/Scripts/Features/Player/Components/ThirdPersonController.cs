@@ -3,7 +3,7 @@ using Services.Progress;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Player.Components
 {
     public class ThirdPersonController : MonoBehaviour,
         ILevelProgressLoadEvent, ILevelProgressCollector
@@ -11,11 +11,14 @@ namespace Player
         [SerializeField] private Transform camera;
         [SerializeField] private float turnSmoothVelocity = 2f;
         [SerializeField] private float turnSmoothTime = 0.1f;
-        [Space] [SerializeField] private CharacterController characterController;
+        [Space]
+        [SerializeField] private CharacterController characterController;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float runSpeed = 10f;
-        [Space] [SerializeField] private PlayerAnimator animator;
-        [Space] [SerializeField] private InputActionReference moveAction;
+        [Space] 
+        [SerializeField] private PlayerAnimator animator;
+        [Space] 
+        [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference sprintAction;
 
         private Vector2 _moveInput;

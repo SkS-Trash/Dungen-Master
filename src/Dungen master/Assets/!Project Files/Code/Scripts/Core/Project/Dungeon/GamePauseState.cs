@@ -35,7 +35,7 @@ namespace Core.Project.Dungeon
             _cursorControl = cursorControl;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             CursorSetup();
 

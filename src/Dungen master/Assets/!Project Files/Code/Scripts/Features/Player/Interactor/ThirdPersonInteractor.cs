@@ -2,14 +2,8 @@ using Interactable;
 using Observers.Input;
 using UnityEngine;
 
-namespace Player
+namespace Player.Interactor
 {
-    public interface IInteractableFocusEvent : IGlobalSubscriber
-    {
-        void OnInteractableFocus(InteractableBase interactable);
-        void OnInteractableLoseFocus();
-    }
-
     public class ThirdPersonInteractor : MonoBehaviour
     {
         [SerializeField] private float interactionRange = 2f;

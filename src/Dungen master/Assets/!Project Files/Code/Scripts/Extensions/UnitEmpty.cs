@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Структура-заглушка
 /// </summary>
-public struct Unit
+public struct UnitEmpty
 {
-    public static Unit Default => default;
+    public static UnitEmpty Default => default;
 }

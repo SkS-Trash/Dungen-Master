@@ -16,7 +16,7 @@ namespace Core.Project.Dungeon
             _cursorControl = cursorControl;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             _cursorControl.SetLock(CursorLockMode.Locked);
             _cursorControl.SetVisible(false);

@@ -9,7 +9,7 @@ namespace Enemy.Actions
     {
         public override void Act(StateController c)
         {
-            c.GetComponent<AttackCooldownTracker>().ResetCooldown();
+            c.AttackCooldownTracker.ResetCooldown();
         }
     }
 }

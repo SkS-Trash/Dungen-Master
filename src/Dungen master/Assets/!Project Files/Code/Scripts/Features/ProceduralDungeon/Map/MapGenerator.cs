@@ -6,13 +6,6 @@ using ProceduralDungeon.Data.Types;
 
 namespace ProceduralDungeon
 {
-    public enum MapGenerationMode
-    {
-        Rectangular,
-        Cavern,
-        BSP,
-    }
-
     public class MapGenerator : IMapGenerator
     {
         public TileType[,] Map { get; private set; }

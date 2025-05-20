@@ -1,4 +1,5 @@
 ﻿using Enemy.Components;
+using Enemy.Components.Events;
 using UnityEngine;
 
 namespace Enemy.Core
@@ -14,14 +15,20 @@ namespace Enemy.Core
         [field: SerializeField] public AttackPatternSO AttackPattern { get; private set; }
 
         public EnemyAnimator Animator { get; private set; }
+        public EnemyAnimationEvents AnimationEvents { get; private set; }
         public EnemyHealth Health { get; private set; }
         public EnemyMovement Movement { get; private set; }
+        public AttackCooldownTracker AttackCooldownTracker { get; private set; }
         public Transform Player { get; private set; }
 
         private void Awake()
         {
-            Movement = GetComponent<EnemyMovement>();
             Animator = GetComponent<EnemyAnimator>();
+            AnimationEvents = GetComponentInChildren<EnemyAnimationEvents>();
+
+            Movement = GetComponent<EnemyMovement>();
+
+            AttackCooldownTracker = GetComponent<AttackCooldownTracker>();
 
             Health = GetComponent<EnemyHealth>();
             Health.SetMaxHealth(Stats.maxHealth);
@@ -39,30 +46,5 @@ namespace Enemy.Core
 
         public void SetPlayerTransform(Transform playerTransform) =>
             Player = playerTransform;
-    }
-
-    public class Cooldown
-    {
-        private float _cooldownDuration;
-        private float _nextReadyTime;
-
-        public Cooldown(float duration)
-        {
-            _cooldownDuration = duration;
-            _nextReadyTime = -Mathf.Infinity;
-        }
-
-        public bool IsReady => Time.time >= _nextReadyTime;
-
-        public void Trigger()
-        {
-            _nextReadyTime = Time.time + _cooldownDuration;
-        }
-
-        public float NormalizedRemaining()
-        {
-            if (IsReady) return 0f;
-            return Mathf.Clamp01((_nextReadyTime - Time.time) / _cooldownDuration);
-        }
     }
 }

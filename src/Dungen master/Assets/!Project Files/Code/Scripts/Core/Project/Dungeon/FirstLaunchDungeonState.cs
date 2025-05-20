@@ -19,7 +19,7 @@ namespace Core.Project.Dungeon
             _progress = progress;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             var gameProgress = _progress.GlobalProgress;
             gameProgress.currentLevelIndex = 0;

@@ -20,7 +20,7 @@ namespace Core.Project.Home
             _projectEngine = projectEngine;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             SetupStartPauseEvent();
 
