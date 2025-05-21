@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Factories.GameEvent;
 using GameEventObserver;
 using Providers.Assets;
+using Score;
 using Services.AudioPlayback;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer;
@@ -37,6 +38,7 @@ namespace Core.Project.Dungeon
             SetupPlayerDeathEvent();
             SetupBossDeathEvent();
             SetupEnemyDeathEvent();
+            InstantiateScoreCounter();
 
             return UniTask.CompletedTask;
         }
@@ -104,6 +106,12 @@ namespace Core.Project.Dungeon
                 var soundtrack = await _assetsProvider.GetAsset<AudioClip>(SoundsPaths.GameEnemyDeathSoundtrack);
                 _audioPlayback.PlayAudio(soundtrack, AudioType.SoundEffect);
             }
+        }
+
+        private void InstantiateScoreCounter()
+        {
+            var scoreCounterGO = new GameObject();
+            scoreCounterGO.AddComponent<ScoreCounter>();
         }
     }
 }

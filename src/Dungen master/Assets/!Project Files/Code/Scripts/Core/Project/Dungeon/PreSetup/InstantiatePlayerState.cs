@@ -9,6 +9,7 @@ using Providers.Containers.Game;
 using R3;
 using Services.Window;
 using StateMachines.DirectControlMultiLayer;
+using UI.HUD;
 using UnityEngine;
 using static GameObjectsPaths;
 
