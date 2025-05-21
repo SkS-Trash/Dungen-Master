@@ -88,12 +88,12 @@ namespace Core.Project.Dungeon
             await _windowService.Open(WindowID.HUD);
 
             var healthBar = _windowService.Get<HealthBar>(WindowID.HUD);
-            var healthContainer = _player.GetComponent<HealthContainer>();
+            var healthContainer = _player.GetComponentInChildren<HealthContainer>();
             healthContainer.HealthPercentage.Subscribe(healthBar.SetHealthPercentage);
             healthBar.SetHealthPercentage(healthContainer.HealthPercentage.Value);
 
             var magicCooldown = _windowService.Get<PlayerMagicCooldown>(WindowID.HUD);
-            var magicContainer = _player.GetComponent<MagicCastController>();
+            var magicContainer = _player.GetComponentInChildren<MagicCastController>();
             magicContainer.SpellCooldown.Subscribe(magicCooldown.SetMagicCooldownPercentage);
             magicCooldown.SetMagicCooldownPercentage(0f);
         }

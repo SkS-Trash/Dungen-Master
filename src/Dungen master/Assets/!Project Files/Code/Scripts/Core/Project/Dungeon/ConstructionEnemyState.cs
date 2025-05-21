@@ -77,14 +77,17 @@ namespace Core.Project.Dungeon
             );
             enemyInstance.name = $"Enemy - {enemyType} ({x}, {y})";
 
+            var stateController = enemyInstance.GetComponent<StateController>();
+            var stateDraw = enemyInstance.GetComponentInChildren<EnemyCurrentStateDraw>();
+            stateController.Stats.Subscribe(
+                state => stateDraw.SetStateText(state.ToString()),
+                state => stateDraw.SetStateText(state.ToString())
+            );
+            
             var healthContainer = enemyInstance.GetComponent<HealthContainer>();
             var healthBar = enemyInstance.GetComponentInChildren<HealthBar>();
             healthContainer.HealthPercentage.Subscribe(healthBar.SetHealthPercentage);
 
-            var stateController = enemyInstance.GetComponent<StateController>();
-            var stateDraw = enemyInstance.GetComponentInChildren<EnemyCurrentStateDraw>();
-            stateController.Stats.Subscribe(state => stateDraw.SetStateText(state.ToString()));
-            
             stateController.SetPlayerTransform(_playerTransform);
         }
     }

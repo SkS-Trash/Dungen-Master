@@ -2,8 +2,12 @@
 using Cysharp.Threading.Tasks;
 using Factories.GameEvent;
 using GameEventObserver;
+using Providers.Assets;
+using Services.AudioPlayback;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer;
+using UnityEngine;
+using AudioType = Services.AudioPlayback.AudioType;
 
 namespace Core.Project.Dungeon
 {
@@ -11,20 +15,28 @@ namespace Core.Project.Dungeon
     {
         private readonly IGameEventFactory _gameEventFactory;
         private readonly IProjectEngine _projectEngine;
+        private readonly IAudioPlaybackService _audioPlayback;
+        private readonly IAssetsProvider _assetsProvider;
 
         public SetupGameEventState(
             IGameEventFactory gameEventFactory,
-            IProjectEngine projectEngine
+            IProjectEngine projectEngine,
+            IAudioPlaybackService audioPlayback,
+            IAssetsProvider assetsProvider
         )
         {
             _gameEventFactory = gameEventFactory;
             _projectEngine = projectEngine;
+            _audioPlayback = audioPlayback;
+            _assetsProvider = assetsProvider;
         }
 
         public UniTask OnEnterAsync(UnitEmpty _)
         {
             SetupStartPauseEvent();
             SetupPlayerDeathEvent();
+            SetupBossDeathEvent();
+            SetupEnemyDeathEvent();
 
             return UniTask.CompletedTask;
         }
@@ -48,6 +60,49 @@ namespace Core.Project.Dungeon
             void OnPlayerDeathEvent(GameEventObserverBehaviour gameEventObserverBehaviour)
             {
                 _projectEngine.ChangeState<MainMenuState>();
+            }
+        }
+
+        private void SetupBossDeathEvent()
+        {
+            var @event = _gameEventFactory.CreateGameEvent(GameEventType.BossDied);
+            @event.Register(OnBossDeathEvent);
+
+            void OnBossDeathEvent(GameEventObserverBehaviour gameEventObserverBehaviour)
+            {
+                _projectEngine.ChangeState<LaunchNextLevelDungeon>();
+            }
+        }
+
+        private void SetupEnemyDeathEvent()
+        {
+            var enemyDiedCount = 0;
+            const int enemyDeathTargetForLaunchNewLevel = 7;
+            const int enemyDeathTargetForSpawnBoss = 3;
+            var @event = _gameEventFactory.CreateGameEvent(GameEventType.EnemyDied);
+            @event.Register(OnEnemyDeathEvent);
+
+            void OnEnemyDeathEvent(GameEventObserverBehaviour gameEventObserverBehaviour)
+            {
+                enemyDiedCount++;
+
+                LaunchEnemyDeathSound();
+
+                if (enemyDiedCount == enemyDeathTargetForSpawnBoss)
+                {
+                    _projectEngine.RunOneShot<LaunchBossDungeon>();
+                }
+
+                if (enemyDiedCount == enemyDeathTargetForLaunchNewLevel)
+                {
+                    _projectEngine.ChangeState<LaunchNextLevelDungeon>();
+                }
+            }
+
+            async void LaunchEnemyDeathSound()
+            {
+                var soundtrack = await _assetsProvider.GetAsset<AudioClip>(SoundsPaths.GameEnemyDeathSoundtrack);
+                _audioPlayback.PlayAudio(soundtrack, AudioType.SoundEffect);
             }
         }
     }
