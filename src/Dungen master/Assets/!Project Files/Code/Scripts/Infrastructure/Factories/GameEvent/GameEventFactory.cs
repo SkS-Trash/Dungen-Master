@@ -21,7 +21,7 @@ namespace Factories.GameEvent
             _objectResolver = objectResolver;
         }
 
-        public GameEventObserverBehaviour CreateGameEvent(GameEventType eventType, object data = null)
+        public IGameEventObserver CreateGameEvent(GameEventType eventType, object data = null)
         {
             var prefab = _staticDataProvider
                 .GetGameEventObserverCollection()

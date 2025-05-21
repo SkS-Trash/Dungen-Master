@@ -23,11 +23,11 @@ namespace Services.Window
             _uiFactory.Exists(windowID);
 
         /// <inheritdoc/>
-        public async UniTask Open(WindowID windowID)
+        public async UniTask<GameObject> Open(WindowID windowID)
         {
             var windowsPath = windowID.GetWindowsPath();
 
-            await _uiFactory.CreateScreen(windowsPath, windowID);
+            return await _uiFactory.CreateScreen(windowsPath, windowID);
         }
 
         /// <inheritdoc/>
@@ -45,25 +45,5 @@ namespace Services.Window
         /// <inheritdoc/>
         public void Close(WindowID windowID) =>
             _uiFactory.DestroyScreen(windowID);
-    }
-
-    internal static class Extensions
-    {
-        internal static string GetWindowsPath(this WindowID windowID) => windowID switch
-        {
-            WindowID.GameLoading => WindowsPaths.GAME_LOADING_PATH,
-            WindowID.MainMenu => WindowsPaths.MAIN_MENU_PATH,
-            WindowID.Settings => WindowsPaths.SETTINGS_PATH,
-
-            WindowID.HomePauseMenu => WindowsPaths.HOME_PAUSE_MENU_PATH,
-
-            WindowID.GamePauseMenu => WindowsPaths.GAME_PAUSE_MENU_PATH,
-            WindowID.Game => WindowsPaths.GAME_PATH,
-            WindowID.HUD => WindowsPaths.HUD_PATH,
-
-            WindowID.GameOver => WindowsPaths.GAME_OVER_PATH,
-            WindowID.Victory => WindowsPaths.VICTORY_PATH,
-            _ => null
-        };
     }
 }

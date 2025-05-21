@@ -16,7 +16,7 @@ namespace Enemy.Attacks
             if (magic && magic.CanCast())
             {
                 magic.SetSpell(spell);
-                controller.Animator.LaunchAttack(); // ивент вызовет Cast
+                controller.Animator.LaunchAttack();
             }
         }
     }

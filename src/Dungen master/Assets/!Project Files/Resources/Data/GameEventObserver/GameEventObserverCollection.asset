@@ -17,3 +17,7 @@ MonoBehaviour:
     Observer: {fileID: 5391293281670465362, guid: 0f7a10610a103ed419d580c3d06cf068, type: 3}
   - EventType: 2
     Observer: {fileID: 8365135481507845634, guid: 1f4d2bff2ffe6094cbb1b45a539cb964, type: 3}
+  - EventType: 3
+    Observer: {fileID: -1930173893415949523, guid: 8cd9e96afc0b3bb4fba9030fdc3b8f86, type: 3}
+  - EventType: 4
+    Observer: {fileID: 3404025749660257211, guid: b4aa3d9f6c92d544c9a3d1fef550b9f7, type: 3}

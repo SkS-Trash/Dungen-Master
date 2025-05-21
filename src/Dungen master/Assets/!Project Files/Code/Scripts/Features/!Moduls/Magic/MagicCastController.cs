@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using Magic.Data;
+using R3;
 using UnityEngine;
 
 namespace Magic
 {
     public class MagicCastController : MonoBehaviour
     {
+        public ReactiveProperty<float> SpellCooldown { get; } = new(1f);
+
         [SerializeField] private UnitType[] targetUnits = { UnitType.Player };
         [SerializeField] private Transform magicCastPoint;
         [SerializeField] private Spell spell;
@@ -43,14 +46,11 @@ namespace Magic
             while (currentSpellCooldown < _spellCooldown)
             {
                 currentSpellCooldown += Time.deltaTime;
-                EventBus.RaiseEvent<IPlayerMagicCooldownEvent>(x =>
-                    x.OnPlayerMagicCooldownChanged(CurrentSpellCooldown(currentSpellCooldown)));
+
+                SpellCooldown.Value = currentSpellCooldown / _spellCooldown;
 
                 yield return null;
             }
         }
-
-        private float CurrentSpellCooldown(float currentSpellCooldown) =>
-            1 - currentSpellCooldown / _spellCooldown;
     }
 }

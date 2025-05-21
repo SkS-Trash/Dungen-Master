@@ -1,10 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Enemy.Components.UI;
 using Enemy.Core;
 using Factories.GameObject;
+using Health;
 using ProceduralDungeon.Data.Configs;
 using ProceduralDungeon.Data.Types;
 using Providers.Containers.Game;
+using R3;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 
@@ -26,7 +29,7 @@ namespace Core.Project.Dungeon
             _containerProvider = containerProvider;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             var container = _containerProvider.Container;
             _playerTransform = container.PlayerTransform;
@@ -72,12 +75,20 @@ namespace Core.Project.Dungeon
                 Quaternion.identity,
                 parent
             );
-
             enemyInstance.name = $"Enemy - {enemyType} ({x}, {y})";
 
-            enemyInstance
-                .GetComponent<StateController>()
-                .SetPlayerTransform(_playerTransform);
+            var stateController = enemyInstance.GetComponent<StateController>();
+            var stateDraw = enemyInstance.GetComponentInChildren<EnemyCurrentStateDraw>();
+            stateController.Stats.Subscribe(
+                state => stateDraw.SetStateText(state.ToString()),
+                state => stateDraw.SetStateText(state.ToString())
+            );
+            
+            var healthContainer = enemyInstance.GetComponent<HealthContainer>();
+            var healthBar = enemyInstance.GetComponentInChildren<HealthBar>();
+            healthContainer.HealthPercentage.Subscribe(healthBar.SetHealthPercentage);
+
+            stateController.SetPlayerTransform(_playerTransform);
         }
     }
 }

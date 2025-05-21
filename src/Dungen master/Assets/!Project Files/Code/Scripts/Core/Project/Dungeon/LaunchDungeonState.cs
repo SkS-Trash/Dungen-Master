@@ -1,10 +1,14 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using Providers.Assets;
 using Providers.Containers.Game;
 using Providers.Data;
+using Services.AudioPlayback;
 using Services.Progress;
 using Services.ProjectManager;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
+using AudioType = Services.AudioPlayback.AudioType;
 
 namespace Core.Project.Dungeon
 {
@@ -14,21 +18,27 @@ namespace Core.Project.Dungeon
         private readonly IStaticDataProvider _staticData;
         private readonly IGameContainerProvider _gameContainer;
         private readonly IProgressService _progress;
+        private readonly IAudioPlaybackService _audioPlayback;
+        private readonly IAssetsProvider _assetsProvider;
 
         public LaunchDungeonState(
             IProjectEngine projectEngine,
             IStaticDataProvider staticData,
             IGameContainerProvider gameContainer,
-            IProgressService progress
+            IProgressService progress,
+            IAudioPlaybackService audioPlayback,
+            IAssetsProvider assetsProvider
         )
         {
             _projectEngine = projectEngine;
             _staticData = staticData;
             _gameContainer = gameContainer;
             _progress = progress;
+            _audioPlayback = audioPlayback;
+            _assetsProvider = assetsProvider;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await _projectEngine.RunOneShot<LoadEmptySceneState>();
 
@@ -39,10 +49,11 @@ namespace Core.Project.Dungeon
             await _projectEngine.RunOneShot<ConstructionDecorState>();
             await _projectEngine.RunOneShot<BakeNavMeshState>();
             await _projectEngine.RunOneShot<InstantiatePlayerState>();
-            await _projectEngine.RunOneShot<InstantiateUIState>();
             await _projectEngine.RunOneShot<ConstructionEnemyState>();
             await _projectEngine.RunOneShot<ConfiguredGameState>();
             await _projectEngine.RunOneShot<SetupGameEventState>();
+
+            await StartSoundtrack();
 
             TrySaveOrLoadConfig();
         }
@@ -85,6 +96,12 @@ namespace Core.Project.Dungeon
                 EventBus.RaiseEvent<ILevelProgressLoadEvent>(x => x.OnProgressLoaded(levelProgress));
                 EventBus.RaiseEvent<IGlobalProgressLoadEvent>(x => x.OnProgressLoaded(gameProgress));
             }
+        }
+
+        private async UniTask StartSoundtrack()
+        {
+            var soundtrack = await _assetsProvider.GetAsset<AudioClip>(SoundsPaths.GameplaySoundtrack);
+            _audioPlayback.PlayAudio(soundtrack, AudioType.Music, true);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Core.Project
             _progress = progress;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             if (_progress.GlobalProgress.IsInDungeon)
             {

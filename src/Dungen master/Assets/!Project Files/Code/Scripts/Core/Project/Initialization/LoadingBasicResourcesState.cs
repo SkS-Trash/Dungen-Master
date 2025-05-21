@@ -8,7 +8,7 @@ namespace Core.Project.Initialization
     {
         private const string DEFAULT_ADDRESSABLE_LABEL = "default";
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await AddressablesInitialize();
 

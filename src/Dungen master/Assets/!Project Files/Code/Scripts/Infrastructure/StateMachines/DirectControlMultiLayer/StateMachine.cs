@@ -31,7 +31,7 @@ namespace StateMachines.DirectControlMultiLayer
         #region ChangeState
 
         public UniTask ChangeState<TState>() where TState : IState
-            => SwitchStateInternal<TState, Unit>(Unit.Default, true);
+            => SwitchStateInternal<TState, UnitEmpty>(UnitEmpty.Default, true);
 
         public UniTask ChangeState<TState, TArg>(TArg arg) where TState : IState
             => SwitchStateInternal<TState, TArg>(arg, true);
@@ -41,7 +41,7 @@ namespace StateMachines.DirectControlMultiLayer
         #region PushState / PopState
 
         public UniTask PushState<TState>() where TState : IState
-            => SwitchStateInternal<TState, Unit>(Unit.Default, false);
+            => SwitchStateInternal<TState, UnitEmpty>(UnitEmpty.Default, false);
 
         public UniTask PushState<TState, TArg>(TArg arg) where TState : IState
             => SwitchStateInternal<TState, TArg>(arg, false);
@@ -55,7 +55,7 @@ namespace StateMachines.DirectControlMultiLayer
 
             if (_stateStack.Count > 0)
             {
-                await EnterActiveStateAsync(Unit.Default);
+                await EnterActiveStateAsync(UnitEmpty.Default);
             }
         }
 
@@ -66,7 +66,7 @@ namespace StateMachines.DirectControlMultiLayer
         public async UniTask RunOneShot<TState>() where TState : IStateOneShot
         {
             var state = _statesFactory.CreateState<TState>();
-            await state.OnEnterAsync(Unit.Default);
+            await state.OnEnterAsync(UnitEmpty.Default);
         }
 
 
@@ -131,8 +131,8 @@ namespace StateMachines.DirectControlMultiLayer
 
             StateChanged?.Invoke(activeState);
 
-            if (activeState is IEnterable<Unit> enterable)
-                await enterable.OnEnterAsync(Unit.Default);
+            if (activeState is IEnterable<UnitEmpty> enterable)
+                await enterable.OnEnterAsync(UnitEmpty.Default);
             else if (activeState is IEnterable<TArg> enterableWithArg)
                 await enterableWithArg.OnEnterAsync(arg);
 

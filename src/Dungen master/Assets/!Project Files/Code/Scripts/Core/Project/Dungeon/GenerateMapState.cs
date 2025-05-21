@@ -17,7 +17,7 @@ namespace Core.Project.Dungeon
             _containerProvider = containerProvider;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             var data = _containerProvider.Container;
             var random = new Random(data.Seed);

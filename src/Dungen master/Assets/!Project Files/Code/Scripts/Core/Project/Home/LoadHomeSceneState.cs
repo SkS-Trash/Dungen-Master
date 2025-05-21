@@ -15,7 +15,7 @@ namespace Core.Project.Home
             _sceneLoaderService = sceneLoaderService;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await _sceneLoaderService.LoadSceneAsync(ScenesPaths.HOME);
         }

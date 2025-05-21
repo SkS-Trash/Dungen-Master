@@ -26,7 +26,7 @@ namespace Core.Project.Home
             _inputActionReader = inputActionReader;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await _window.Open(WindowID.HomePauseMenu);
             _inputActionReader.OnCancelChanged += ExitFromPause;

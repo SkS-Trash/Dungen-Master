@@ -15,7 +15,7 @@ namespace Core.Project.Initialization
             _progressService = progressService;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             LoadProgress();
 

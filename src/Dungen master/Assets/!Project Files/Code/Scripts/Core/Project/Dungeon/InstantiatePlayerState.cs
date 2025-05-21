@@ -1,8 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
 using Factories.GameObject;
-using Player;
+using Health;
+using Magic;
+using Player.Components;
+using Player.UI;
 using ProceduralDungeon.Data.Types;
 using Providers.Containers.Game;
+using R3;
+using Services.Window;
 using StateMachines.DirectControlMultiLayer;
 using UnityEngine;
 using static GameObjectsPaths;
@@ -13,23 +18,30 @@ namespace Core.Project.Dungeon
     {
         private readonly IGameObjectFactory _gameObjectFactory;
         private readonly IGameContainerProvider _gameContainer;
+        private readonly IWindowService _windowService;
+
+        private GameObject _player;
 
         public InstantiatePlayerState(
             IGameObjectFactory gameObjectFactory,
-            IGameContainerProvider gameContainer
+            IGameContainerProvider gameContainer,
+            IWindowService windowService
         )
         {
             _gameObjectFactory = gameObjectFactory;
             _gameContainer = gameContainer;
+            _windowService = windowService;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             var container = _gameContainer.Container;
 
             FindAndSetupSpawnPoint(container);
 
             await InstantiatePlayer(container);
+
+            await InstantiatePlayerUI();
         }
 
         private void FindAndSetupSpawnPoint(IGameContainer container)
@@ -62,13 +74,28 @@ namespace Core.Project.Dungeon
         {
             var spawnPoint = container.PlayerSpawnPoint.position;
 
-            var player = await _gameObjectFactory.InstantiateAsync(
+            _player = await _gameObjectFactory.InstantiateAsync(
                 PLAYER,
                 spawnPoint,
                 Quaternion.identity
             );
 
-            container.PlayerTransform = player.GetComponentInChildren<ThirdPersonController>().transform;
+            container.PlayerTransform = _player.GetComponentInChildren<ThirdPersonController>().transform;
+        }
+
+        private async UniTask InstantiatePlayerUI()
+        {
+            await _windowService.Open(WindowID.HUD);
+
+            var healthBar = _windowService.Get<HealthBar>(WindowID.HUD);
+            var healthContainer = _player.GetComponentInChildren<HealthContainer>();
+            healthContainer.HealthPercentage.Subscribe(healthBar.SetHealthPercentage);
+            healthBar.SetHealthPercentage(healthContainer.HealthPercentage.Value);
+
+            var magicCooldown = _windowService.Get<PlayerMagicCooldown>(WindowID.HUD);
+            var magicContainer = _player.GetComponentInChildren<MagicCastController>();
+            magicContainer.SpellCooldown.Subscribe(magicCooldown.SetMagicCooldownPercentage);
+            magicCooldown.SetMagicCooldownPercentage(0f);
         }
     }
 }

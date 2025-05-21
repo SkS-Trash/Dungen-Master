@@ -16,7 +16,7 @@ namespace Core.Project
             _stateMachine = stateMachine;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             _stateMachine.ChangeState<InitializationState>();
 

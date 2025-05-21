@@ -48,10 +48,10 @@ namespace Factories.UI
             if (_screenInstances.TryGetValue(windowId, out var screenObject))
             {
                 var screenComponent = screenObject.GetComponent<T>();
-                if (screenComponent != null)
-                {
-                    return screenComponent;
-                }
+                if (screenComponent) return screenComponent;
+
+                screenComponent = screenObject.GetComponentInChildren<T>();
+                if (screenComponent) return screenComponent;
 
                 Debug.LogError($"Компонент экрана типа {typeof(T)} не найден");
                 return null;

@@ -18,7 +18,7 @@ namespace Core.Project.Dungeon
             _gameObjectFactory = gameObjectFactory;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             var parentObject = await _gameObjectFactory.InstantiateAsync(GameObjectsPaths.EMPTY_GAME_OBJECT);
             parentObject.name = "NavMeshBake";

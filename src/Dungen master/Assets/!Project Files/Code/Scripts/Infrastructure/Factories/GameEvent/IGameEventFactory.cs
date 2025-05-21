@@ -4,6 +4,6 @@ namespace Factories.GameEvent
 {
     public interface IGameEventFactory
     {
-        GameEventObserverBehaviour CreateGameEvent(GameEventType eventType, object data = null);
+        IGameEventObserver CreateGameEvent(GameEventType eventType, object data = null);
     }
 }

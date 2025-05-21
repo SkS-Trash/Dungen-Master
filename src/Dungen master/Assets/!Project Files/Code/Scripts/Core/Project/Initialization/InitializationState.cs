@@ -16,7 +16,7 @@ namespace Core.Project.Initialization
             _projectEngine = projectEngine;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             // await _projectEngine.RunWhileWaitingForCompletion<OpenLoadingScreenState>();
             await _projectEngine.RunOneShot<LoadEmptySceneState>();

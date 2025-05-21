@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 11400000, guid: 3801af37f5faafc4e9aff00b34053ab3, type: 2}
-  <Stats>k__BackingField: {fileID: 11400000, guid: b85b82525a15e3949b9a5d66f2302341, type: 2}
   <AttackPattern>k__BackingField: {fileID: 11400000, guid: de0aa3bc2d5f5f148bc9b33127644afa, type: 2}
+  stats: {fileID: 11400000, guid: b85b82525a15e3949b9a5d66f2302341, type: 2}
 --- !u!114 &8686112336913678897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,8 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb9590d1e204fa58f6f36bf9754724b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentHealth>k__BackingField: 0
-  <MaxHealth>k__BackingField: 100
 --- !u!114 &257353264420956079
 MonoBehaviour:
   m_ObjectHideFlags: 0

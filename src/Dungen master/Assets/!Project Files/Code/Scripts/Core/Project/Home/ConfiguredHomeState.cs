@@ -16,7 +16,7 @@ namespace Core.Project.Home
             _cursorControl = cursorControl;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             CursorLock();
 

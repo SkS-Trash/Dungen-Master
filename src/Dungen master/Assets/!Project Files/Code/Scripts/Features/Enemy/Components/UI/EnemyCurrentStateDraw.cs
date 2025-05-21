@@ -1,5 +1,4 @@
-﻿using Enemy.Core;
-using TMPro;
+﻿using TMPro;
 using UI;
 using UnityEngine;
 
@@ -8,22 +7,20 @@ namespace Enemy.Components.UI
     public class EnemyCurrentStateDraw : ElementUI
     {
         [SerializeField] private TMP_Text text;
-        [SerializeField] private StateController stateController;
-        
-#if !UNITY_EDITOR
+
         protected override void Awake()
         {
             base.Awake();
+#if !UNITY_EDITOR
             text.gameObject.SetActive(false);
-        }
 #endif
+        }
 
-
-#if UNITY_EDITOR
-        private void Update()
+        public void SetStateText(string state)
         {
-            text.text = stateController.currentState.name;
-        }
+#if UNITY_EDITOR
+            text.text = state;
 #endif
+        }
     }
 }

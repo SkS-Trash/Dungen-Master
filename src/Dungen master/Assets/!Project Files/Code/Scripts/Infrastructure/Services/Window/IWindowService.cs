@@ -13,7 +13,7 @@ namespace Services.Window
         /// </summary>
         /// <param name="windowID">Идентификатор окна.</param>
         /// <returns>Задача, представляющая асинхронную операцию открытия окна.</returns>
-        UniTask Open(WindowID windowID);
+        UniTask<GameObject> Open(WindowID windowID);
 
         /// <summary>
         /// Открывает окно с указанным идентификатором и возвращает компонент типа T.
