@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnter:
   - {fileID: 11400000, guid: 6e15f930d357bf446b26887d28592346, type: 2}
+  - {fileID: 11400000, guid: cf4d9838830ca6748b463b7d0cbdb163, type: 2}
   actions: []
   onExit: []
   transitions: []
