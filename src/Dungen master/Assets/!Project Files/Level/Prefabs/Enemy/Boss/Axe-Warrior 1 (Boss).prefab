@@ -276,8 +276,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 11400000, guid: e9fb79aab71abf84c9405710c5e83e86, type: 2}
-  <Stats>k__BackingField: {fileID: 11400000, guid: 3a764020270bc5249bff74d8c4a0500e, type: 2}
   <AttackPattern>k__BackingField: {fileID: 11400000, guid: de0aa3bc2d5f5f148bc9b33127644afa, type: 2}
+  stats: {fileID: 11400000, guid: 3a764020270bc5249bff74d8c4a0500e, type: 2}
 --- !u!114 &17937947109130452
 MonoBehaviour:
   m_ObjectHideFlags: 0
