@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProceduralDungeon.Data.Configs.Decor;
-using ProceduralDungeon.Data.Configs.Enemy;
-using ProceduralDungeon.Data.Configs.Map;
 using UnityEngine;
 
 namespace Progress

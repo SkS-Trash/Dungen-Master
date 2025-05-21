@@ -1,5 +1,4 @@
-﻿using Enemy.Components;
-using Enemy.Core;
+﻿using Enemy.Core;
 using UnityEngine;
 
 namespace Enemy.Actions

@@ -12,7 +12,7 @@ namespace Enemy.Core
     {
         [Tooltip("Start State (SO)")] public State currentState;
 
-        [field: SerializeField] public ReactiveProperty<EnemyStatsSO> Stats { get; private set; }
+        public ReactiveProperty<EnemyStatsSO> Stats { get; private set; }
         [field: SerializeField] public AttackPatternSO AttackPattern { get; private set; }
 
         public EnemyAnimator Animator { get; private set; }
@@ -22,6 +22,8 @@ namespace Enemy.Core
         public AttackCooldownTracker AttackCooldownTracker { get; private set; }
         public Transform Player { get; private set; }
 
+        [SerializeField] private EnemyStatsSO stats;
+
         private void Awake()
         {
             Animator = GetComponent<EnemyAnimator>();
@@ -30,6 +32,8 @@ namespace Enemy.Core
             Movement = GetComponent<EnemyMovement>();
 
             AttackCooldownTracker = GetComponent<AttackCooldownTracker>();
+
+            Stats = new ReactiveProperty<EnemyStatsSO>(stats);
 
             Health = GetComponent<EnemyHealth>();
             Health.SetMaxHealth(Stats.CurrentValue.maxHealth);

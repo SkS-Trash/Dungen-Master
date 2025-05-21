@@ -6,5 +6,7 @@
 
         StartPause,
         PlayerDied,
+        BossDied,
+        EnemyDied,
     }
 }

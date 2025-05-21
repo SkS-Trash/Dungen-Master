@@ -8,8 +8,7 @@ namespace Enemy.Components
     public class EnemyHealth : HealthContainer,
         ILevelProgressLoadEvent, ILevelProgressCollector
     {
-        [field: ShowInInspector, HideInEditorMode]
-        public bool WasDamaged { get; set; }
+        [field: ShowInInspector, HideInEditorMode] public bool WasDamaged { get; set; }
 
         private void OnEnable()
         {
