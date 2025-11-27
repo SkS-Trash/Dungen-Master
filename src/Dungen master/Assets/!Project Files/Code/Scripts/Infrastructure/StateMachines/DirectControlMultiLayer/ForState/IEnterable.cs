@@ -6,7 +6,7 @@ namespace StateMachines.DirectControlMultiLayer
     /// Интерфейс для состояний, способных выполнять "OnEnter" без аргумента.
     /// При этом он сам наследует generic-вариант с типом Unit.
     /// </summary>
-    public interface IEnterable : IEnterable<Unit>
+    public interface IEnterable : IEnterable<UnitEmpty>
     {
     }
 

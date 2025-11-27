@@ -11,7 +11,7 @@ namespace Enemy.Actions
         public override void Act(StateController c)
         {
             _vector3 = (c.transform.position - c.Player.position).normalized;
-            _vector3 = c.transform.position + _vector3 * c.Stats.fleeDistance;
+            _vector3 = c.transform.position + _vector3 * c.Stats.CurrentValue.fleeDistance;
             c.Movement.MoveTo(_vector3);
         }
     }

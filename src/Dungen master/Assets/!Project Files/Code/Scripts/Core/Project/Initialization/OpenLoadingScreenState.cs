@@ -15,7 +15,7 @@ namespace Core.Project.Initialization
             _windowService = windowService;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await InstantiateLoadingScreen();
         }

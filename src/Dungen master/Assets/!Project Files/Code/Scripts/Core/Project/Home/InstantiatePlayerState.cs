@@ -22,7 +22,7 @@ namespace Core.Project.Home
             _sceneContainer = sceneContainerProvider.Get();
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await InstantiatePlayer();
         }

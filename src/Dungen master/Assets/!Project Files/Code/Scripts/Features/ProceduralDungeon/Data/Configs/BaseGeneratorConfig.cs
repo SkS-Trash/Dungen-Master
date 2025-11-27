@@ -26,6 +26,7 @@ namespace ProceduralDungeon.Data.Configs
         [Button("Validate"), GUIColor(0.5f, 0.8f, 0.5f)]
         private void OnValidate()
         {
+            Tile.Validate();
             Decor.Validate();
             Enemy.Validate();
         }

@@ -8,7 +8,6 @@ namespace Enemy.Decisions
     public class DamageAnimEnded : DecisionSO
     {
         public override bool Decide(StateController c) =>
-            c.GetComponentInChildren<EnemyAnimationEvents>().LastEvent ==
-            EnemyAnimationEvents.AnimationEventType.GetHitEnd;
+            c.AnimationEvents.LastEvent == EnemyAnimationEvents.AnimationEventType.GetHitEnd;
     }
 }

@@ -21,7 +21,7 @@ namespace Core.Project.Settings
             _window = window;
         }
 
-        public async UniTask OnEnterAsync(Unit _)
+        public async UniTask OnEnterAsync(UnitEmpty _)
         {
             await _window.Open(WindowID.Settings);
 

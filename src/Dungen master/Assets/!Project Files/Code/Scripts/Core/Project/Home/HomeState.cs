@@ -19,7 +19,7 @@ namespace Core.Project.Home
             _windowService = windowService;
         }
 
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
             _inputReader.OnCancelChanged += OnCancelChanged;
 

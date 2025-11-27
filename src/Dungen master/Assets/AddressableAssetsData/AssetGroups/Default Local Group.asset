@@ -156,8 +156,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5898753f2103bf945a53e4ea88b7ec88
-    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Boss/Magician-Skeleton 1
-      (Boss).prefab
+    m_Address: Enemy/Boss/2
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -204,6 +203,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87feb047954dffa4ea31ec83737f43e7
+    m_Address: Sounds/MainMenu/MainMenuSoundtrack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8fcd3526d958b894db7e5b7dfd7ce716
     m_Address: Assets/!Project Files/Level/Prefabs/ConfigPrefab/Spikes/spikes.prefab
     m_ReadOnly: 0
@@ -243,13 +247,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a7fdde9dbb81b4167a27a8aeb1e4ce58
+    m_Address: Sounds/GameEnemyDeath/GameEnemyDeathSoundtrack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: add5eb6b5b56d2f4a82eb83d8792bf07
     m_Address: Assets/!Project Files/Level/Prefabs/Spells/SpellBall - Green.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b2f3fa34401d7874f83b34e964fc4080
-    m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Boss/Axe-Warrior 1 (Boss).prefab
+    m_Address: Enemy/Boss/1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -295,6 +304,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dff547ca933eb4d72a80bbb104e16ab7
+    m_Address: Sounds/HomeLocation/HomeLocationSoundtrack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e08a2efde2007ec49865a3717a8c80f7
     m_Address: Assets/!Project Files/Level/Prefabs/Enemy/Close Combat/Axe-Warrior
       2.prefab
@@ -306,8 +320,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e28c32c1c9bc92b418386a2be34b16b0
+    m_Address: Sounds/GameBoss/GameBossSoundtrack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e599bf126aa68d44f9af1d8668dd5256
     m_Address: Assets/!Project Files/Level/Prefabs/Enemies/Skeleton Magician 2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5a8736bfb09a1f418736c6c8b32ae1f
+    m_Address: Sounds/Gameplay/GameplaySoundtrack
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

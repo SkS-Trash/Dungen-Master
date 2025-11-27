@@ -1,5 +1,4 @@
-﻿using Enemy.Components;
-using Enemy.Core;
+﻿using Enemy.Core;
 using UnityEngine;
 
 namespace Enemy.Actions
@@ -14,13 +13,11 @@ namespace Enemy.Actions
 
             var attack = pattern.PickNext(c.transform.position, c.Player.position);
 
-            var cooldownTracker = c.GetComponent<AttackCooldownTracker>();
-
-            if (!cooldownTracker.IsReady(attack)) return;
+            if (!c.AttackCooldownTracker.IsReady(attack)) return;
 
             attack?.Execute(c);
 
-            cooldownTracker.SetCooldown(attack);
+            c.AttackCooldownTracker.SetCooldown(attack);
         }
     }
 }

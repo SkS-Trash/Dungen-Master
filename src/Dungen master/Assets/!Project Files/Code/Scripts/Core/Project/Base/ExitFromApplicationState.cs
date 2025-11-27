@@ -5,7 +5,7 @@ namespace Core.Project
 {
     public class ExitFromApplicationState : IStateOneShot
     {
-        public UniTask OnEnterAsync(Unit _)
+        public UniTask OnEnterAsync(UnitEmpty _)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

@@ -17,10 +17,10 @@ MonoBehaviour:
   onExit: []
   transitions:
   - decisions:
-    - {fileID: 11400000, guid: 186032df72dfe0f42bd2ca37fa2db3f5, type: 2}
-    trueState: {fileID: 11400000, guid: 657121b7ae5d07749b40e028d23495c6, type: 2}
-    falseState: {fileID: 11400000, guid: 03cd2094224fae94bb4655217a86722d, type: 2}
-  - decisions:
     - {fileID: 11400000, guid: 2e34c048d27f7464eb6e8759e7a85cab, type: 2}
     trueState: {fileID: 11400000, guid: 7b97412d4e16bde49af0e92d324584ba, type: 2}
     falseState: {fileID: 0}
+  - decisions:
+    - {fileID: 11400000, guid: 186032df72dfe0f42bd2ca37fa2db3f5, type: 2}
+    trueState: {fileID: 11400000, guid: 657121b7ae5d07749b40e028d23495c6, type: 2}
+    falseState: {fileID: 11400000, guid: 03cd2094224fae94bb4655217a86722d, type: 2}

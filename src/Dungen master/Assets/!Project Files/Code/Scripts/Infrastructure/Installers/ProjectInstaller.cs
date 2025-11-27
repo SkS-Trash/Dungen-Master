@@ -9,6 +9,7 @@ using Providers.Assets;
 using Providers.Containers.Game;
 using Providers.Containers.Scene;
 using Providers.Data;
+using Services.AudioPlayback;
 using Services.CoroutineRunner;
 using Services.CursorControl;
 using Services.Progress;
@@ -25,6 +26,10 @@ namespace Installers
     public class ProjectInstaller : LifetimeScope
     {
         [SerializeField] private InputActionReader inputActionReader;
+        [Space]
+        [SerializeField] private AudioSource musicSource;
+        [SerializeField] private AudioSource soundEffectSource;
+        [SerializeField] private AudioSource voiceOverSource;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -49,6 +54,10 @@ namespace Installers
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IWindowService, WindowService>(Lifetime.Singleton);
             builder.Register<ICursorControlService, CursorControlService>(Lifetime.Singleton);
+            builder.Register<IAudioPlaybackService, AudioPlaybackService>(Lifetime.Singleton)
+                .WithParameter("musicSource", musicSource)
+                .WithParameter("soundEffectSource", soundEffectSource)
+                .WithParameter("voiceOverSource", voiceOverSource);
 
             builder.Register<StateMachines.DirectControlMultiLayer.IStatesFactory, StateMachines.DirectControlMultiLayer.StatesFactory>(Lifetime.Singleton);
             builder.Register<StateMachines.DirectControlMultiLayer.IStateMachine, StateMachines.DirectControlMultiLayer.StateMachine>(Lifetime.Transient);

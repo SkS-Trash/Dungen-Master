@@ -1,5 +1,4 @@
-﻿using Enemy.Components;
-using Enemy.Core;
+﻿using Enemy.Core;
 using UnityEngine;
 
 namespace Enemy.Actions
@@ -9,7 +8,7 @@ namespace Enemy.Actions
     {
         public override void Act(StateController c)
         {
-            c.GetComponent<AttackCooldownTracker>().ResetCooldown();
+            c.AttackCooldownTracker.ResetCooldown();
         }
     }
 }
