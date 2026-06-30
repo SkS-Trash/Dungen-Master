@@ -1,0 +1,19 @@
+﻿using Cysharp.Threading.Tasks;
+using StateMachines.DirectControlMultiLayer;
+
+namespace Core.Project
+{
+    public class ExitFromApplicationState : IStateOneShot
+    {
+        public UniTask OnEnterAsync(UnitEmpty _)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            UnityEngine.Application.Quit();
+#endif
+
+            return UniTask.CompletedTask;
+        }
+    }
+}

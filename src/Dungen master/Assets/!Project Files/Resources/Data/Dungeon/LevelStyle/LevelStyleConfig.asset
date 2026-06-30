@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84bf9180864439085ccc829dc8c3310, type: 3}
+  m_Name: LevelStyleConfig
+  m_EditorClassIdentifier: 
+  tileConfigs:
+  - <Type>k__BackingField: 1
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: eff0223d7b87ae346b822f03381949c8, type: 2}
+    - {fileID: 11400000, guid: ee699ec221a2b884088c8bb54aa903e7, type: 2}
+    - {fileID: 11400000, guid: 91336343d7ac1ea409f350bf6ce8ce42, type: 2}
+    - {fileID: 11400000, guid: f4fe6c34a731bcb4bba670ebdb516e3c, type: 2}
+  - <Type>k__BackingField: 2
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: c62d96152a3b19044b18ec4cd8939c53, type: 2}
+    - {fileID: 11400000, guid: 23e5406a18cd92c47aa86633d78cd785, type: 2}
+    - {fileID: 11400000, guid: 9b5a982ececf12247a1d2058e0ce1b03, type: 2}
+    - {fileID: 11400000, guid: eadce90e84362be41844f64ff3240008, type: 2}
+  - <Type>k__BackingField: 3
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: 57e3e54b18162ef42b18bba5efc9e5ca, type: 2}
+  - <Type>k__BackingField: 4
+    <Configs>k__BackingField: []
+  enemyConfigs:
+  - <Type>k__BackingField: 1
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: 68fff6619254d2944bffe982c0943d89, type: 2}
+  - <Type>k__BackingField: 2
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: 92d771f09ef6551458053fc6089bf54f, type: 2}
+  - <Type>k__BackingField: 3
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: eea7e7b8f5477294caed4a066309fca6, type: 2}
+    - {fileID: 11400000, guid: b8c9277453bbcd9488d9121c45fba6b2, type: 2}
+    - {fileID: 11400000, guid: 15efcfa01e3adc84a92f1930b0246d04, type: 2}
+    - {fileID: 11400000, guid: be5bcf56ee4dc1a4c8570741416aae8f, type: 2}
+    - {fileID: 11400000, guid: b3d48d37a8e48d547a9ea4fd4fc3ebd5, type: 2}
+    - {fileID: 11400000, guid: 25c5858e6f451154c8b81b235397ae3d, type: 2}
+  - <Type>k__BackingField: 4
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: b2dd4f779bb22554e9a625fa050fef02, type: 2}
+  - <Type>k__BackingField: 5
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: f5c94f5933ab346429ee628da38a49fb, type: 2}
+    - {fileID: 11400000, guid: 0677a0fcee642544d8ea3896f6996766, type: 2}
+  decorConfigs:
+  - <Type>k__BackingField: 1
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: 5229a1df6dd3b644393e22b1ac374e8d, type: 2}
+    - {fileID: 11400000, guid: 1584af13369df1a4aa749fef86192f69, type: 2}
+  - <Type>k__BackingField: 2
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: 883053c9593d99e4888d9ce5b07edadb, type: 2}
+    - {fileID: 11400000, guid: 2f246b611f009984990bc97172b66796, type: 2}
+  - <Type>k__BackingField: 3
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: 38531d4eb9ed1624487fe6dc1e4c2a2c, type: 2}
+  - <Type>k__BackingField: 4
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: d427ad0328265ca45b8379cdb7cf4dab, type: 2}
+    - {fileID: 11400000, guid: ce2f048fc3b6d4544a6212148c839c0b, type: 2}
+  - <Type>k__BackingField: 5
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: b27e20b6bff1e4546b1a747b40ff7ea9, type: 2}
+    - {fileID: 11400000, guid: 91b73281976771a4ab1bfc33a6516fec, type: 2}
+    - {fileID: 11400000, guid: a8d88f7125c2d4e4997a41a02d44998f, type: 2}
+    - {fileID: 11400000, guid: 7208621611b12e44d8c255080c986f2f, type: 2}
+  - <Type>k__BackingField: 6
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: a4a9826e978d0a44e95f5d4165a59aa0, type: 2}
+    - {fileID: 11400000, guid: d61212c72a3322c4b80aa8a98f1c0888, type: 2}
+  - <Type>k__BackingField: 7
+    <Configs>k__BackingField:
+    - {fileID: 11400000, guid: 4162d7fedabe07049965b6a1524a21f8, type: 2}
+    - {fileID: 11400000, guid: faea4be7cbb812f43b1a57b9a45afd34, type: 2}

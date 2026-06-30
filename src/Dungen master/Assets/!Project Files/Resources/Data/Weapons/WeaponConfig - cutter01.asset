@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daced4c6c5742a7a1df97d2b293fe57, type: 3}
+  m_Name: WeaponConfig - cutter01
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\u0420\u0435\u0437\u0430\u043A"
+  <ObjectReference>k__BackingField:
+    m_AssetGUID: 2c59362f1b2f4334d839f2acd8ffa4d7
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
+  <Damage>k__BackingField: 10
+  <OffsetRotation>k__BackingField: {x: -90, y: 90, z: 0}
+  <OffsetPosition>k__BackingField: {x: 0, y: 0.11, z: 0}

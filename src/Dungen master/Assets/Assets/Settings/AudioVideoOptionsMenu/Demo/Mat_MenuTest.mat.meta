@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e9819b93cbeb4744bbdae28049a5cf4e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33781
+  packageName: Audio Video Options/Settings Menu
+  packageVersion: 4.2
+  assetPath: Assets/@PaulosCreations/AudioVideoOptionsMenu/Demo/Mat_MenuTest.mat
+  uploadId: 701258

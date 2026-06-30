@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ca5e00ddd1f76a042ae3ae5afb2a0527
+timeCreated: 1566196189
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 24100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33781
+  packageName: Audio Video Options/Settings Menu
+  packageVersion: 4.2
+  assetPath: Assets/@PaulosCreations/AudioVideoOptionsMenu/AudioMixers/Mixer_Main.mixer
+  uploadId: 701258

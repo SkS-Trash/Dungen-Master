@@ -1,0 +1,11 @@
+﻿using System.Collections.Generic;
+using ProceduralDungeon.Data.Types;
+
+namespace ProceduralDungeon
+{
+    public interface IEnemySpawner
+    {
+        void SpawnEnemies(TileType[,] map, DecorType[,] decorLayer, List<Room> rooms);
+        EnemyType[,] EnemyLayer { get; }
+    }
+}

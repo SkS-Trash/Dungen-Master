@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855e25570ef841608b9f61dbb4320429, type: 3}
+  m_Name: Attack StateSimple
+  m_EditorClassIdentifier: 
+  onEnter:
+  - {fileID: 11400000, guid: 4aee64bdbe8a8094696b1dbdb9fa501d, type: 2}
+  actions:
+  - {fileID: 11400000, guid: 1bfc7019424404346b50727a61efb935, type: 2}
+  - {fileID: 11400000, guid: 7c79ed0515f42f74388dc3e37b016516, type: 2}
+  onExit:
+  - {fileID: 11400000, guid: 0bd065799e984a94eb57a7a864b15ce2, type: 2}
+  transitions:
+  - decisions:
+    - {fileID: 11400000, guid: 2e34c048d27f7464eb6e8759e7a85cab, type: 2}
+    trueState: {fileID: 11400000, guid: 7b97412d4e16bde49af0e92d324584ba, type: 2}
+    falseState: {fileID: 0}
+  - decisions:
+    - {fileID: 11400000, guid: bc53c3373e5cdaf488a3c3e03fc29bb2, type: 2}
+    trueState: {fileID: 11400000, guid: 657121b7ae5d07749b40e028d23495c6, type: 2}
+    falseState: {fileID: 0}
+  - decisions:
+    - {fileID: 11400000, guid: 265c9dbc842494a4a8ff30cfb608c8d8, type: 2}
+    trueState: {fileID: 11400000, guid: 03cd2094224fae94bb4655217a86722d, type: 2}
+    falseState: {fileID: 0}

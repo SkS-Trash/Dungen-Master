@@ -1,0 +1,15 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Applies general rules to all C# scripts within the Frontline WW2 Unity project.
+globs: Assets/**/*.cs
+---
+- Все скрипты на C# для Unity 2021.3.18f1 LTS. Данные (юниты, постройки, способности) — через ScriptableObject’ы.
+- UI — MVVM (UniRx + TMPro), анимации кнопок/панелей через DoTween.
+- Навигация — Unity NavMesh + динамические NavMeshSurface/NavMeshObstacle (воронки), OffMeshLink’и для преодоления препятствий.
+- Интеграции: COZY Stylized Weather, COZY Link (multiplayer), Terrain Dynamic Pit (кратеры), Mirror/Netcode.
+- Профилировать в профайлере, выносить частые аллокации в пулы, минимизировать GC-allocation.
+
